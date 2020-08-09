@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.83b7b48f.chunk.css",
+    "main.js": "/static/js/main.86d398a2.chunk.js",
+    "main.js.map": "/static/js/main.86d398a2.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.83c3e0c4.js",
+    "runtime-main.js.map": "/static/js/runtime-main.83c3e0c4.js.map",
+    "static/js/2.4905ac73.chunk.js": "/static/js/2.4905ac73.chunk.js",
+    "static/js/2.4905ac73.chunk.js.map": "/static/js/2.4905ac73.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.9f1e135377d1db053114a2a1096fe25c.js": "/precache-manifest.9f1e135377d1db053114a2a1096fe25c.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.83b7b48f.chunk.css.map": "/static/css/main.83b7b48f.chunk.css.map",
+    "static/js/2.4905ac73.chunk.js.LICENSE.txt": "/static/js/2.4905ac73.chunk.js.LICENSE.txt",
+    "static/media/Hearthstone.jpg": "/static/media/Hearthstone.ed328439.jpg",
+    "static/media/subject-foster.png": "/static/media/subject-foster.19ee1451.png",
+    "static/media/subject1.png": "/static/media/subject1.30811111.png",
+    "static/media/subject2.png": "/static/media/subject2.47b7f9d9.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.83c3e0c4.js",
+    "static/js/2.4905ac73.chunk.js",
+    "static/css/main.83b7b48f.chunk.css",
+    "static/js/main.86d398a2.chunk.js"
+  ]
+}
