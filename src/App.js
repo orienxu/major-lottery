@@ -33,7 +33,7 @@ export default class DrawCards extends Component {
 
     return (
       <div className="App">
-        <ReactCardFlip
+        {/* <ReactCardFlip
           isFlipped={this.state.isFlipped}
           flipDirection="horizontal"
           className="CardContainer"
@@ -44,7 +44,7 @@ export default class DrawCards extends Component {
           <div>
             <img src={subjectFoster} className="App-logo" alt="logo" onClick={this.handleClick} />
           </div>
-        </ReactCardFlip>
+        </ReactCardFlip> */}
         <Share
           url='https://www.baidu.com'
           title='分享生活点滴'
