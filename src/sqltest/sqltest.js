@@ -1,5 +1,19 @@
 const { Connection, Request } = require("tedious");
 
+'use strict';
+
+const express = require('express');
+
+// Constants
+const PORT = 3000;
+const HOST = '127.0.0.1';
+
+// App
+const app = express();
+
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
+
 // Create connection to database
 const config = {
   authentication: {
@@ -11,7 +25,7 @@ const config = {
   },
   server: "drawmajor.database.windows.net",
   options: {
-    database: "major", //update me
+    database: "major",
     encrypt: true
   }
 };
@@ -38,14 +52,19 @@ function queryDatabase() {
       if (err) {
         console.error(err.message);
       } else {
-        console.log(`${rowCount} row(s) returned`);
+        // console.log(`${rowCount} row(s) returned`);
       }
     }
   );
 
   request.on("row", columns => {
-    columns.forEach(column => {
-      console.log("%s\t%s", column.metadata.colName, column.value);
+    app.get('/', (req, res) => {
+      let textHold = '';
+      columns.forEach(column => {
+        // console.log("%s\t%s", column.metadata.colName, column.value);
+        textHold += (column.metadata.colName + ' ' + column.value + '\n');
+      });
+      res.send(textHold);
     });
   });
 
