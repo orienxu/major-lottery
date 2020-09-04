@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "cors": "^2.8.5",
     "mssql": "^6.2.1",
+    "mysql": "^2.18.1",
     "properties-reader": "^2.1.1",
     "react": "^16.13.1",
     "react-card-flip": "^1.0.11",

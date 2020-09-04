@@ -20,11 +20,13 @@ class Server {
         this.dbname = properties.get('lottery.database_name');
         this.username = properties.get('lottery.username');
         this.passwd = properties.get('lottery.password');
+        this.port = properties.get('lottery.port');
         this.query = new Query({
-            user: this.username,
-            password: this.passwd,
-            server: this.url,
-            database: this.database
+            host: "ec2-18-222-142-130.us-east-2.compute.amazonaws.com",
+            user: "root1",
+            password: "123",            
+            database: "MajorLottery",
+            port: 3306
         });
         this.query.init();
     }
