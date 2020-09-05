@@ -78,7 +78,12 @@ class Server {
         
     }
 
-    
+    close() {
+        running.close(function() {
+            console.log("Closing server");
+        });
+        this.query.exit();
+    }
 
     
 
