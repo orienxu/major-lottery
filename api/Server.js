@@ -4,7 +4,8 @@ const properties = propertiesReader('./api/dbconn.properties');
 const urlParser = require('url');
 const Query = require('./Query');
 
-
+const USER_NOT_FOUND = -1;
+const INCORRECT_PASSWORD_OR_USERNAME = -2;
 
 class Server {
     constructor() {
@@ -22,18 +23,20 @@ class Server {
         this.passwd = properties.get('lottery.password');
         this.port = properties.get('lottery.port');
         this.query = new Query({
-            host: "ec2-18-222-142-130.us-east-2.compute.amazonaws.com",
-            user: "root1",
-            password: "123",            
-            database: "MajorLottery",
-            port: 3306
+            host: this.url,
+            user: this.username,
+            password: this.passwd.toString(),            
+            database: this.dbname,
+            port: this.port
         });
         this.query.init();
     }
 
     doLogin(username, password) {
-        //TODO
+        this.query.logIn(username, password, )
     }
+
+    
 
     doRegister(username, password) {
         //TODO
@@ -43,11 +46,22 @@ class Server {
     //     //TODO
     // }
 
-    doAction(action, param) {
+    doAction(action, param, res) {
+
         switch(action) {
             case '/login':
                 //Note: key on param depends on the param structure and how u name the input
-                this.doLogin(param["username"], param["password"]);
+                this.query.logIn(param['username'], param['password'], function(result) {
+                    if (result === USER_NOT_FOUND){
+                        res.end(JSON.stringify({"result" : "User not found", "outcome" : 0}));
+                    }
+                    else if (result === INCORRECT_PASSWORD_OR_USERNAME) {
+                        res.end(JSON.stringify({"result" : "Incorrect password or username", "outcome" : 0}));
+                    }
+                    else {
+                        res.end(JSON.stringify({"result" : result + " logged in", "outcome" : 1}));
+                    }
+                });
                 //TODO return 
                 break;
             case '/register':
@@ -68,12 +82,10 @@ class Server {
         const running = http.createServer(function (req,res) {
             res.setHeader("Content-Type", "application/json");
             const reqSummary = urlParser.parse(req.url, true);
-            console.log("request coming in...");
-            let result = self.doAction(reqSummary.pathname, reqSummary.query);
+            self.doAction(reqSummary.pathname, reqSummary.query, res);
             //TODO write response base on doAction result in JSON format;
-            res.end();
         });
-        console.log("Server running");
+        console.log("Server running...");
         running.listen(9000);
         
     }

@@ -1,7 +1,7 @@
-CREATE TABLE [User](
+CREATE TABLE Users(
     username VARCHAR(20) PRIMARY KEY,
-                 pass VARBINARY, 
-                 salt VARBINARY, 
+                 pass VARBINARY(20), 
+                 salt VARBINARY(20), 
                  timeLeft int
 );
 
