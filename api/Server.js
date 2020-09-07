@@ -47,7 +47,6 @@ class Server {
     // }
 
     doAction(action, param, res) {
-
         switch(action) {
             case '/login':
                 //Note: key on param depends on the param structure and how u name the input
