@@ -3,11 +3,12 @@ const crypto = require('crypto');
 
 const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where U.username = ?";
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
-const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? "
-REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
+const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
+const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
+
 class Query {
     constructor(config) {
         this.config = config;
