@@ -93,10 +93,7 @@ class Query {
                 callback("Username is already taken");
             }
         });
-        
     }
-
-    
 
     updateUserCard(username) {
         

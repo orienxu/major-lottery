@@ -6,6 +6,8 @@ const Query = require('./Query');
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
+const REGISTER_SUCCESS = "New user registered";
+const REGISTER_FAILED = "Username is already taken";
 
 class Server {
     constructor() {
@@ -64,8 +66,14 @@ class Server {
                 //TODO return 
                 break;
             case '/register':
-                this.doRegister(param["username"], param["password"]);
                 //TODO
+                this.query.register(param['username'], param['password'], function(result) {
+                    if (result === REGISTER_SUCCESS) {
+                        res.end(JSON.stringify({"result" : result, "success" : 1}));
+                    } else if (result === REGISTER_FAILED) {
+                        res.end(JSON.stringify({"result" : result, "success" : 0}));
+                    }
+                });
                 break;
             case '/generateNewCard':
                 //TODO
