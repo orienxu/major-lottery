@@ -112,7 +112,7 @@ class Query {
 
     ownedCards(username, callback) {
         var self = this;
-        let res = null;
+        let res = [];
         self.connection.query(VIEW_OWNED, [username], function (err, results) {
           if (err) {
               throw err;
@@ -123,11 +123,12 @@ class Query {
               return;
           }
 
+        res = results[0]['design'];
           for (let i = 0; i < CARDS.length; i++) {
               let cardName = CARDS[i];
               let owned = results[0][cardName];
-              if (owned) {
-                res.push(cardName + ".png");
+              if (owned == 1) {
+                res.push(owned + ".png");
               }
           }
           callback(res);
