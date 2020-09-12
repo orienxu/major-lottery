@@ -12,6 +12,19 @@ CREATE TABLE UserCard(
     cse CHAR, 
     ee CHAR, 
     info CHAR, 
+    design CHAR,
+    acms CHAR,
+    biochem CHAR,
+    stat CHAR,
+    com CHAR,
+    arch CHAR,
+    me CHAR,
+    foster CHAR,
+    psych CHAR,
+    phys CHAR,
+    math CHAR,
+    music CHAR,
+    chem CHAR,
     FOREIGN KEY(username) REFERENCES Users(username)
 
 );
