@@ -35,7 +35,7 @@ class Query {
         // console.log(this.logIn("weifeng", "123", this.logInHelper));
         // this.register("weifeng", "123", this.registerHelper);
         // this.logIn("weifeng","123", this.registerHelper);
-        this.ownedCards("weifeng", this.ownedCardsHelper);
+        // this.ownedCards("weifeng", this.ownedCardsHelper);
     }
 
     logIn(username, passwd, callback){
@@ -97,7 +97,28 @@ class Query {
 
     }
 
-
+    ownedCards(username, callback) {
+        var self = this;
+        let res = [];
+        self.connection.query(VIEW_OWNED, [username], function (err, results) {
+          if (err) {
+              throw err;
+          }
+          if (results.length < 1) {
+              res = userConfig.EMPTY_OWNED;
+              callback(res);
+              return;
+          }
+          for (let i = 0; i < CARDS.length; i++) {
+              let cardName = CARDS[i];
+              let owned = results[0][cardName];
+              if (owned == 1) {
+                res.push(cardName + ".png");
+              }
+          }
+          callback(res);
+        });
+    }
 
     // updateUserCard(username) {
 
@@ -109,30 +130,6 @@ class Query {
     //          throw err;
     //      }
     // }
-
-    ownedCards(username, callback) {
-        var self = this;
-        let res = [];
-        self.connection.query(VIEW_OWNED, [username], function (err, results) {
-          if (err) {
-              throw err;
-          }
-          if (results.length < 1) {
-              res = userConfig.EMPTY_OWNED;
-              callback(res); // ??
-              return;
-          }
-
-          for (let i = 0; i < CARDS.length; i++) {
-              let cardName = CARDS[i];
-              let owned = results[0][cardName];
-              if (owned == 1) {
-                res.push(cardName + ".png");
-              }
-          }
-          callback(res);
-        });
-    }
 
     ownedCardsHelper(res) {
         console.log(res);
