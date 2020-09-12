@@ -7,7 +7,7 @@ const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where 
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
 const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
-const VIEW_OWNED = "SELECT UC.cse, UC.ee FROM UserCard As UC JOIN Users As U ON UC.username = U.username WHERE U.username = ?";
+const VIEW_OWNED = "SELECT UC.cse, UC.ee, UC.info, UC.design, UC.acms, UC.biochem, UC.stat, UC.com, UC.arch, UC.me, UC.foster, UC.psych, UC.phys, UC.math, UC.music, UC.chem FROM UserCard As UC JOIN Users As U ON UC.username = U.username WHERE U.username = ?";
 
 class Query {
     constructor(config) {
