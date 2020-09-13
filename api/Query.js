@@ -9,6 +9,7 @@ const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardD
 const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
 const UPDATE_TIME_LEFT = "Update U From Users As U Set U.timeLeft = ? Where U.username = ?";
 const UPDATE_OWNED_CARD = "Update UC From UserCard As UC Set UC.? = '1', UC.? = '1', UC.? = '1' Where UC.username = ?"; //join?
+const MAX_MAJOR_NUMBER = 16;
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
@@ -36,6 +37,7 @@ class Query {
             if(err) console.error("error" + err.stack);
         });
 
+        this.updateUserCard("weifeng", this.registerHelper);
         //console.log(this.logIn("weifeng", "123", this.logInHelper));
         //this.register("weifeng", "123", this.registerHelper);
         //this.logIn("weifeng","123", this.registerHelper);
@@ -113,7 +115,7 @@ class Query {
                 var number = 0;
                 var index = -1;
                 while (number < 3) {
-                    index = Math.floor(Math.random() * Math.floor(max));
+                    index = Math.floor(Math.random() * Math.floor(MAX_MAJOR_NUMBER));
                     if (lotteryResult[0] !== majorList[index] && lotteryResult[1] !== majorList[index] && lotteryResult[2] !== majorList[index]) {
                         lotteryResult[number] = majorList[index];
                         number++;
@@ -131,13 +133,13 @@ class Query {
                 for (i = 0; i<resCardInfo.length; i++) {
                     resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
                 }
-                timeLeft = timeLeft - 3;
-                self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
-                    if (err) {
-                        throw err;
-                    }
-                    calllback("time left updated");
-                })
+                // timeLeft = timeLeft - 3;
+                // self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
+                //     if (err) {
+                //         throw err;
+                //     }
+                //     calllback("time left updated");
+                // })
                 callback(resCardInfo);
             } else {
                 callback("Don't have enough lottery chances")
@@ -145,7 +147,7 @@ class Query {
         })
     }
 
-    resCardInfo(cardname, callback) {
+    getCardInfo(cardname, callback) {
         var self = this;
         self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
             if (err) {
