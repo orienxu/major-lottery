@@ -5,11 +5,10 @@ const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where 
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
 const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
-const SAVE_CARD_CHECK_EXIST = "";
-const GET_CARD_INFO = "";
+const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardDetail As CD Where CD.cardName = ?";
 const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
-const UPDATE_TIME_LEFT = "";
-const UPDATE_OWNED_CARD = "Update UC From UserCard As UC Set UC.? = '1', UC.? = '1', UC.? = '1' Where U.username = ?"; //join?
+const UPDATE_TIME_LEFT = "Update U From Users As U Set U.timeLeft = ? Where U.username = ?";
+const UPDATE_OWNED_CARD = "Update UC From UserCard As UC Set UC.? = '1', UC.? = '1', UC.? = '1' Where UC.username = ?"; //join?
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
@@ -108,7 +107,8 @@ class Query {
             if (err) {
                 throw err;
             }
-            if (results[0]['timeLeft'] >= 3) {
+            var timeLeft = results[0]['timeLeft'];
+            if (timeLeft >= 3) {
                 var lotteryResult = ["NONE", "NONE", "NONE"];
                 var number = 0;
                 var index = -1;
@@ -121,16 +121,23 @@ class Query {
                 }
                 self.connection.query(UPDATE_OWNED_CARD, [lotteryResult[0],lotteryResult[1],lotteryResult[2],username],
                     function (err, results, fields) {
-                        if (err) {
-                            throw err;
-                        }
-                        callback("new cards updated");
+                    if (err) {
+                        throw err;
+                    }
+                    callback("new cards updated");
                 })
                 var resCardInfo = ["NONE", "NONE", "NONE"];
                 var i;
                 for (i = 0; i<resCardInfo.length; i++) {
                     resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
                 }
+                timeLeft = timeLeft - 3;
+                self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                    calllback("time left updated");
+                })
                 callback(resCardInfo);
             } else {
                 callback("Don't have enough lottery chances")
