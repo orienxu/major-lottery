@@ -31,6 +31,17 @@ class Query {
         return salt;
     }
 
+    getCardInfo(cardname, callback) {
+        var self = this;
+        self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
+            if (err) {
+                throw err;
+            }
+            callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
+            return results[0];
+        })
+    }
+
     init() {
         this.connection = sql.createConnection(this.config);
         this.connection.connect(function (err) {
@@ -144,17 +155,6 @@ class Query {
             } else {
                 callback("Don't have enough lottery chances")
             }
-        })
-    }
-
-    getCardInfo(cardname, callback) {
-        var self = this;
-        self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
-            if (err) {
-                throw err;
-            }
-            callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
-            return results[0];
         })
     }
 
