@@ -33,7 +33,7 @@ CREATE TABLE UserCard(
 CREATE TABLE CardDetail(
     cardName VARCHAR(20),
     intro VARCHAR(20),
-    majorDesript VARCHAR(20)
+    majorDescript VARCHAR(20)
 );
 
 

@@ -5,6 +5,11 @@ const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where 
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
 const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
+const SAVE_CARD_CHECK_EXIST = "";
+const GET_CARD_INFO = "";
+const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
+const UPDATE_TIME_LEFT = "";
+const UPDATE_OWNED_CARD = "Update UC From UserCard As UC Set UC.? = '1', UC.? = '1', UC.? = '1' Where U.username = ?"; //join?
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
@@ -34,7 +39,7 @@ class Query {
 
         //console.log(this.logIn("weifeng", "123", this.logInHelper));
         //this.register("weifeng", "123", this.registerHelper);
-        // this.logIn("weifeng","123", this.registerHelper);
+        //this.logIn("weifeng","123", this.registerHelper);
     }
 
     logIn(username, passwd, callback){
@@ -95,8 +100,53 @@ class Query {
         });
     }
 
-    updateUserCard(username) {
-        
+    updateUserCard(username, callback) {
+        const majorList = ["cse", "ee", "info", "design", "acms", "biochem", "stat", "com",
+                           "arch", "me", "foster", "psych", "phys", "math", "music", "chem"];
+        var self = this;
+        self.connection.query(CHECK_TIME_LEFT, [username], function (err, results, fields) {
+            if (err) {
+                throw err;
+            }
+            if (results[0]['timeLeft'] >= 3) {
+                var lotteryResult = ["NONE", "NONE", "NONE"];
+                var number = 0;
+                var index = -1;
+                while (number < 3) {
+                    index = Math.floor(Math.random() * Math.floor(max));
+                    if (lotteryResult[0] !== majorList[index] && lotteryResult[1] !== majorList[index] && lotteryResult[2] !== majorList[index]) {
+                        lotteryResult[number] = majorList[index];
+                        number++;
+                    }
+                }
+                self.connection.query(UPDATE_OWNED_CARD, [lotteryResult[0],lotteryResult[1],lotteryResult[2],username],
+                    function (err, results, fields) {
+                        if (err) {
+                            throw err;
+                        }
+                        callback("new cards updated");
+                })
+                var resCardInfo = ["NONE", "NONE", "NONE"];
+                var i;
+                for (i = 0; i<resCardInfo.length; i++) {
+                    resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
+                }
+                callback(resCardInfo);
+            } else {
+                callback("Don't have enough lottery chances")
+            }
+        })
+    }
+
+    resCardInfo(cardname, callback) {
+        var self = this;
+        self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
+            if (err) {
+                throw err;
+            }
+            callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
+            return results[0];
+        })
     }
 
     // errorHandler(err) {
