@@ -14,8 +14,7 @@
     "react": "^16.13.1",
     "react-card-flip": "^1.0.11",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.3",
-    "social-share-react": "^1.1.2"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",

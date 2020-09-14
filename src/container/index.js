@@ -13,7 +13,7 @@ export default class MainPage extends Component {
     constructor() {
         super();
         this.state = {
-            id: "draw"
+            id: 'draw'
         }
     }
 
@@ -33,6 +33,9 @@ export default class MainPage extends Component {
                 <div>
                     <img src={Res.star}
                         style={{ width: '7vmin', marginRight: '1.5vmin' }}
+                        onClick={
+                            () => this.handleClick('collection')
+                        }
                     />
                     <img src={Res.user}
                         onClick={
@@ -47,12 +50,14 @@ export default class MainPage extends Component {
 
     render() {
         const { id } = this.state;
+        console.log(id)
         const subpage = () => {
             switch (id) {
                 case "info": return <InfoPage />;
                 case "user": return <UserPage />;
-                case "draw": return <DrawPage action={() => { this.handleClick('info') }} />;
+                case "draw": return <DrawPage action={() => this.handleClick('info')} />;
                 case "result": return <ResultPage />;
+                case "collection": return <CollectionPage />;
 
                 default: return <h1>No project match</h1>
             }
