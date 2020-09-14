@@ -5,4 +5,5 @@ export default {
     arrow: require('../res/Arrow.png'),
     star: require('../res/Star.png'),
     user: require('../res/User.png'),
+    home: require('../res/Home.png'),
 }
