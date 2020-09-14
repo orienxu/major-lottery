@@ -31,16 +31,16 @@ class Query {
         return salt;
     }
 
-    getCardInfo(cardname, callback) {
-        var self = this;
-        self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
-            if (err) {
-                throw err;
-            }
-            callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
-            return results[0];
-        })
-    }
+    // getCardInfo(cardname, callback) {
+    //     var self = this;
+    //     self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
+    //         if (err) {
+    //             throw err;
+    //         }
+    //         callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
+    //         return results[0];
+    //     })
+    // }
 
     init() {
         this.connection = sql.createConnection(this.config);
@@ -139,11 +139,11 @@ class Query {
                     }
                     callback("new cards updated");
                 })
-                var resCardInfo = ["NONE", "NONE", "NONE"];
-                var i;
-                for (i = 0; i<resCardInfo.length; i++) {
-                    resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
-                }
+                // var resCardInfo = ["NONE", "NONE", "NONE"];
+                // var i;
+                // for (i = 0; i<resCardInfo.length; i++) {
+                //     resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
+                // }
                 // timeLeft = timeLeft - 3;
                 // self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
                 //     if (err) {
