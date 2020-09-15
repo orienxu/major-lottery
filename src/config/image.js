@@ -6,4 +6,5 @@ export default {
     star: require('../res/Star.png'),
     user: require('../res/User.png'),
     home: require('../res/Home.png'),
+    cardBack: require('../res/card-back.png'),
 }

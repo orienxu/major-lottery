@@ -18,7 +18,7 @@ export default class DrawPage extends Component {
                 style={styles.contentMain}
             >
                 <div style={styles.icon}>
-                    <img src={Res.icon} style={{ width: '55vmin' }} />
+                    <img src={Res.cardBack} style={{ width: '55vmin' }} />
                 </div>
                 <h1 style={styles.button}
                     onClick={this.props.action}
@@ -84,9 +84,6 @@ const styles = {
 
     },
     icon: {
-        backgroundColor: 'white',
-        width: '60vmin',
-        height: '80vmin',
         alignSelf: 'center',
         marginTop: '20vmin',
         display: 'flex',

@@ -96,10 +96,8 @@ const styles = {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flex: 1,
-    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    // overflow: 'hidden',
     backgroundColor: '#DDDDDD',
   },
   contentTitle: {
