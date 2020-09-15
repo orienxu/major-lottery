@@ -12,24 +12,6 @@ export default class DrawPage extends Component {
         };
     }
 
-    renderTop() {
-        return (
-            <div style={styles.topMain}>
-                <img src={Res.arrow}
-                    style={{ width: '7vmin', marginLeft: '3vmin' }}
-                />
-                <div style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <img src={Res.star}
-                        style={{ width: '7vmin', marginRight: '1.5vmin' }}
-                    />
-                    <img src={Res.user}
-                        style={{ width: '7vmin', marginRight: '3vmin' }}
-                    />
-                </div>
-            </div >
-        );
-    }
-
     renderContent() {
         return (
             <div
@@ -61,15 +43,6 @@ export default class DrawPage extends Component {
 }
 
 const styles = {
-    topMain: {
-        width: '100%',
-        height: '12vmin',
-        backgroundColor: '#B9A9D9',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
     contentMain: {
         justifyContent: 'flex-start',
         display: 'flex',

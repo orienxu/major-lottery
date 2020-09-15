@@ -82,7 +82,7 @@ const styles = {
         padding: '3vw',
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(255, 221, 155, 0.72)',
+        background: '#EDD29D',
         boxShadow: '4px 4px 4px rgba(0, 0, 0, 0.25)',
         borderRadius: '28px',
     },

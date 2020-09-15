@@ -6,6 +6,10 @@ import UserPage from './user';
 import DrawPage from './drawPage';
 import ResultPage from './resultPage';
 import CollectionPage from './collection';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
+import StarIcon from '@material-ui/icons/Star';
+import PersonIcon from '@material-ui/icons/Person'
 import { motion } from "framer-motion";
 
 export default class MainPage extends Component {
@@ -22,27 +26,33 @@ export default class MainPage extends Component {
     }
 
     renderTop() {
+        const { id } = this.state;
         return (
             <div style={styles.topMain}>
-                <img src={Res.home}
-                    onClick={
-                        () => this.handleClick('draw')
-                    }
-                    style={{ width: '7vmin', marginLeft: '3vmin' }}
-                />
+                <IconButton
+                    aria-label="Home"
+                    disabled={id === 'draw'}
+                    onClick={() => this.handleClick('draw')}
+                >
+                    <HomeIcon />
+                </IconButton>
                 <div>
-                    <img src={Res.star}
-                        style={{ width: '7vmin', marginRight: '1.5vmin' }}
-                        onClick={
-                            () => this.handleClick('collection')
-                        }
-                    />
-                    <img src={Res.user}
-                        onClick={
-                            () => this.handleClick('user')
-                        }
-                        style={{ width: '7vmin', marginRight: '3vmin' }}
-                    />
+                    <IconButton
+                        aria-label="Collection"
+                        disabled={id === 'collection'}
+                        onClick={() => this.handleClick('collection')}
+                    >
+                        <StarIcon />
+                    </IconButton>
+                    <IconButton
+                        aria-label="User"
+                        disabled={id === 'user'}
+                        onClick={() => this.handleClick('user')}
+                    >
+                        <PersonIcon
+                            style={{ marginLeft: '-4vmin' }}
+                        />
+                    </IconButton>
                 </div>
             </div >
         );
@@ -50,7 +60,6 @@ export default class MainPage extends Component {
 
     render() {
         const { id } = this.state;
-        console.log(id)
         const subpage = () => {
             switch (id) {
                 case "info": return <InfoPage />;
@@ -77,10 +86,12 @@ const styles = {
     topMain: {
         width: '100%',
         height: '12vmin',
-        backgroundColor: '#B9A9D9',
+        backgroundColor: '#F5F3F8',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        overflow: 'auto',
     },
 }

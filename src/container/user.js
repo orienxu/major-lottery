@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-//import ReactCardFlip from 'react-card-flip';
 import subject1 from '../res/subject1.png';
-
-
-//import hearthstone from './res/Hearthstone.jpg';
-//import Share from 'social-share-react'
 import './App.css';
 
 

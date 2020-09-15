@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import Res from './../config/image';
-import Share from 'social-share-react'
 import './App.css';
 import { motion } from "framer-motion"
 
@@ -77,14 +76,6 @@ export default class InfoPage extends Component {
           </div>
         </ReactCardFlip>
         <p>{this.state.apiResponse}</p>
-        <Share
-          url='https://www.baidu.com'
-          title='分享生活点滴'
-          disabled={['google', 'facebook', 'twitter', 'qq', 'douban', 'tencent', 'linkedin']}
-          descripiton='我抽到了Foster专业'
-          image={Res.subject1}
-          site={['wechat']}
-        />
       </div>
     );
   }
