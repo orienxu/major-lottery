@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactCardFlip from 'react-card-flip';
-import Res from './config/image';
+import Res from './../config/image';
 import Share from 'social-share-react'
 import './App.css';
+import { motion } from "framer-motion"
 
-
-export default class DrawCards extends Component {
+export default class InfoPage extends Component {
 
   constructor() {
     super();
@@ -14,13 +14,12 @@ export default class DrawCards extends Component {
       apiResponse: 'Node failed',
     };
     this.handleClick = this.handleClick.bind(this);
-
   }
 
   callAPI() {
-    fetch('http://localhost:9000/testAPI')
+    fetch('http://localhost:9000/login?username=xxx&password=xxxx')
       .then(res => res.text(),
-        console.log('res')
+        // console.log('res')
       )
       .then(res => this.setState({ apiResponse: res }));
   }
@@ -32,24 +31,6 @@ export default class DrawCards extends Component {
   handleClick(e) {
     e.preventDefault();
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-  }
-
-  renderTop() {
-    return (
-      <div style={styles.topMain}>
-        <img src={Res.arrow}
-          style={{ width: '7vmin', marginLeft: '3vmin' }}
-        />
-        <div style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-          <img src={Res.star}
-            style={{ width: '7vmin', marginRight: '1.5vmin' }}
-          />
-          <img src={Res.user}
-            style={{ width: '7vmin', marginRight: '3vmin' }}
-          />
-        </div>
-      </div >
-    );
   }
 
   renderContent() {
@@ -80,63 +61,54 @@ export default class DrawCards extends Component {
     );
   }
 
-  // renderTest() {
-  //   return (
-  //     <div>
-  //       <ReactCardFlip
-  //         isFlipped={this.state.isFlipped}
-  //         flipDirection="horizontal"
-  //         className="CardContainer"
-  //       >
-  //         <div>
-  //           <img src={Res.hearthstone} className="App-logo" alt="logo" onClick={this.handleClick} />
-  //         </div>
-  //         <div>
-  //           <img src={Res.subjectFoster} className="App-logo" alt="logo" onClick={this.handleClick} />
-  //         </div>
-  //       </ReactCardFlip>
-  //       <p>{this.state.apiResponse}</p>
-  //       <Share
-  //         url='https://www.baidu.com'
-  //         title='分享生活点滴'
-  //         disabled={['google', 'facebook', 'twitter', 'qq', 'douban', 'tencent', 'linkedin']}
-  //         descripiton='我抽到了Foster专业'
-  //         image={Res.subject1}
-  //         site={['wechat']}
-  //       />
-  //     </div>
-  //   );
-  // }
-
-  render() {
+  renderTest() {
     return (
-      <div className="App">
-        {this.renderTop()}
-        {this.renderContent()}
+      <div>
+        <ReactCardFlip
+          isFlipped={this.state.isFlipped}
+          flipDirection="horizontal"
+          className="CardContainer"
+        >
+          <div>
+            <img src={Res.hearthstone} className="App-logo" alt="logo" onClick={this.handleClick} />
+          </div>
+          <div>
+            <img src={Res.subjectFoster} className="App-logo" alt="logo" onClick={this.handleClick} />
+          </div>
+        </ReactCardFlip>
+        <p>{this.state.apiResponse}</p>
+        <Share
+          url='https://www.baidu.com'
+          title='分享生活点滴'
+          disabled={['google', 'facebook', 'twitter', 'qq', 'douban', 'tencent', 'linkedin']}
+          descripiton='我抽到了Foster专业'
+          image={Res.subject1}
+          site={['wechat']}
+        />
       </div>
     );
   }
 
+  render() {
+    console.log('rendered')
+    return (
+      <div className="App">
+        {this.renderContent()}
+        {/* {this.renderTest()} */}
+      </div>
+    );
+  }
 }
 
 const styles = {
-  topMain: {
-    width: '100%',
-    height: '12vmin',
-    backgroundColor: '#B9A9D9',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   contentMain: {
     justifyContent: 'flex-start',
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'flex-start',
     flex: 1,
     height: '100vh',
-    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    // overflow: 'hidden',
     backgroundColor: '#DDDDDD',
   },
   contentTitle: {
@@ -148,4 +120,3 @@ const styles = {
     flexDirection: 'column',
   }
 }
-

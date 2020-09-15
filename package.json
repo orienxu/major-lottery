@@ -7,14 +7,14 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "cors": "^2.8.5",
+    "framer-motion": "^2.6.6",
     "mssql": "^6.2.1",
     "mysql": "^2.18.1",
     "properties-reader": "^2.1.1",
     "react": "^16.13.1",
     "react-card-flip": "^1.0.11",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.3",
-    "social-share-react": "^1.1.2"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
