@@ -1,15 +1,19 @@
 const sql = require('mysql');
 const crypto = require('crypto');
+const { serialize } = require('v8');
 
 const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where U.username = ?";
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
 const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
-const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardDetail As CD Where CD.cardName = ?";
+// const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardDetail As CD Where CD.cardName = ?";
+const LOTTERY_CHECK_USER_EXIST = "Select UC.username From UserCard As UC Where UC.username = ?";
+const INIT_USER_CARD = "Insert Into UserCard Values(?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
 const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
 const UPDATE_TIME_LEFT = "Update Users As U Set U.timeLeft = ? Where U.username = ?";
 const UPDATE_OWNED_CARD = "Update UserCard As UC Set ";
 const MAX_MAJOR_NUMBER = 16;
+const INIT_TIME_LEFT = 9;
 
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
@@ -50,7 +54,9 @@ class Query {
 
 
         // for test
-        this.updateUserCard("weifeng", this.registerHelper);
+        //this.register("Hongjiang", "123", this.registerHelper);
+        //this.updateUserCard("Hongjiang", this.registerHelper);
+        //this.updateUserCard("weifeng", this.registerHelper);
         //console.log(this.logIn("weifeng", "123", this.logInHelper));
         //this.register("weifeng", "123", this.registerHelper);
         //this.logIn("weifeng","123", this.registerHelper);
@@ -98,11 +104,11 @@ class Query {
                 throw err;
             }
             console.log(results[0]);
-            if (results.length == 0) {
+            if (results.length === 0) {
                 var salt = self.generateSalt();
                 var hashedPass = hash.update(passwd, salt).digest("hex");
     
-                self.connection.query(REGISTER_ADD_USER, [username, hashedPass, salt, 3], function (err, results, fields) {
+                self.connection.query(REGISTER_ADD_USER, [username, hashedPass, salt, INIT_TIME_LEFT], function (err, results, fields) {
                     if (err) {
                         throw err;
                     }
@@ -114,10 +120,25 @@ class Query {
         });
     }
 
+    // Pre: Username exist in the User table.
+    // Post: return a array of string containing the result of lottery through callback;
+    //             or a msg represent fail of lottery(do not have enough time);
     updateUserCard(username, callback) {
         const majorList = ["cse", "ee", "info", "design", "acms", "biochem", "stat", "com",
                            "arch", "me", "foster", "psych", "phys", "math", "music", "chem"];
         var self = this;
+        self.connection.query(LOTTERY_CHECK_USER_EXIST, [username], function (err, results, fields) {
+            if (err) {
+                throw err;
+            }
+            if (results.length === 0) {
+                self.connection.query(INIT_USER_CARD, [username], function (err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                })
+            }
+        })
         self.connection.query(CHECK_TIME_LEFT, [username], function (err, results, fields) {
             if (err) {
                 throw err;
@@ -139,7 +160,7 @@ class Query {
                     if (err) {
                         throw err;
                     }
-                    callback("new cards updated");
+                    //callback("new cards updated");
                 })
                 var resCardInfo = [lotteryResult[0], lotteryResult[1], lotteryResult[2]]; // for test
                 timeLeft = timeLeft - 3;
@@ -147,7 +168,7 @@ class Query {
                     if (err) {
                         throw err;
                     }
-                    callback("time left updated");
+                    //callback("time left updated");
                 })
                 callback(resCardInfo); // for test
             } else {

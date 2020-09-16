@@ -8,6 +8,7 @@ const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
 const REGISTER_SUCCESS = "New user registered";
 const REGISTER_FAILED = "Username is already taken";
+const TIME_LEFT_NOT_ENOUGH = "Don't have enough lottery chances";
 
 class Server {
     constructor() {
@@ -77,6 +78,13 @@ class Server {
                 break;
             case '/generateNewCard':
                 //TODO
+                this.query.updateUserCard(param['username'], function(result) {
+                    if (result = TIME_LEFT_NOT_ENOUGH) {
+                        res.end(JSON.stringify({"result" : result, "success" : 0}));
+                    } else {
+                        res.end(JSON.stringify({"result" : result, "success" : 1}));
+                    }
+                })
                 break;
             //add in however many needed action here.
         }
