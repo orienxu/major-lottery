@@ -3,12 +3,9 @@
   align-items: center;
   justify-content: center;
   height: 100vmin;
+  overflow: visible;
 }
 
 .App-logo {
   height: 40vmin;
 }
-
-/* .CardContainer {
-
-} */
