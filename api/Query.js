@@ -7,8 +7,8 @@ const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.use
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
 const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardDetail As CD Where CD.cardName = ?";
 const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
-const UPDATE_TIME_LEFT = "Update U From Users As U Set U.timeLeft = ? Where U.username = ?";
-const UPDATE_OWNED_CARD = "Update UC From UserCard As UC Set UC.? = '1', UC.? = '1', UC.? = '1' Where UC.username = ?"; //join?
+const UPDATE_TIME_LEFT = "Update Users As U Set U.timeLeft = ? Where U.username = ?";
+const UPDATE_OWNED_CARD = "Update UserCard As UC Set ";
 const MAX_MAJOR_NUMBER = 16;
 
 const USER_NOT_FOUND = -1;
@@ -48,6 +48,8 @@ class Query {
             if(err) console.error("error" + err.stack);
         });
 
+
+        // for test
         this.updateUserCard("weifeng", this.registerHelper);
         //console.log(this.logIn("weifeng", "123", this.logInHelper));
         //this.register("weifeng", "123", this.registerHelper);
@@ -132,26 +134,22 @@ class Query {
                         number++;
                     }
                 }
-                self.connection.query(UPDATE_OWNED_CARD, [lotteryResult[0],lotteryResult[1],lotteryResult[2],username],
-                    function (err, results, fields) {
+                var cardUpdateSql = self.cardUpdateAssemble(lotteryResult[0], lotteryResult[1], lotteryResult[2]);
+                self.connection.query(cardUpdateSql, [username], function (err, results, fields) {
                     if (err) {
                         throw err;
                     }
                     callback("new cards updated");
                 })
-                // var resCardInfo = ["NONE", "NONE", "NONE"];
-                // var i;
-                // for (i = 0; i<resCardInfo.length; i++) {
-                //     resCardInfo[i] = getCardInfo(lotteryResult[i], callback);
-                // }
-                // timeLeft = timeLeft - 3;
-                // self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
-                //     if (err) {
-                //         throw err;
-                //     }
-                //     calllback("time left updated");
-                // })
-                callback(resCardInfo);
+                var resCardInfo = [lotteryResult[0], lotteryResult[1], lotteryResult[2]]; // for test
+                timeLeft = timeLeft - 3;
+                self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                    callback("time left updated");
+                })
+                callback(resCardInfo); // for test
             } else {
                 callback("Don't have enough lottery chances")
             }
@@ -164,6 +162,11 @@ class Query {
     //          throw err;
     //      }
     // }
+
+     cardUpdateAssemble(card1, card2, card3) {
+        var cardListSql = "UC." + card1 + " = '1', UC." + card2 + " = '1', UC." + card3 + " = '1' Where UC.username = ?";
+        return UPDATE_OWNED_CARD + cardListSql;
+     }
 
     exit() {
         this.connection.end(function(err) {
