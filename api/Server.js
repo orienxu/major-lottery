@@ -3,9 +3,8 @@ const propertiesReader = require('properties-reader');
 const properties = propertiesReader('./api/dbconn.properties');
 const urlParser = require('url');
 const Query = require('./Query');
+const Config = require('./Config');
 
-const USER_NOT_FOUND = -1;
-const INCORRECT_PASSWORD_OR_USERNAME = -2;
 
 class Server {
     constructor() {
@@ -25,7 +24,7 @@ class Server {
         this.query = new Query({
             host: this.url,
             user: this.username,
-            password: this.passwd.toString(),            
+            password: this.passwd.toString(),
             database: this.dbname,
             port: this.port
         });
@@ -36,7 +35,7 @@ class Server {
         this.query.logIn(username, password, )
     }
 
-    
+
 
     doRegister(username, password) {
         //TODO
@@ -61,7 +60,7 @@ class Server {
                         res.end(JSON.stringify({"result" : result + " logged in", "outcome" : 1}));
                     }
                 });
-                //TODO return 
+                //TODO return
                 break;
             case '/register':
                 this.doRegister(param["username"], param["password"]);
@@ -70,6 +69,14 @@ class Server {
             case '/generateNewCard':
                 //TODO
                 break;
+            case '/ownedCards':
+                this.query.ownedCards(param['username'], function(result) {
+                    if (result === Config.EMPTY_OWNED){
+                        res.end(JSON.stringify({"result" : "User has no cards", "outcome" : 0})); // outcome?
+
+                    }
+                    res.end(JSON.stringify({"result" : result, "outcome" : 1}));
+                });
             //add in however many needed action here.
         }
         return 0;
@@ -86,7 +93,7 @@ class Server {
         });
         console.log("Server running...");
         running.listen(9000);
-        
+
     }
 
     close() {
@@ -96,9 +103,9 @@ class Server {
         this.query.exit();
     }
 
-    
 
-    
+
+
 }
 
 module.exports = Server;
