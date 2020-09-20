@@ -38,7 +38,7 @@ export default class InfoPage extends Component {
         style={styles.contentMain}
       >
         <h2 style={styles.contentTitle}>CSE</h2>
-        <img src={Res.subjectFoster} style={{ width: '67vmin', alignSelf: 'center' }} />
+        <motion src={Res.subjectFoster} style={{ width: '67vmin', alignSelf: 'center' }} />
         <div>
           <h3>
             人设概览
