@@ -5,14 +5,11 @@ const urlParser = require('url');
 const Query = require('./Query');
 const Config = require('./Config');
 
-<<<<<<< HEAD
 const USER_NOT_FOUND = -1;
 const INCORRECT_PASSWORD_OR_USERNAME = -2;
 const REGISTER_SUCCESS = "New user registered";
 const REGISTER_FAILED = "Username is already taken";
 const TIME_LEFT_NOT_ENOUGH = "Don't have enough lottery chances";
-=======
->>>>>>> e85b4af98f77d2ac0bfe370d560cb0f689eca9ac
 
 class Server {
     constructor() {
@@ -39,20 +36,6 @@ class Server {
         this.query.init();
     }
 
-    doLogin(username, password) {
-        this.query.logIn(username, password, )
-    }
-
-
-
-    doRegister(username, password) {
-        //TODO
-    }
-
-    // doGenerateNewCard(username) {
-    //     //TODO
-    // }
-
     doAction(action, param, res) {
         switch(action) {
             case '/login':
@@ -68,10 +51,8 @@ class Server {
                         res.end(JSON.stringify({"result" : result + " logged in", "outcome" : 1}));
                     }
                 });
-                //TODO return
                 break;
             case '/register':
-                //TODO
                 this.query.register(param['username'], param['password'], function(result) {
                     if (result === REGISTER_SUCCESS) {
                         res.end(JSON.stringify({"result" : result, "success" : 1}));
@@ -81,7 +62,6 @@ class Server {
                 });
                 break;
             case '/generateNewCard':
-                //TODO
                 this.query.updateUserCard(param['username'], function(result) {
                     if (result = TIME_LEFT_NOT_ENOUGH) {
                         res.end(JSON.stringify({"result" : result, "success" : 0}));
@@ -110,7 +90,6 @@ class Server {
             res.setHeader("Content-Type", "application/json");
             const reqSummary = urlParser.parse(req.url, true);
             self.doAction(reqSummary.pathname, reqSummary.query, res);
-            //TODO write response base on doAction result in JSON format;
         });
         console.log("Server running...");
         running.listen(9000);

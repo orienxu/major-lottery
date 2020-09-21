@@ -8,7 +8,6 @@ const LOGIN_CHECK_USER_EXIST = "Select U.username, U.salt From Users As U Where 
 const LOGIN_CHECK_CRED = "Select U.username From Users As U Where U.username = ? and U.pass = ?";
 const REGISTER_CHECK_USER_EXIST = "Select U.username From Users As U Where U.username = ? ";
 const REGISTER_ADD_USER = "INSERT INTO Users VALUES(?, ?, ?, ?)";
-// const GET_CARD_INFO = "Select CD.cardName, CD.intro, CD.majorDescript From CardDetail As CD Where CD.cardName = ?";
 const LOTTERY_CHECK_USER_EXIST = "Select UC.username From UserCard As UC Where UC.username = ?";
 const INIT_USER_CARD = "Insert Into UserCard Values(?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
 const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.username = ?";
@@ -38,38 +37,11 @@ class Query {
         return salt;
     }
 
-    // getCardInfo(cardname, callback) {
-    //     var self = this;
-    //     self.connection.query(GET_CARD_INFO, [cardname], function (err, results, fields) {
-    //         if (err) {
-    //             throw err;
-    //         }
-    //         callback("name" + results[0]["cardName"] + "Intro:" + results[0]["intro"] + "Description:" + results[0]["majorDescript"]);
-    //         return results[0];
-    //     })
-    // }
-
     init() {
         this.connection = sql.createConnection(this.config);
         this.connection.connect(function (err) {
             if(err) console.error("error" + err.stack);
         });
-
-<<<<<<< HEAD
-
-        // for test
-        //this.register("Hongjiang", "123", this.registerHelper);
-        //this.updateUserCard("Hongjiang", this.registerHelper);
-        //this.updateUserCard("weifeng", this.registerHelper);
-        //console.log(this.logIn("weifeng", "123", this.logInHelper));
-        //this.register("weifeng", "123", this.registerHelper);
-        //this.logIn("weifeng","123", this.registerHelper);
-=======
-        // console.log(this.logIn("weifeng", "123", this.logInHelper));
-        // this.register("weifeng", "123", this.registerHelper);
-        // this.logIn("weifeng","123", this.registerHelper);
-        // this.ownedCards("weifeng", this.ownedCardsHelper);
->>>>>>> e85b4af98f77d2ac0bfe370d560cb0f689eca9ac
     }
 
     logIn(username, passwd, callback){
@@ -117,13 +89,8 @@ class Query {
             if (results.length === 0) {
                 var salt = self.generateSalt();
                 var hashedPass = hash.update(passwd, salt).digest("hex");
-<<<<<<< HEAD
     
                 self.connection.query(REGISTER_ADD_USER, [username, hashedPass, salt, INIT_TIME_LEFT], function (err, results, fields) {
-=======
-
-                self.connection.query(REGISTER_ADD_USER, [username, hashedPass, salt, 3], function (err, results, fields) {
->>>>>>> e85b4af98f77d2ac0bfe370d560cb0f689eca9ac
                     if (err) {
                         throw err;
                     }
@@ -133,7 +100,6 @@ class Query {
                 callback("Username is already taken");
             }
         });
-<<<<<<< HEAD
     }
 
     // Pre: Username exist in the User table.
@@ -176,22 +142,21 @@ class Query {
                     if (err) {
                         throw err;
                     }
-                    //callback("new cards updated");
+                    console.log("new cards updated");
                 })
-                var resCardInfo = [lotteryResult[0], lotteryResult[1], lotteryResult[2]]; // for test
+                var resCardInfo = [lotteryResult[0], lotteryResult[1], lotteryResult[2]];
                 timeLeft = timeLeft - 3;
                 self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
                     if (err) {
                         throw err;
                     }
-                    //callback("time left updated");
+                    console.log("time left updated");
                 })
-                callback(resCardInfo); // for test
+                callback(resCardInfo);
             } else {
                 callback("Don't have enough lottery chances")
             }
         })
-=======
 
     }
 
@@ -216,30 +181,15 @@ class Query {
           }
           callback(res);
         });
->>>>>>> e85b4af98f77d2ac0bfe370d560cb0f689eca9ac
     }
 
-    // updateUserCard(username) {
-
-    // }
-
-    // errorHandler(err) {
-    //      if (err) {
-    //          console.error("error" + err.stack);
-    //          throw err;
-    //      }
-    // }
-
-<<<<<<< HEAD
-     cardUpdateAssemble(card1, card2, card3) {
+    cardUpdateAssemble(card1, card2, card3) {
         var cardListSql = "UC." + card1 + " = '1', UC." + card2 + " = '1', UC." + card3 + " = '1' Where UC.username = ?";
         return UPDATE_OWNED_CARD + cardListSql;
      }
-=======
     ownedCardsHelper(res) {
         console.log(res);
     }
->>>>>>> e85b4af98f77d2ac0bfe370d560cb0f689eca9ac
 
     exit() {
         this.connection.end(function(err) {
