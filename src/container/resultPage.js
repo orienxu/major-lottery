@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import Res from '../config/image';
 import './App.css';
-
+import {motion} from 'framer-motion'
 
 export default class ResultPage extends Component {
 
@@ -16,13 +16,24 @@ export default class ResultPage extends Component {
 
     renderContent() {
         return (
-            <div
+            <motion.div
+                animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
+                transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
-                <img src={Res.subjectFoster} style={{ width: '30vmin', alignSelf: 'center', marginTop: '20vmin' }} />
+                <motion.img
+                    initial={styles.initalStyle}
+                    animate={{y: -100}} 
+                    src={Res.subjectFoster} style={{ width: '30vmin', alignSelf: 'center', marginTop: '20vmin' }} />
                 <div>
-                    <img src={Res.subjectFoster} style={{ width: '30vmin', margin: '10vmin' }} />
-                    <img src={Res.subjectFoster} style={{ width: '30vmin', margin: '10vmin' }} />
+                    <motion.img
+                    initial={styles.initalStyle}
+                    animate={{x: 100, y: 180}}
+                     src={Res.subjectFoster} style={{ width: '30vmin', margin: '10vmin' }} />
+                    <motion.img
+                    initial={styles.initalStyle}
+                    animate={{x: -100, y: 180}}
+                     src={Res.subjectFoster} style={{ width: '30vmin', margin: '10vmin' }} />
                 </div>
 
                 <div
@@ -35,7 +46,7 @@ export default class ResultPage extends Component {
                         &#12288;分享&#12288;
                     </h2>
                 </div>
-            </div>
+            </motion.div>
         );
     }
 
@@ -86,6 +97,14 @@ const styles = {
         borderRadius: '2vmin',
         margin: '10vmin',
         width: '30vmin',
-    }
+    },
+    initalStyle: {
+        position: "absolute",
+        top:0,
+        bottom: 0,
+        left: 0,
+        right: 0,            
+        margin: "auto"
+    },
 }
 

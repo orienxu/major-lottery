@@ -64,7 +64,7 @@ export default class MainPage extends Component {
             switch (id) {
                 case "info": return <InfoPage />;
                 case "user": return <UserPage />;
-                case "draw": return <DrawPage action={() => this.handleClick('info')} />;
+                case "draw": return <DrawPage action={() => this.handleClick('result')} />;
                 case "result": return <ResultPage />;
                 case "collection": return <CollectionPage />;
 
@@ -93,5 +93,6 @@ const styles = {
         alignItems: 'center',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         overflow: 'auto',
+        position: 'relative',
     },
 }
