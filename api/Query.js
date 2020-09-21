@@ -126,7 +126,7 @@ class Query {
                 throw err;
             }
             var timeLeft = results[0]['timeLeft'];
-            if (timeLeft >= 3) {
+            if (timeLeft >= 1) {
                 var lotteryResult = ["NONE", "NONE", "NONE"];
                 var number = 0;
                 var index = -1;
@@ -145,7 +145,7 @@ class Query {
                     console.log("new cards updated");
                 })
                 var resCardInfo = [lotteryResult[0], lotteryResult[1], lotteryResult[2]];
-                timeLeft = timeLeft - 3;
+                timeLeft = timeLeft - 1;
                 self.connection.query(UPDATE_TIME_LEFT, [timeLeft, username], function (err, results, fields) {
                     if (err) {
                         throw err;
@@ -154,7 +154,7 @@ class Query {
                 })
                 callback(resCardInfo);
             } else {
-                callback("Don't have enough lottery chances")
+                callback("Don't have enough lottery chances");
             }
         })
 
