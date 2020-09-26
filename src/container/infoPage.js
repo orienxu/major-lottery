@@ -1,35 +1,25 @@
 import React, { Component } from 'react';
-import ReactCardFlip from 'react-card-flip';
 import Res from './../config/image';
 import './App.css';
-import { motion } from "framer-motion"
 
 export default class InfoPage extends Component {
 
   constructor() {
     super();
     this.state = {
-      isFlipped: false,
       apiResponse: 'Node failed',
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  callAPI() {
-    fetch('http://localhost:9000/login?username=xxx&password=xxxx')
-      .then(res => res.text(),
-        // console.log('res')
-      )
-      .then(res => this.setState({ apiResponse: res }));
+  async callAPI() {
+    const response = await fetch('http://localhost:9000/login?username=weifeng&password=123');
+    const data = await response.json();
+
+    console.log(data);
   }
 
   componentWillMount() {
     this.callAPI();
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   renderContent() {
@@ -38,7 +28,7 @@ export default class InfoPage extends Component {
         style={styles.contentMain}
       >
         <h2 style={styles.contentTitle}>CSE</h2>
-        <motion src={Res.subjectFoster} style={{ width: '67vmin', alignSelf: 'center' }} />
+        <img src={Res.subjectFoster} style={{ width: '67vmin', alignSelf: 'center' }} />
         <div>
           <h3>
             人设概览
@@ -60,32 +50,10 @@ export default class InfoPage extends Component {
     );
   }
 
-  renderTest() {
-    return (
-      <div>
-        <ReactCardFlip
-          isFlipped={this.state.isFlipped}
-          flipDirection="horizontal"
-          className="CardContainer"
-        >
-          <div>
-            <img src={Res.hearthstone} className="App-logo" alt="logo" onClick={this.handleClick} />
-          </div>
-          <div>
-            <img src={Res.subjectFoster} className="App-logo" alt="logo" onClick={this.handleClick} />
-          </div>
-        </ReactCardFlip>
-        <p>{this.state.apiResponse}</p>
-      </div>
-    );
-  }
-
   render() {
-    console.log('rendered')
     return (
       <div className="App">
         {this.renderContent()}
-        {/* {this.renderTest()} */}
       </div>
     );
   }

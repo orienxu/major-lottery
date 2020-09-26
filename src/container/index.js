@@ -17,7 +17,7 @@ export default class MainPage extends Component {
     constructor() {
         super();
         this.state = {
-            id: 'draw'
+            id: 'info'
         }
     }
 

@@ -37,56 +37,56 @@ class Server {
     }
 
     doAction(action, param, res) {
-        switch(action) {
+        switch (action) {
             case '/login':
                 //Note: key on param depends on the param structure and how u name the input
-                this.query.logIn(param['username'], param['password'], function(result) {
-                    if (result === USER_NOT_FOUND){
-                        res.end(JSON.stringify({"result" : "User not found", "outcome" : 0}));
+                this.query.logIn(param['username'], param['password'], function (result) {
+                    if (result === USER_NOT_FOUND) {
+                        res.end(JSON.stringify({ "result": "User not found", "outcome": 0 }));
                     }
                     else if (result === INCORRECT_PASSWORD_OR_USERNAME) {
-                        res.end(JSON.stringify({"result" : "Incorrect password or username", "outcome" : 0}));
+                        res.end(JSON.stringify({ "result": "Incorrect password or username", "outcome": 0 }));
                     }
                     else {
-                        res.end(JSON.stringify({"result" : result + " logged in", "outcome" : 1}));
+                        res.end(JSON.stringify({ "result": result + " logged in", "outcome": 1 }));
                     }
                 });
                 break;
             case '/register':
-                this.query.register(param['username'], param['password'], function(result) {
+                this.query.register(param['username'], param['password'], function (result) {
                     if (result === REGISTER_SUCCESS) {
-                        res.end(JSON.stringify({"result" : result, "success" : 1}));
+                        res.end(JSON.stringify({ "result": result, "success": 1 }));
                     } else if (result === REGISTER_FAILED) {
-                        res.end(JSON.stringify({"result" : result, "success" : 0}));
+                        res.end(JSON.stringify({ "result": result, "success": 0 }));
                     }
                 });
                 break;
             case '/generateNewCard':
-                this.query.updateUserCard(param['username'], function(result) {
+                this.query.updateUserCard(param['username'], function (result) {
                     if (result === TIME_LEFT_NOT_ENOUGH) {
-                        res.end(JSON.stringify({"result" : result, "success" : 0}));
+                        res.end(JSON.stringify({ "result": result, "success": 0 }));
                     } else {
-                        res.end(JSON.stringify({"result" : result, "success" : 1}));
+                        res.end(JSON.stringify({ "result": result, "success": 1 }));
                     }
                 })
                 break;
             case '/ownedCards':
-                this.query.ownedCards(param['username'], function(result) {
-                    if (result === Config.EMPTY_OWNED){
-                        res.end(JSON.stringify({"result" : "User has no cards", "outcome" : 0})); // outcome?
+                this.query.ownedCards(param['username'], function (result) {
+                    if (result === Config.EMPTY_OWNED) {
+                        res.end(JSON.stringify({ "result": "User has no cards", "outcome": 0 })); // outcome?
 
                     }
-                    res.end(JSON.stringify({"result" : result, "outcome" : 1}));
+                    res.end(JSON.stringify({ "result": result, "outcome": 1 }));
                 });
             //add in however many needed action here.
         }
         return 0;
     }
 
-    run(){
+    run() {
         //do not delete, this is for the callback function to refer back to the current object
         var self = this;
-        const running = http.createServer(function (req,res) {
+        const running = http.createServer(function (req, res) {
             res.setHeader("Content-Type", "application/json");
             const reqSummary = urlParser.parse(req.url, true);
             self.doAction(reqSummary.pathname, reqSummary.query, res);
@@ -97,7 +97,7 @@ class Server {
     }
 
     close() {
-        running.close(function() {
+        running.close(function () {
             console.log("Closing server");
         });
         this.query.exit();
