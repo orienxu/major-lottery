@@ -18,7 +18,7 @@ export default class InfoPage extends Component {
     console.log(data);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.callAPI();
   }
 

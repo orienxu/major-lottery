@@ -5,7 +5,7 @@ import InfoPage from './infoPage';
 import UserPage from './user';
 import DrawPage from './drawPage';
 import ResultPage from './resultPage';
-import CollectionPage from './collection';
+import CollectionPage from './Collection/collection';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
@@ -17,7 +17,9 @@ export default class MainPage extends Component {
     constructor() {
         super();
         this.state = {
-            id: 'info'
+            id: 'info',
+            loggedIn: false,
+            loggedInUser: "weifeng"
         }
     }
 
@@ -66,7 +68,7 @@ export default class MainPage extends Component {
                 case "user": return <UserPage />;
                 case "draw": return <DrawPage action={() => this.handleClick('result')} />;
                 case "result": return <ResultPage />;
-                case "collection": return <CollectionPage />;
+                case "collection": return <CollectionPage loggedInUser=  {this.state.loggedInUser}/>;
 
                 default: return <h1>No project match</h1>
             }

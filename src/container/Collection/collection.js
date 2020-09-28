@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import Res from '../config/image';
-import './App.css';
-
+import Res from '../../config/image';
+import '../App.css';
+import ServerConfig from '../../config/ServerConfig'
+import CollectionEntry from './CollectionEntry';
 
 export default class CollectionPage extends Component {
 
     constructor() {
         super();
+        this.state = {
+            owned: []
+        }
     }
 
     renderContent() {
@@ -35,9 +39,46 @@ export default class CollectionPage extends Component {
     render() {
         return (
             <div className="App">
-                {this.renderContent()}
+                <div style = {styles.contentMain}>
+                    {this.state.owned}
+                </div>
             </div>
         );
+    }
+
+    componentDidMount() {  
+        this.setState({
+            owned: []
+        })      
+        this.getOwnedCard()        
+    }
+
+    async getOwnedCard() {
+        let username = this.props.loggedInUser
+        if (username !== null && username !== "") {
+            fetch(ServerConfig.SERVER_URL + ServerConfig.GET_OWNED_CARD + username)
+                .then(this.checkStatus)
+                .then(data => {                    
+                    const ownedCard = JSON.parse(data).result
+                    console.log(ownedCard)
+                    this.setState({
+                        owned: ownedCard.map(card => (
+                            <CollectionEntry image={card} />
+                        ))
+                    })
+                })
+
+        } else {
+            alert("User are not suppose to be here if not logged in, please file a bug")
+        }
+    }
+
+    checkStatus(response) { 
+        if (response.status >= 200 && response.status < 300 || response.status == 0) {  
+        return response.text();
+        } else {  
+        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+        } 
     }
 
 }

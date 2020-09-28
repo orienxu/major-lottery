@@ -95,7 +95,7 @@ export default class ResultPage extends Component {
                 >
                     <motion.div
                         animate={{
-                            y: -150,
+                            y: -180,
                         }}
                         style={styles.initalStyle}
                     >
@@ -108,8 +108,8 @@ export default class ResultPage extends Component {
                     >
                         <motion.div
                             animate={{
-                                x: -80,
-                                y: 50,
+                                x: -100,
+                                y: 70,
                             }}
                             style={styles.initalStyle}
                         >
@@ -117,8 +117,8 @@ export default class ResultPage extends Component {
                         </motion.div>
                         <motion.div
                             animate={{
-                                x: 80,
-                                y: 50,
+                                x: 100,
+                                y: 70,
                             }}
                             style={styles.initalStyle}
 
