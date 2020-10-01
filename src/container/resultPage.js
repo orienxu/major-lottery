@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import Res from '../config/image';
 import './App.css';
+import ServerConfig from '../config/ServerConfig';
 import { motion } from 'framer-motion'
 
 export default class ResultPage extends Component {
@@ -13,6 +14,7 @@ export default class ResultPage extends Component {
             isFlipped2: false,
             isFlipped3: false,
             apiResponse: 'Node failed',
+            cardResult: ['cardBack', 'cardBack', 'cardBack'],
         };
         this.handleClick1 = this.handleClick1.bind(this);
         this.handleClick2 = this.handleClick2.bind(this);
@@ -73,18 +75,21 @@ export default class ResultPage extends Component {
 
     handleClick1(e) {
         e.preventDefault();
-        this.setState(prevState => ({ isFlipped1: !prevState.isFlipped1 }));
+        //this.setState(prevState => ({ isFlipped1: !prevState.isFlipped1 }));
+        this.setState(prevState => ({ isFlipped1: true }));
     }
     handleClick2(e) {
         e.preventDefault();
-        this.setState(prevState => ({ isFlipped2: !prevState.isFlipped2 }));
+        //this.setState(prevState => ({ isFlipped2: !prevState.isFlipped2 }));
+        this.setState(prevState => ({ isFlipped2: true }));
     }
     handleClick3(e) {
         e.preventDefault();
-        this.setState(prevState => ({ isFlipped3: !prevState.isFlipped3 }));
+        //this.setState(prevState => ({ isFlipped3: !prevState.isFlipped3 }));
+        this.setState(prevState => ({ isFlipped3: true }));
     }
 
-    renderContent() {
+    renderContent(cards) {
         return (
             <div style={styles.content}>
                 <div
@@ -99,7 +104,7 @@ export default class ResultPage extends Component {
                         }}
                         style={styles.initalStyle}
                     >
-                        {this.card1('subjectFoster')}
+                        {this.card1(cards[0])}
                     </motion.div>
                     <div
                         style={{
@@ -113,7 +118,7 @@ export default class ResultPage extends Component {
                             }}
                             style={styles.initalStyle}
                         >
-                            {this.card2('subjectFoster')}
+                            {this.card2(cards[1])}
                         </motion.div>
                         <motion.div
                             animate={{
@@ -123,7 +128,7 @@ export default class ResultPage extends Component {
                             style={styles.initalStyle}
 
                         >
-                            {this.card3('subjectFoster')}
+                            {this.card3(cards[2])}
                         </motion.div>
                     </div>
                 </div>
@@ -134,12 +139,12 @@ export default class ResultPage extends Component {
     renderBottom() {
         return (
             <div style={styles.box}>
-                <h2 style={styles.rec}>
+                <button style={styles.rec}>
                     再抽一次
-            </h2>
-                <h2 style={styles.rec}>
+            </button>
+                <button style={styles.rec}>
                     &#12288;分享&#12288;
-            </h2>
+            </button>
             </div>
         );
     }
@@ -160,6 +165,40 @@ export default class ResultPage extends Component {
         );
     }
 
+    componentDidMount() {  
+        this.generateNewCard()        
+    }
+
+    async generateNewCard() {
+        //let username = this.props.loggedInUser
+        let username = "weifeng"
+        if (username !== null && username !== "") {
+            fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
+                .then(checkStatus)
+                .then(data => {    
+                    console.log(data)                
+                    const newCards = JSON.parse(data).result
+                    console.log(newCards)
+                    this.setState({
+                        cardResult: newCards
+                    })
+                })
+            this.setState(prevState => ({ isFlipped1: false, isFlipped2: false, isFlipped3: false })); 
+        } else {
+            alert("User are not suppose to be here if not logged in, please file a bug")
+        }
+    }
+
+}
+
+function checkStatus(response) { 
+    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
+        console.log(5)
+        return response.text();
+    } else { 
+        console.log(5) 
+        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+    } 
 }
 
 const styles = {
