@@ -22,5 +22,6 @@ export default {
     phys: require('../res/phys.png'),
     psych: require('../res/psych.png'),
     biochem: require('../res/biochem.png'),
-    stat: require('../res/stat.png')
+    stat: require('../res/stat.png'),
+    biochem: require('../res/biochem.png')
 }

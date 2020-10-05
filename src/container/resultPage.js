@@ -89,7 +89,7 @@ export default class ResultPage extends Component {
         this.setState(prevState => ({ isFlipped3: true }));
     }
 
-    renderContent(cards) {
+    renderContent() {
         return (
             <div style={styles.content}>
                 <div
@@ -99,12 +99,16 @@ export default class ResultPage extends Component {
                     }}
                 >
                     <motion.div
-                        animate={{
-                            y: -180,
+                        initial={{
+                            y: "18vh"
                         }}
+                        animate={{
+                            y: "-2vh",
+                        }}
+                        transition={{duration: 1}}
                         style={styles.initalStyle}
                     >
-                        {this.card1(cards[0])}
+                        {this.card1(this.state.cardResult[0])}
                     </motion.div>
                     <div
                         style={{
@@ -112,23 +116,33 @@ export default class ResultPage extends Component {
                         }}
                     >
                         <motion.div
-                            animate={{
-                                x: -100,
-                                y: 70,
+                            initial={{
+                                y: "-10vh",
+                                x: "25vw"
                             }}
+                            animate={{
+                                x: "-2vw",
+                                y: "0.3vh",
+                            }}
+                            transition={{duration: 1}}
                             style={styles.initalStyle}
                         >
-                            {this.card2(cards[1])}
+                            {this.card2(this.state.cardResult[1])}
                         </motion.div>
                         <motion.div
-                            animate={{
-                                x: 100,
-                                y: 70,
+                            initial={{
+                                y: "-10vh",
+                                x: "-25vw"
                             }}
+                            animate={{
+                                x: "2vw",
+                                y: "0.3vh",
+                            }}
+                            transition={{duration: 1}}
                             style={styles.initalStyle}
 
                         >
-                            {this.card3(cards[2])}
+                            {this.card3(this.state.cardResult[2])}
                         </motion.div>
                     </div>
                 </div>
@@ -139,12 +153,12 @@ export default class ResultPage extends Component {
     renderBottom() {
         return (
             <div style={styles.box}>
-                <button style={styles.rec}>
+                <button style={styles.rec} onClick = {() => this.generateNewCard()}>
                     再抽一次
-            </button>
+                </button>
                 <button style={styles.rec}>
                     &#12288;分享&#12288;
-            </button>
+                </button>
             </div>
         );
     }
@@ -165,7 +179,7 @@ export default class ResultPage extends Component {
         );
     }
 
-    componentDidMount() {  
+    componentDidMount() {
         this.generateNewCard()        
     }
 
@@ -237,7 +251,7 @@ const styles = {
         width: '30vmin',
     },
     initalStyle: {
-        position: "absolute",
+        position: "flex",
         top: '40vh',
         left: '34vmin',
         margin: "auto",

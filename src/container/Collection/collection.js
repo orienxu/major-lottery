@@ -3,13 +3,14 @@ import Res from '../../config/image';
 import '../App.css';
 import ServerConfig from '../../config/ServerConfig'
 import CollectionEntry from './CollectionEntry';
+import { motion } from 'framer-motion'
 
 export default class CollectionPage extends Component {
 
     constructor() {
         super();
         this.state = {
-            owned: []
+            owned: [],
         }
     }
 
@@ -38,11 +39,15 @@ export default class CollectionPage extends Component {
 
     render() {
         return (
-            <div className="App">
-                <div style = {styles.contentMain}>
+            <motion.div className="App"                
+            >
+                <motion.div style = {styles.contentMain}
+                    animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
+                    transition={{duration: 5, yoyo:Infinity}}
+                >
                     {this.state.owned}
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         );
     }
 
@@ -63,7 +68,7 @@ export default class CollectionPage extends Component {
                     console.log(ownedCard)
                     this.setState({
                         owned: ownedCard.map(card => (
-                            <CollectionEntry image={card} />
+                            <CollectionEntry key={card} image={card} />
                         ))
                     })
                 })

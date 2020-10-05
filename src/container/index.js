@@ -68,7 +68,11 @@ export default class MainPage extends Component {
                 case "user": return <UserPage />;
                 case "draw": return <DrawPage action={() => this.handleClick('result')} />;
                 case "result": return <ResultPage/>;
-                case "collection": return <CollectionPage loggedInUser=  {this.state.loggedInUser}/>;
+                case "collection": 
+                return <CollectionPage 
+                            action={() => this.handleClick('result')}
+                            loggedInUser= {this.state.loggedInUser}
+                        />;
 
                 default: return <h1>No project match</h1>
             }

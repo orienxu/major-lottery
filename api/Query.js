@@ -176,7 +176,7 @@ class Query {
               let cardName = CARDS[i];
               let owned = results[0][cardName];
               if (owned == 1) {
-                res.push(cardName + ".png");
+                res.push(cardName);
               }
           }
           callback(res);
