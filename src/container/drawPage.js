@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import Res from '../config/image';
 import './App.css';
+import {motion} from 'framer-motion'
+import Button from '@material-ui/core/Button';
 
 export default class DrawPage extends Component {
-
+    
     constructor() {
         super();
         this.state = {
+            chancesLeft: 3,
             isFlipped: false,
             apiResponse: 'Node failed',
         };
     }
-
     renderContent() {
         return (
-            <div
+            <motion.div
+                animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
+                transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
                 <div style={styles.icon}>
@@ -24,14 +28,23 @@ export default class DrawPage extends Component {
                     onClick={this.props.action}
                 >
                     点我抽卡
-                </h1>
-                <h3 style={styles.rec}>
+                </h1> 
+                {/* <Button style={styles.button} variant="contained"
+                    onClick={this.props.action}
+                >
+                    点我抽卡
+                </Button> */}
+                <h3 id = "ChancesLeft" style={styles.rec}>
                     剩余次数：3
-                 </h3>
-            </div>
+                </h3> 
+
+            </motion.div>
         );
     }
-
+    componentDidMount () {
+        document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
+    }
+    
     render() {
         return (
             <div className="App">
@@ -49,7 +62,6 @@ const styles = {
         flexDirection: 'column',
         alignItems: 'flex-start',
         flex: 1,
-        height: '100vh',
         overflow: 'hidden',
         backgroundColor: '#FFB9F0',
     },
@@ -62,6 +74,7 @@ const styles = {
         flexDirection: 'column',
     },
     button: {
+        fontSize: '32px',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
         borderRadius: '6vmin',
