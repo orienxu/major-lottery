@@ -4,11 +4,12 @@ import './App.css';
 
 export default class InfoPage extends Component {
 
-  constructor() {
+  constructor(match) {
     super();
     this.state = {
       apiResponse: 'Node failed',
     };
+    console.log(match)
   }
 
   async callAPI() {

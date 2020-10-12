@@ -3,51 +3,28 @@ import Res from '../../config/image';
 import '../App.css';
 import ServerConfig from '../../config/ServerConfig'
 import CollectionEntry from './CollectionEntry';
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
 
 export default class CollectionPage extends Component {
-
-    constructor() {
+    all = ["cse", "ee", "info", "design", "acms", "biochem", "stat", "com", "arch", "me", "foster", "psych", "phys", "math", "music", "chem"];
+    constructor(link) {
         super();
         this.state = {
             owned: [],
+            loggedInUser: link["match"].params.username
         }
-    }
-
-    renderContent() {
-        return (
-            <div
-                style={styles.contentMain}
-            >
-                <h2 style={styles.contentTitle}>我的卡片</h2>
-                <div style={styles.box}>
-                    <img src={Res.subjectFoster} style={styles.img} />
-                    <h2 style={styles.majorName}>Applied and Computational Math Science</h2>
-                </div>
-                <div style={styles.box}>
-                    <img src={Res.subjectFoster} style={styles.img} />
-                    <h2 style={styles.majorName}>CSE</h2>
-                </div>
-                <div style={styles.box}>
-                    <img src={Res.subjectFoster} style={styles.img} />
-                    <h2 style={styles.majorName}>M E</h2>
-                </div>
-
-            </div>
-        );
     }
 
     render() {
         return (
-            <motion.div className="App"                
-            >
-                <motion.div style = {styles.contentMain}
-                    animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
-                    transition={{duration: 5, yoyo:Infinity}}
-                >
-                    {this.state.owned}
-                </motion.div>
-            </motion.div>
+            <div className="App">
+                    <motion.div style = {styles.contentMain}
+                        animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
+                        transition={{duration: 5, yoyo:Infinity}}
+                    >
+                        {this.state.owned}
+                    </motion.div>
+            </div>
         );
     }
 
@@ -59,17 +36,26 @@ export default class CollectionPage extends Component {
     }
 
     async getOwnedCard() {
-        let username = this.props.loggedInUser
+        let username = this.state.loggedInUser
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GET_OWNED_CARD + username)
                 .then(this.checkStatus)
                 .then(data => {                    
-                    const ownedCard = JSON.parse(data).result
+                    const ownedCard = JSON.parse(data).result;
+                    const ownedSet = new Set(ownedCard)
                     console.log(ownedCard)
+                    //TODO change to check outcome later
                     this.setState({
-                        owned: ownedCard.map(card => (
-                            <CollectionEntry key={card} image={card} />
-                        ))
+                        owned: ownedCard.map(card => {
+                            return <CollectionEntry key={card} image= {card}/>
+                        })
+                    })
+                    this.setState({
+                        owned: this.state.owned.concat(this.all.map((card) => {
+                            if (!ownedSet.has(card)) {
+                                return <CollectionEntry  key={card} image={'cardBack'} quote={card}/>
+                            } 
+                        }))
                     })
                 })
 

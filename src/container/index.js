@@ -11,6 +11,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import PersonIcon from '@material-ui/icons/Person'
 import { motion } from "framer-motion";
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 export default class MainPage extends Component {
 
@@ -32,24 +33,30 @@ export default class MainPage extends Component {
         return (
             <div style={styles.topMain}>
                 <IconButton
+                    component={Link}
+                    to={"/"}
                     aria-label="Home"
                     disabled={id === 'draw'}
-                    onClick={() => this.handleClick('draw')}
+                    // onClick={() => this.handleClick('draw')}
                 >
                     <HomeIcon />
                 </IconButton>
                 <div>
                     <IconButton
+                        component={Link}
+                        to={"/collection/f"}
                         aria-label="Collection"
                         disabled={id === 'collection'}
-                        onClick={() => this.handleClick('collection')}
+                        // onClick={() => this.handleClick('collection')}
                     >
                         <StarIcon />
                     </IconButton>
                     <IconButton
+                        component={Link}
+                        to={"/login"}
                         aria-label="User"
                         disabled={id === 'user'}
-                        onClick={() => this.handleClick('user')}
+                        // onClick={() => this.handleClick('user')}
                     >
                         <PersonIcon
                             style={{ marginLeft: '-4vmin' }}
@@ -62,28 +69,35 @@ export default class MainPage extends Component {
 
     render() {
         const { id } = this.state;
-        const subpage = () => {
-            switch (id) {
-                case "info": return <InfoPage />;
-                case "user": return <UserPage />;
-                case "draw": return <DrawPage action={() => this.handleClick('result')} />;
-                case "result": return <ResultPage/>;
-                case "collection": 
-                return <CollectionPage 
-                            action={() => this.handleClick('result')}
-                            loggedInUser= {this.state.loggedInUser}
-                        />;
+        // const subpage = () => {
+        //     switch (id) {
+        //         case "info": return <InfoPage />;
+        //         case "user": return <UserPage />;
+        //         case "draw": return <DrawPage action={() => this.handleClick('result')} />;
+        //         case "result": return <ResultPage/>;
+        //         case "collection": 
+        //         return <CollectionPage 
+        //                     action={() => this.handleClick('result')}
+        //                     loggedInUser= {this.state.loggedInUser}
+        //                 />;
 
-                default: return <h1>No project match</h1>
-            }
-        }
+        //         default: return <h1>No project match</h1>
+        //     }
+        // }
         return (
-            <div className="App">
-                {this.renderTop()}
-                {
-                    subpage()
-                }
-            </div>
+            <Router>
+                <div className="App">
+                    {this.renderTop()}
+                    <Switch>
+                        <Route path="/info/:id" component={InfoPage}/>
+                        <Route path = "/collection/:username" exact component={CollectionPage}/>
+                        {/* TODO: 菁华加一下你的login page */}
+                        {/* <Route path = "/login" component={LoginPage}/> */}
+                        <Route path="/" exact component={DrawPage}/>
+                        <Route path="/result" component={ResultPage}/>
+                    </Switch>
+                </div>
+            </Router>
         );
     }
 }
