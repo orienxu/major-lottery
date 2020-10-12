@@ -1,45 +1,46 @@
 import { Button } from '@material-ui/core';
 import React, { Component } from 'react';
 import Res from '../../config/image';
+import Quotes from '../../config/Quote'
 
-// const imageMap = {
-//     "cse.png": Res.cse,
-//     "acms.png": Res.acms,
-//     "arch.png": Res.arch,
-//     "biochem.png": Res.bioChem,
-//     "chem.png": Res.chem,
-//     "com.png": Res.com,
-//     "ee.png": Res.ee,
-//     "info.png": Res.info,
-//     "design.png": Res.design,
-//     "foster.png": Res.foster,
-//     "math.png": Res.math,
-//     "me.png": Res.me,
-//     "music.png": Res.music,
-//     "phys.png": Res.phys,
-//     "psych.png": Res.psych,
-//     "stat.png": Res.stat
+// const fullNameMap = {
+//     "cse": "Computer Science",
+//     "acms": "Applied and Computational Math Science",
+//     "arch": "Architecture",
+//     "biochem": "Biological Chemistry",
+//     "chem": "Chemistry",
+//     "com": "Communication",
+//     "ee": "Electrical Engineering",
+//     "info": "Informatic",
+//     "design": "Design",
+//     "foster": "Business Administration",
+//     "math": "Mathematics",
+//     "me": "Mechanical Engineering",
+//     "music": "Music",
+//     "phys": "Physics",
+//     "psych": "Psychology",
+//     "stat": "Statistics"
 // }
 
 const fullNameMap = {
-    "cse": "Computer Science",
-    "acms": "Applied and Computational Math Science",
-    "arch": "Architecture",
-    "biochem": "Biological Chemistry",
-    "chem": "Chemistry",
-    "com": "Communication",
-    "ee": "Electrical Engineering",
-    "info": "Informatic",
-    "design": "Design",
-    "foster": "Business Administration",
-    "math": "Mathematics",
-    "me": "Mechanical Engineering",
-    "music": "Music",
-    "phys": "Physics",
-    "psych": "Psychology",
-    "stat": "Statistics"
+    "cse": "CSE",
+    "acms": "ACMS",
+    "arch": "ARCH",
+    "biochem": "BIOCHEM",
+    "chem": "CHEM",
+    "com": "COM",
+    "ee": "EE",
+    "info": "INFO",
+    "design": "DESIGN",
+    "foster": "BUSINESS",
+    "math": "MATH",
+    "me": "ME",
+    "music": "MUSIC",
+    "phys": "PHYSICS",
+    "psych": "PSYCHOLOGY",
+    "stat": "STAT",
+    "" : ""
 }
-
 
 export default class CollectionEntry extends Component{    
     constructor() {
@@ -51,7 +52,12 @@ export default class CollectionEntry extends Component{
             <Button onClick={this.helper}>
                 <div style={styles.box}>
                     <img src={Res[this.props.image]} style={styles.img} />
-                    <h2 style={styles.majorName}>{fullNameMap[this.props.image]}</h2>
+                    <ul style={styles.ul}>
+                        <h2 style={styles.majorName}>{fullNameMap[this.props.image]}</h2>
+                        <h4 style={styles.majorQuote}>{
+                            Quotes[this.props.image === "cardBack" ? this.props.quote : this.props.image]
+                        }</h4>
+                    </ul>
                 </div>
             </Button>
         );
@@ -78,12 +84,18 @@ const styles = {
         filter: 'drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25))',
     },
     majorName: {
-        fontFamily: 'Annie Use Your Telescope',
+        fontFamily: 'Ro',
         fontStyle: 'normal',
         fontWeight: 'normal',
-        fontSize: '2.8vh',
+        fontSize: '2.0vh',
         display: 'flex',
         lineHeight: '4.8vh',
-        alignItems: 'center',
+    },
+    majorQuote: {
+        display: 'flex',
+    },
+    ul: {
+        textAlign: "center",
+        listStyleType: 'none',
     }
 }

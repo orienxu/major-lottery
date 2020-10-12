@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Button } from '@material-ui/core';
 import Res from '../config/image';
 import './App.css';
-
+import {Link} from 'react-router-dom'
 export default class DrawPage extends Component {
 
     constructor() {
@@ -20,11 +21,13 @@ export default class DrawPage extends Component {
                 <div style={styles.icon}>
                     <img src={Res.cardBack} style={{ width: '55vmin' }} />
                 </div>
-                <h1 style={styles.button}
-                    onClick={this.props.action}
+                <Button
+                    component={Link}
+                    to="/result"
+                    style={styles.button}
                 >
                     点我抽卡
-                </h1>
+                </Button>
                 <h3 style={styles.rec}>
                     剩余次数：3
                  </h3>

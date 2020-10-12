@@ -40,19 +40,23 @@ class Server {
         switch (action) {
             case '/login':
                 //Note: key on param depends on the param structure and how u name the input
+
                 this.query.logIn(param['username'], param['password'], function (result) {
                     if (result === USER_NOT_FOUND) {
-                        res.end(JSON.stringify({ "result": "User not found", "outcome": 0 }));
+                        res.end(JSON.stringify({ "result": "User not found", "success": 0 }));
                     }
                     else if (result === INCORRECT_PASSWORD_OR_USERNAME) {
-                        res.end(JSON.stringify({ "result": "Incorrect password or username", "outcome": 0 }));
+                        res.end(JSON.stringify({ "result": "Incorrect password or username", "success": 0 }));
                     }
                     else {
-                        res.end(JSON.stringify({ "result": result + " logged in", "outcome": 1 }));
+                        res.end(JSON.stringify({ "result": result + " logged in", "success": 1 }));
                     }
                 });
                 break;
             case '/register':
+                if (param['password'] == null || param['password'] === "") {
+                    break;
+                }
                 this.query.register(param['username'], param['password'], function (result) {
                     if (result === REGISTER_SUCCESS) {
                         res.end(JSON.stringify({ "result": result, "success": 1 }));
@@ -73,14 +77,64 @@ class Server {
             case '/ownedCards':
                 this.query.ownedCards(param['username'], function (result) {
                     if (result === Config.EMPTY_OWNED) {
-                        res.end(JSON.stringify({ "result": "User has no cards", "outcome": 0 })); // outcome?
-
-                    }
-                    res.end(JSON.stringify({ "result": result, "outcome": 1 }));
+                        console.log("ending")
+                        res.end(JSON.stringify({ "result": "User has no cards", "success": 0 }));                        
+                    } else {
+                        res.end(JSON.stringify({ "result": result, "success": 1 }));
+                    }                    
                 });
-            //add in however many needed action here.
+                break;
+            case '/updateTime':
+                if (!this.checkUserName(param['username'])) {
+                    res.end(JSON.stringify({"success" : 0, "error" : "Invalid username"}));
+                    break;
+                }
+
+                this.query.updateTimeLeft(param['username'], (status, message) => {
+                    if (status !== Config.SUCCESS){
+                        res.end(JSON.stringify({"success" : 0, "error" : message}));
+                        return
+                    }
+
+                    console.log("Update successful");
+                    res.end(JSON.stringify({"success" : 1, "error": message}))
+                });
+                break;
+            case '/checkTime':
+                if (!this.checkUserName(param['username'])) {
+                    res.end(JSON.stringify({"success" : 0, "error" : "Invalid username"}));
+                    break;
+                }
+
+                this.query.checkUserExist(param['username'], (result, err, message) => {
+                    if (err !== Config.SUCCESS) {
+                        console.log(message)
+                        res.end(JSON.stringify({"success" : 0, "error" : message}));
+                        return;
+                    }
+                    res.write(JSON.stringify({"result" : result, "success" : 1, "error" : "None"}))
+                    res.end()
+                });
+                break;
+
+            default:
+                break;
         }
         return 0;
+    }
+
+    checkUserName(name) {
+        if (name == null || name === ""){
+            return false;
+        }
+        return true;
+    }
+
+    checkPassword(pass) {
+        if (pass == null || pass === "") {
+            return false;
+        }
+        return true;
     }
 
     run() {

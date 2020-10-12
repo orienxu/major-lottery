@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 .App {
   text-align: center;
   align-items: center;
@@ -8,4 +12,12 @@
 
 .App-logo {
   height: 50vmin;
+}
+
+body {
+  font-family: 'Annie Use Your Telescope', cursive;
+}
+
+.MajorName{
+  font-family: 'Roboto', sans-serif;
 }
