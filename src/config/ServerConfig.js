@@ -6,6 +6,4 @@ export default {
     LOGIN_NAME: "login?username=",
     LOGIN_PASS: "&passwowrd=",
     GENERATE_NEW_CARD: "generateNewCard?username=",
-    UPDATE_PASS: "NOT IMPLEMENTED YET",
-
 }

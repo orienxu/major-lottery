@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "cors": "^2.8.5",
     "framer-motion": "^2.6.6",
+    "mdbreact": "^4.27.0",
     "mssql": "^6.2.1",
     "mysql": "^2.18.1",
     "properties-reader": "^2.1.1",
