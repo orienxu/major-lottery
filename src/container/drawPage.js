@@ -4,35 +4,53 @@ import Res from '../config/image';
 import './App.css';
 import {motion} from 'framer-motion'
 import {Link} from 'react-router-dom'
+import LogInPage from './LoginPage';
+
 export default class DrawPage extends Component {
 
     constructor() {
         super();     
         this.state = {
             //ipAddress: "",
-            loggedIn: false,
             chancesLeft: 3,
             isFlipped: false,
             apiResponse: 'Node failed',
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.checkUser = this.checkUser.bind(this);
-        this.getUserIP = this.getUserIP.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
+        // this.checkUser = this.checkUser.bind(this);
+        // this.getUserIP = this.getUserIP.bind(this);
     }
     
-    handleClick() {
-        //e.preventDefault();
-        this.setState(prevState => ({ chancesLeft: this.state.chancesLeft - 1 }));
-        document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
+    handleCardClick() {
+        //do api call here
+        if (!this.props.loggedIn) {
+            var ip = "place holder";
+            //get ip 
+            //and set it back by calling a function passed in props
+            this.props.setUserToVisitor(ip);
+        }
+        fetch(this.props)
+        //transition to next resultPage
+        //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
+
+        this.setState({ 
+            chancesLeft: this.state.chancesLeft - 1,
+        })
+        // document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
     }
 
     btn = () => {
+        /*
+            You have to checck the chances everytime you call generate card
+            using some sort of fetch(api)
+         */
         if(this.state.chancesLeft > 0) {
+            //update time left before transitioning
             return <Button
-                    onClick = {this.handleClick}
                     component={Link}
                     to="/result"
                     style={styles.button}
+                    onClick={() => {this.handleCardClick()}}
                     >
                     点我抽卡
                     </Button>;
@@ -44,6 +62,9 @@ export default class DrawPage extends Component {
         }
         
     }
+
+
+
     renderContent() {
         return (
             <motion.div
@@ -54,30 +75,22 @@ export default class DrawPage extends Component {
                 <div style={styles.icon}>
                     <img src={Res.cardBack} style={{ width: '55vmin' }} />
                 </div>
-                {/* <Button
-                    component={Link}
-                    to="/result"
-                    style={styles.button}
-                >
-                    点我抽卡
-                    <Btn chances={this.state.chancesLeft}/>
-                </Button> */}
                 {/* 判断是否有剩余次数 */}
                 {this.btn()}
-                <h3 id = "ChancesLeft" style={styles.rec}>
-                   
-                </h3> 
-
-            </motion.div>
+                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3>
+            </motion.div>           
         );
     }
 
+
     // check user status
     componentWillMount () {
+        //Dont do any ip checking here, component are not loaded
         this.checkUser();
     }
 
     componentDidMount () {
+        //You could do this by updating the state
         document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
     }
 
@@ -89,7 +102,6 @@ export default class DrawPage extends Component {
         } else {
             // get chancesleft
         }
-
         //this.state.chancesLeft = 3;
     }
     
@@ -101,6 +113,7 @@ export default class DrawPage extends Component {
         .then(res => {
           return res.text()
         }).then(ip => {
+            //dont return the result, set it to a state, it automatically updates the page where that state is used.
             return ip;
             //console.log(this.state.ipAddress);
         });
@@ -117,13 +130,11 @@ export default class DrawPage extends Component {
 
 const styles = {
     contentMain: {
-        justifyContent: 'flex-start',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
         flex: 1,
-        overflow: 'hidden',
-        backgroundColor: '#FFB9F0',
+        height: "auto",
+        overflow: 'scroll',
     },
     contentTitle: {
         marginLeft: '3vmin',
@@ -137,15 +148,14 @@ const styles = {
         fontSize: '32px',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
-        borderRadius: '6vmin',
+        borderRadius: '3vmin',
         marginTop: '5vmin',
         marginBottom: '3vmin',
         color: 'white',
-        width: '60vmin',
-        height: '17vmin',
+        width: '55vmin',
+        height: '15vmin',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
     },
     fakeButton: {
         fontSize: '32px',
@@ -176,6 +186,9 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    LOGIN_POPUP: {
+        
     }
 }
 
