@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Res from '../config/image';
 import './App.css';
 import InfoPage from './infoPage';
-import UserPage from './User';
 import DrawPage from './drawPage';
 import ResultPage from './resultPage';
 import CollectionPage from './Collection/collection';
