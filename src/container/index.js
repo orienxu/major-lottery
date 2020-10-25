@@ -42,7 +42,9 @@ export default class MainPage extends Component {
                     // onClick={() => this.handleClick('draw')}
                 >
                     <HomeIcon />
+                    
                 </IconButton>
+                <h3 style={{marginLeft: "7vmin"}} >华大课友抽奖</h3>
                 <div>
                     <IconButton
                         component={Link}
@@ -56,7 +58,8 @@ export default class MainPage extends Component {
                         onClick={() => {this.setState({openLoginWindow: true})}}
                     >
                         <PersonIcon
-                            style={{ marginLeft: '-4vmin' }}
+                            style={{ marginLeft: '-3vmin' }}
+                        
                         />
                     </IconButton>
                 </div>
@@ -84,7 +87,7 @@ export default class MainPage extends Component {
                             return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor= {(ip) => {this.setUserToVisitor(ip)}}/>
                         }} />
 
-                        <Route path="/result" component={ResultPage}/>
+                        <Route path="/result" component={InfoPage}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
                     <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => {this.onLogIn(username, pass)}} />
