@@ -1,5 +1,5 @@
 export default {
-    SERVER_URL: "http://localhost:9000/",
+    SERVER_URL: "http://localhost:9000/api/",
     GET_OWNED_CARD: "ownedCards?username=",
     REGISTER_NAME: "register?username=",
     REGISTER_PASS: "&password=",

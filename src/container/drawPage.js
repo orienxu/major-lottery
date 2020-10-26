@@ -136,8 +136,7 @@ class DrawPage extends Component {
 const styles = {
     contentMain: {
         display: 'flex',
-        flexDirection: 'column',
-        height: "80vh",
+        flexDirection: 'column',   
         flex: 1,
         overflow: 'hidden',
         position: "relative"
