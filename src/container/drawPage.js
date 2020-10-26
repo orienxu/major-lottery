@@ -26,7 +26,7 @@ class DrawPage extends Component {
         this.setState({
             playAnimation: true
         })
-        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3000)
+        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
         //do api call here
         // if (!this.props.loggedIn) {
         //     var ip = "place holder";
