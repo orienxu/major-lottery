@@ -68,7 +68,7 @@ class Server {
             case '/generateNewCard':
                 this.query.updateUserCard(param['username'], function (result) {
                     if (result === TIME_LEFT_NOT_ENOUGH) {
-                        res.end(JSON.stringify({ "result": result, "success": 0 }));
+                        res.end(JSON.stringify({ "result": [], "success": 0 }));
                     } else {
                         res.end(JSON.stringify({ "result": result, "success": 1 }));
                     }
@@ -78,7 +78,7 @@ class Server {
                 this.query.ownedCards(param['username'], function (result) {
                     if (result === Config.EMPTY_OWNED) {
                         console.log("ending")
-                        res.end(JSON.stringify({ "result": "User has no cards", "success": 0 }));                        
+                        res.end(JSON.stringify({ "result": [], "success": 0, "error": "User has no cards" }));                        
                     } else {
                         res.end(JSON.stringify({ "result": result, "success": 1 }));
                     }                    
