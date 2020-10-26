@@ -1,5 +1,5 @@
 //import { Button } from 'react-native-elements';
-import React,  { useState, Component } from 'react';
+import React,  { useState } from 'react';
 import './App.css';
 import { motion } from 'framer-motion';
 import TextField from '@material-ui/core/TextField';

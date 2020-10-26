@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Res from '../config/image';
 import './App.css';
 import InfoPage from './infoPage';
+<<<<<<< HEAD
 //import UserPage from './User';
+=======
+>>>>>>> 2a9b3bbc5d542ed84c0b2b2d26eb78e36edc51e7
 import DrawPage from './drawPage';
 import ResultPage from './resultPage';
 import CollectionPage from './Collection/collection';
@@ -11,7 +14,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import PersonIcon from '@material-ui/icons/Person'
 import { motion } from "framer-motion";
-import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LogInPage from './LoginPage';
 import ServerConfig from '../config/ServerConfig';
 
@@ -39,10 +42,12 @@ export default class MainPage extends Component {
                     component={Link}
                     to={"/"}
                     aria-label="Home"
-                    // onClick={() => this.handleClick('draw')}
+                // onClick={() => this.handleClick('draw')}
                 >
                     <HomeIcon />
+
                 </IconButton>
+                <h3 style={{ marginLeft: "7vmin" }} >华大课友抽奖</h3>
                 <div>
                     <IconButton
                         component={Link}
@@ -53,10 +58,11 @@ export default class MainPage extends Component {
                     </IconButton>
                     <IconButton
                         aria-label="User"
-                        onClick={() => {this.setState({openLoginWindow: true})}}
+                        onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
                         <PersonIcon
-                            style={{ marginLeft: '-4vmin' }}
+                            style={{ marginLeft: '-3vmin' }}
+
                         />
                     </IconButton>
                 </div>
@@ -77,28 +83,28 @@ export default class MainPage extends Component {
                 <div className="App">
                     {this.renderTop()}
                     <Switch>
-                        <Route path="/info/:id" component={InfoPage}/>
-                        <Route path = "/collection/:username" exact component={CollectionPage}/>
+                        <Route path="/info/:id" component={InfoPage} />
+                        <Route path="/collection/:username" exact component={CollectionPage} />
 
                         <Route path="/" exact component={() => {
-                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor= {(ip) => {this.setUserToVisitor(ip)}}/>
+                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
                         }} />
 
-                        <Route path="/result" component={ResultPage}/>
+                        <Route path="/result" component={InfoPage} />
                     </Switch>
                     {/* pass additional props into loginpage */}
-                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => {this.onLogIn(username, pass)}} />
+                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => { this.onLogIn(username, pass) }} />
                 </div>
             </Router>
         );
     }
 
     onLogIn(username, password) {
-        
+
     }
 
     onRegister(username, password) {
-        
+
     }
 
     onLogInClose() {

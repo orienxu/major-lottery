@@ -3,17 +3,17 @@ import { Button } from '@material-ui/core';
 import Res from '../config/image';
 import './App.css';
 import {motion} from 'framer-motion'
-import {Link} from 'react-router-dom'
-import LogInPage from './LoginPage';
-
-export default class DrawPage extends Component {
-
+import {withRouter} from 'react-router-dom'
+import LinearShuffle from './LinearShuffule'
+class DrawPage extends Component {
+    ANIMATION_TIMER = null;
     constructor() {
         super();     
         this.state = {
             //ipAddress: "",
             chancesLeft: 3,
             isFlipped: false,
+            playAnimation: false,
             apiResponse: 'Node failed',
         };
         // this.handleClick = this.handleClick.bind(this);
@@ -22,14 +22,18 @@ export default class DrawPage extends Component {
     }
     
     handleCardClick() {
+        var self = this
+        this.setState({
+            playAnimation: true
+        })
+        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3000)
         //do api call here
-        if (!this.props.loggedIn) {
-            var ip = "place holder";
-            //get ip 
-            //and set it back by calling a function passed in props
-            this.props.setUserToVisitor(ip);
-        }
-        fetch(this.props)
+        // if (!this.props.loggedIn) {
+        //     var ip = "place holder";
+        //     //get ip 
+        //     //and set it back by calling a function passed in props
+        //     this.props.setUserToVisitor(ip);
+        // }
         //transition to next resultPage
         //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
 
@@ -47,8 +51,6 @@ export default class DrawPage extends Component {
         if(this.state.chancesLeft > 0) {
             //update time left before transitioning
             return <Button
-                    component={Link}
-                    to="/result"
                     style={styles.button}
                     onClick={() => {this.handleCardClick()}}
                     >
@@ -62,9 +64,7 @@ export default class DrawPage extends Component {
         }
         
     }
-
-
-
+    
     renderContent() {
         return (
             <motion.div
@@ -78,10 +78,11 @@ export default class DrawPage extends Component {
                 {/* 判断是否有剩余次数 */}
                 {this.btn()}
                 <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3>
-            </motion.div>           
+                {this.state.playAnimation && <LinearShuffle /> }
+            </motion.div>                 
+                       
         );
     }
-
 
     // check user status
     componentWillMount () {
@@ -89,9 +90,12 @@ export default class DrawPage extends Component {
         this.checkUser();
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.ANIMATION_TIMER)
+    }
+
     componentDidMount () {
         //You could do this by updating the state
-        document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
     }
 
     //问题在于getUserIp可以得到ip 但是传不回来
@@ -133,9 +137,10 @@ const styles = {
     contentMain: {
         display: 'flex',
         flexDirection: 'column',
+        height: "80vh",
         flex: 1,
-        height: "auto",
-        overflow: 'scroll',
+        overflow: 'hidden',
+        position: "relative"
     },
     contentTitle: {
         marginLeft: '3vmin',
@@ -193,3 +198,4 @@ const styles = {
     }
 }
 
+export default withRouter(DrawPage);
