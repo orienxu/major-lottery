@@ -1,6 +1,6 @@
 const http = require('http');
 const propertiesReader = require('properties-reader');
-const properties = propertiesReader('./dbconn.properties');
+const properties = propertiesReader('./api/dbconn.properties');
 const urlParser = require('url');
 const Query = require('./Query');
 const Config = require('./Config');
@@ -143,6 +143,7 @@ class Server {
         var self = this;
         const running = http.createServer(function (req, res) {
             res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "http://ec2-18-221-49-166.us-east-2.compute.amazonaws.com")
             const reqSummary = urlParser.parse(req.url, true);
             self.doAction(reqSummary.pathname, reqSummary.query, res);
         });
