@@ -1,6 +1,6 @@
 const http = require('http');
 const propertiesReader = require('properties-reader');
-const properties = propertiesReader('./api/dbconn.properties');
+const properties = propertiesReader('./dbconn.properties');
 const urlParser = require('url');
 const Query = require('./Query');
 const Config = require('./Config');
@@ -118,6 +118,7 @@ class Server {
                 break;
 
             default:
+                
                 break;
         }
         return 0;
