@@ -142,6 +142,7 @@ class Server {
         var self = this;
         const running = http.createServer(function (req, res) {
             res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
             const reqSummary = urlParser.parse(req.url, true);
             self.doAction(reqSummary.pathname, reqSummary.query, res);
         });
