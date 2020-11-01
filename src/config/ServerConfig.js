@@ -6,4 +6,6 @@ export default {
     LOGIN_NAME: "login?username=",
     LOGIN_PASS: "&passwowrd=",
     GENERATE_NEW_CARD: "generateNewCard?username=",
+    CHECK_TIME: "checkTime?username=", 
+    UPDATE_TIME: "updateTime?username=",
 }

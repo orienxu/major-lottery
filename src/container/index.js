@@ -77,28 +77,60 @@ export default class MainPage extends Component {
                 <div className="App">
                     {this.renderTop()}
                     <Switch>
-                        <Route path="/info/:id" component={InfoPage}/>
-                        <Route path = "/collection/:username" exact component={CollectionPage}/>
-
                         <Route path="/" exact component={() => {
                             return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor= {(ip) => {this.setUserToVisitor(ip)}}/>
                         }} />
+                        <Route path="/info/:id" component={InfoPage}/>
+    
+                        <Route path = "/collection/:username" exact component={CollectionPage}/>
+
+                        
 
                         <Route path="/result" component={ResultPage}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
-                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => {this.onLogIn(username, pass)}} />
+                    
+                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} registerAction={(username, pass) => {this.onRegister(username, pass)}} loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
                 </div>
             </Router>
         );
     }
-
+    
     onLogIn(username, password) {
-        
+        if(username == null || username === "") {
+            alert("username should not be empty");
+        } else if (password == null || password === "") {
+            alert("password shoudl not be empty");
+        } else {
+            console.log(password + username)
+            fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+                .then(checkStatus)
+                .then(data => {    
+                    console.log(data)                
+                    this.setState({
+                        loggedInUser: username,
+                    })
+                })
+        }
+
     }
 
     onRegister(username, password) {
-        
+        if(username == null || username === "") {
+            alert("username should not be empty");
+        } else if (password == null || password === "") {
+            alert("password shoudl not be empty");
+        } else {
+            console.log(password + username)
+            fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
+                .then(checkStatus)
+                .then(data => {    
+                    console.log(data)                
+                    this.setState({
+                        //loggedInUser: username,
+                    })
+                })
+        }
     }
 
     onLogInClose() {
@@ -106,6 +138,18 @@ export default class MainPage extends Component {
             openLoginWindow: false,
         })
     }
+    
+
+}
+
+function checkStatus(response) { 
+    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
+        console.log(5)
+        return response.text();
+    } else { 
+        console.log(5) 
+        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+    } 
 }
 
 const styles = {

@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { Dialog, DialogTitle, Button } from '@material-ui/core';
 
 function LogInPage(props) {
+    var username, password, newPassword;
     const {onClose, open, loginAction, registerAction} = props;
     const [registerOpen, setRegisterOpen] = useState(false)
 
@@ -15,17 +16,38 @@ function LogInPage(props) {
     }
 
     const handleLoginClick = () => {
-        loginAction();
+       // console.log(username + password)
+       
+        loginAction(username, password);
         onClose();
     }
 
     const handleRegisterClick = () => {
-        setRegisterOpen(true);
-        //uncomment this to perform ur api fetch
-        //registerAction();
+        if(!registerOpen) {
+            setRegisterOpen(true);
+        } else {
+            //console.log(password + username);
+            if(password === newPassword) {
+                registerAction(username, password);
+                onClose();
+            } else {
+                alert("password not match");
+            }
+            
+        }
         
     }
-
+    //this.handleChange = this.handleChange.bind(this);
+    const handlePasswordChange = (e) => {
+        password = e.target.value;
+    }
+    const handleUsernameChange = (e) => {
+        username = e.target.value;
+    }
+    const handleNewPasswordChange = (e) => {
+        newPassword = e.target.value;
+    }
+    
     return (
         <Dialog
         onClose={handleClose}
@@ -37,10 +59,10 @@ function LogInPage(props) {
             <DialogTitle> 登陆/注册 </DialogTitle>
                 <motion.div style={styles.contentMain} >
                         
-                        <TextField style={styles.inputs} label="Username" variant="outlined"  inputProps={INPUT_PROPS.USERNAME}/>
-                        <TextField style={styles.inputs} label="Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD}/>
-                        {registerOpen && <TextField style={styles.inputs} label="Confirm Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD}/> }
-                        {registerOpen === false && <Button style={styles.loginButton}> 登陆 </Button> }
+                        <TextField style={styles.inputs} label="Username" variant="outlined"  inputProps={INPUT_PROPS.USERNAME} onChange={handleUsernameChange}/>
+                        <TextField style={styles.inputs} label="Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD} onChange={handlePasswordChange}/>
+                        {registerOpen && <TextField style={styles.inputs} label="Confirm Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD} onChange={handleNewPasswordChange}/> }
+                        {registerOpen === false && <Button style={styles.loginButton} onClick={handleLoginClick}> 登陆 </Button> }
                         <Button style={styles.loginButton} onClick={handleRegisterClick}> 注册账号 </Button>
                 </motion.div>
 
@@ -48,15 +70,14 @@ function LogInPage(props) {
     )
 }
 
-
-const INPUT_PROPS = {
-    USERNAME: {
-        type: "email",
-    },
-    PASSWORD: {
-        type: "password",
-    }
-}
+ const INPUT_PROPS = {
+     USERNAME: {
+         type: "email",
+     },
+     PASSWORD: {
+         type: "password",
+     }
+ }
 
 const styles = {
     loginButton: {
@@ -90,4 +111,4 @@ const styles = {
     }
 }
 
-export default LogInPage
+export default LogInPage 
