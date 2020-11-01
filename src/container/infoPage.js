@@ -80,31 +80,33 @@ export default class InfoPage extends Component {
           >
 
           </div>
-          <h3 style={{
-            alignSelf: 'flex-start',
-            marginLeft: '5vmin',
-            marginTop: '14vmin',
-            fontFamily: 'PingFang SC',
-            fontSize: '24px',
-            lineHeight: '34px',
-            fontWeight: '500'
-          }}>
-            专业介绍
+          <div style={{ width: '100vmin', height: '100%' }}>
+            <h3 style={{
+              alignSelf: 'flex-start',
+              marginLeft: '5vmin',
+              marginTop: '6vmin',
+              fontFamily: 'PingFang SC',
+              fontSize: '24px',
+              lineHeight: '34px',
+              fontWeight: '500'
+            }}>
+              专业介绍
           </h3>
-          <p style={{
-            textAlign: 'left',
-            marginTop: '-8vmin',
-            fontFamily: 'PingFang SC',
-            fontSize: '14px',
-            lineHeight: '20px',
-            marginLeft: '5vmin',
-            marginRight: '5vmin',
-          }}>
-            cse作为华大最热门的专业之一，
-            也是非常competitive的专业之一。
-            但是专业里面的机会和师资是觉得worth所有applicant的努力。
-            例如一年几度的career fair就有他们的专属场所。
+            <p style={{
+              textAlign: 'left',
+              marginTop: '-5vmin',
+              fontFamily: 'PingFang SC',
+              fontSize: '14px',
+              lineHeight: '20px',
+              marginLeft: '5vmin',
+              marginRight: '5vmin',
+            }}>
+              cse作为华大最热门的专业之一，
+              也是非常competitive的专业之一。
+              但是专业里面的机会和师资是觉得worth所有applicant的努力。
+              例如一年几度的career fair就有他们的专属场所。
           </p>
+          </div>
         </div>
       </div>
     );
@@ -122,7 +124,7 @@ export default class InfoPage extends Component {
 const styles = {
   contentMain: {
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
