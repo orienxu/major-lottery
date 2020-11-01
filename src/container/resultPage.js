@@ -4,6 +4,7 @@ import Res from '../config/image';
 import './App.css';
 import ServerConfig from '../config/ServerConfig';
 import { motion } from 'framer-motion'
+//import 'http://res.wx.qq.com/open/js/jweixin-1.6.0.js'; //wechat jdk
 
 export default class ResultPage extends Component {
 
@@ -185,7 +186,7 @@ export default class ResultPage extends Component {
 
     async generateNewCard() {
         //let username = this.props.loggedInUser
-        let username = "weifeng"
+        let username = "f"
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
                 .then(checkStatus)
@@ -193,9 +194,13 @@ export default class ResultPage extends Component {
                     console.log(data)                
                     const newCards = JSON.parse(data).result
                     console.log(newCards)
-                    this.setState({
-                        cardResult: newCards
-                    })
+                    if (newCards.length > 0) {
+                        this.setState({
+                            cardResult: newCards
+                        })
+                    } else {
+                        alert("Don't have enough lottery chances")
+                    }
                 })
             this.setState(prevState => ({ isFlipped1: false, isFlipped2: false, isFlipped3: false })); 
         } else {
@@ -204,6 +209,26 @@ export default class ResultPage extends Component {
     }
 
 }
+
+// wx.config({
+//     debug:true,
+//     appId: '',
+//     timestamp: '',
+//     nonceStr: '',
+//     signature: '',
+//     jsApiList: ['updateTimelineShareData']
+// });
+
+// wx.ready(function() {
+//     wx.updateTimelineShareData({
+//         title: '', //分享标题
+//         link: '', //分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+//         imgUrl: '', //分享图标
+//         success: function() {
+//             //设置成功
+//         }
+//     })
+// });
 
 function checkStatus(response) { 
     if ((response.status >= 200 && response.status < 300) || response.status === 0) {  

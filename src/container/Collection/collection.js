@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Res from '../../config/image';
 import '../App.css';
 import ServerConfig from '../../config/ServerConfig'
 import CollectionEntry from './CollectionEntry';
@@ -40,8 +39,16 @@ export default class CollectionPage extends Component {
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GET_OWNED_CARD + username)
                 .then(this.checkStatus)
-                .then(data => {                    
-                    const ownedCard = JSON.parse(data).result;
+                .then(data => {
+                    console.log(data)   
+                    const dataJSON = JSON.parse(data)
+                    const success = dataJSON.success;
+                    if (success == 0) {
+                        alert(dataJSON.error);
+                        return;
+                    }
+                    
+                    const ownedCard = dataJSON.result;
                     const ownedSet = new Set(ownedCard)
                     console.log(ownedCard)
                     //TODO change to check outcome later
@@ -53,7 +60,7 @@ export default class CollectionPage extends Component {
                     this.setState({
                         owned: this.state.owned.concat(this.all.map((card) => {
                             if (!ownedSet.has(card)) {
-                                return <CollectionEntry  key={card} image={'cardBack'} quote={card}/>
+                                return <CollectionEntry key={card} image={'cardBack'} quote={card} />
                             } 
                         }))
                     })

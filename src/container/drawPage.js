@@ -3,13 +3,10 @@ import { Button } from '@material-ui/core';
 import Res from '../config/image';
 import './App.css';
 import {motion} from 'framer-motion'
-import {Link} from 'react-router-dom'
-import LogInPage from './LoginPage';
-import userEvent from '@testing-library/user-event';
-import ServerConfig from '../config/ServerConfig';
-
-export default class DrawPage extends Component {
-
+import {withRouter} from 'react-router-dom'
+import LinearShuffle from './LinearShuffule'
+class DrawPage extends Component {
+    ANIMATION_TIMER = null;
     constructor() {
         super();     
         this.state = {
@@ -17,6 +14,7 @@ export default class DrawPage extends Component {
             loggedIn: false,
             chancesLeft: 3,
             isFlipped: false,
+            playAnimation: false,
             apiResponse: 'Node failed',
         };
         // this.handleClick = this.handleClick.bind(this);
@@ -25,7 +23,18 @@ export default class DrawPage extends Component {
     }
     
     handleCardClick() {
-        fetch(this.props)
+        var self = this
+        this.setState({
+            playAnimation: true
+        })
+        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
+        //do api call here
+        // if (!this.props.loggedIn) {
+        //     var ip = "place holder";
+        //     //get ip 
+        //     //and set it back by calling a function passed in props
+        //     this.props.setUserToVisitor(ip);
+        // }
         //transition to next resultPage
         //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
 
@@ -54,8 +63,8 @@ export default class DrawPage extends Component {
         // if(this.state.chancesLeft > 0) {
         //     //update time left before transitioning
              return <Button
-                     component={Link}
-                     to="/result"
+                     //component={Link}
+                     //to="/result"
                      style={styles.button}
                      onClick={() => {this.handleCardClick()}}
                      >
@@ -69,9 +78,7 @@ export default class DrawPage extends Component {
         // }
         
     }
-
-
-
+    
     renderContent() {
         return (
             <motion.div
@@ -84,14 +91,19 @@ export default class DrawPage extends Component {
                 </div>
                 {/* 判断是否有剩余次数 */}
                 {this.btn()}
-                {/* <h3 id = "ChancesLeft" style={styles.rec}>剩余次数：{this.state.chancesLeft}</h3> */}
-            </motion.div>           
+                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3>
+                {this.state.playAnimation && <LinearShuffle /> }
+            </motion.div>                 
+                       
         );
     }
 
-
     // check user status
     componentWillMount () {       
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.ANIMATION_TIMER)
     }
 
     componentDidMount () {
@@ -157,10 +169,10 @@ function checkStatus(response) {
 const styles = {
     contentMain: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column',   
         flex: 1,
-        height: "auto",
-        overflow: 'scroll',
+        overflow: 'hidden',
+        position: "relative"
     },
     contentTitle: {
         marginLeft: '3vmin',
@@ -218,3 +230,4 @@ const styles = {
     }
 }
 
+export default withRouter(DrawPage);
