@@ -87,7 +87,7 @@ export default class MainPage extends Component {
                         }} />
 
                         <Route path="/result" component={() => {
-                            return <ResultPage loggedIn={this.state.loggedIn} />
+                            return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
                         }} />
                         <Route path="/info" component={InfoPage} />
                     </Switch>

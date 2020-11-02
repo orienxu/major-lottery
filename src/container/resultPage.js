@@ -31,10 +31,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res[img]} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
             </ReactCardFlip>
         );
@@ -48,10 +48,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res.cardBack} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
             </ReactCardFlip>
         );
@@ -65,10 +65,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
             </ReactCardFlip>
         );
@@ -157,9 +157,6 @@ export default class ResultPage extends Component {
                 <button style={styles.button} onClick = {() => this.generateNewCard()}>
                     再抽一次
                 </button>
-                <button style={styles.rec}>
-                    &#12288;分享&#12288;
-                </button>
             </div>
         );
     }
@@ -183,15 +180,11 @@ export default class ResultPage extends Component {
     }
 
     async generateNewCard() {
-        //let username = this.props.loggedInUser
-<<<<<<< HEAD
-        // if (!this.props.loggedIn) {
-        //     alert("Cards can only be saved after login.")
-        // }
-        let username = "f"
-=======
-        let username = "weifeng"
->>>>>>> b9e6d229c3e150bbfc7cd012bdc3086cad9f5cc6
+        let username = this.props.loggedInUser
+        if (!this.props.loggedIn) {
+            alert("Cards can only be saved after login.")
+        }
+        //let username = "f"
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
                 .then(checkStatus)
@@ -257,16 +250,6 @@ const styles = {
         
     },
     contentMain: {
-<<<<<<< HEAD
-        // //justifyContent: 'space-around',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'flex-start',
-        // flex: 1,
-        // overflow: 'hidden',
-        // backgroundImage: `url(${Res.background})`,
-        // backgroundSize: "cover",
-=======
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-center',
@@ -274,7 +257,6 @@ const styles = {
         overflow: 'hidden',
         backgroundImage: `url(${Res.background})`,
         backgroundSize: "cover",
->>>>>>> b9e6d229c3e150bbfc7cd012bdc3086cad9f5cc6
     },
     content: {
         display: 'flex',
@@ -283,18 +265,18 @@ const styles = {
         paddingTop: '10vh',
     },
     box: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingBottom: '10vh'
+        //display: 'flex',
+        //justifyContent: 'space-between',
+        paddingBottom: '10vh',
+        alignSelf: 'center',
     },
-    rec: {
-        backgroundColor: '#C4C4C4',
-        borderRadius: '2vmin',
-        margin: '10vmin',
-        width: '30vmin',
-    },
+    // rec: {
+    //     backgroundColor: '#C4C4C4',
+    //     borderRadius: '2vmin',
+    //     margin: '10vmin',
+    //     width: '30vmin',
+    // },
     button: {
-        textAlign: 'center',
         fontSize: '130%',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
@@ -304,7 +286,7 @@ const styles = {
         color: 'white',
         width: '25vh',
         height: '10vh',
-        display: 'flex',
+        display: 'block',
         alignItems: 'center',
     },
     initalStyle: {
