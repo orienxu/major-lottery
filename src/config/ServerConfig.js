@@ -5,7 +5,7 @@ export default {
     REGISTER_NAME: "register?username=",
     REGISTER_PASS: "&password=",
     LOGIN_NAME: "login?username=",
-    LOGIN_PASS: "&passwowrd=",
+    LOGIN_PASS: "&password=",
     GENERATE_NEW_CARD: "generateNewCard?username=",
     CHECK_TIME: "checkTime?username=", 
     UPDATE_TIME: "updateTime?username=",

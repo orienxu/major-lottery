@@ -21,7 +21,7 @@ export default class MainPage extends Component {
         this.state = {
             id: 'info',
             loggedIn: false,
-            loggedInUser: "weifeng",
+            loggedInUser: "",
             openLoginWindow: false,
         }
     }
@@ -43,7 +43,8 @@ export default class MainPage extends Component {
                     <HomeIcon />
 
                 </IconButton>
-                <h3 style={{ marginLeft: "7vmin" }} >华大课友抽奖</h3>
+                {this.state.loggedInUser === "" && <h3 style={{ marginLeft: "7vmin" }} >华大课友抽奖</h3>}
+                {this.state.loggedInUser !== "" && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
                 <div>
                     <IconButton
                         component={Link}
@@ -52,7 +53,7 @@ export default class MainPage extends Component {
                     >
                         <StarIcon />
                     </IconButton>
-                    <IconButton
+                    {this.state.loggedInUser === "" && <IconButton
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
@@ -60,7 +61,7 @@ export default class MainPage extends Component {
                             style={{ marginLeft: '-3vmin' }}
 
                         />
-                    </IconButton>
+                    </IconButton>}
                 </div>
             </div >
         );
@@ -103,40 +104,34 @@ export default class MainPage extends Component {
     }
     
     onLogIn(username, password) {
-        if(username == null || username === "") {
-            alert("username should not be empty");
-        } else if (password == null || password === "") {
-            alert("password shoudl not be empty");
-        } else {
-            console.log(password + username)
-            fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
-                .then(checkStatus)
-                .then(data => {    
-                    console.log(data)                
+        console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+        fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+            .then(checkStatus)
+            .then(data => {    
+                console.log(data) 
+                if(JSON.parse(data).success === 1) {
+                    alert("User Logged in Successfully");
                     this.setState({
                         loggedInUser: username,
                     })
-                })
-        }
-
+                } else {
+                    alert(JSON.parse(data).result + ", please try again");
+                }         
+            })
     }
 
     onRegister(username, password) {
-        if(username == null || username === "") {
-            alert("username should not be empty");
-        } else if (password == null || password === "") {
-            alert("password shoudl not be empty");
-        } else {
-            console.log(password + username)
-            fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
-                .then(checkStatus)
-                .then(data => {    
-                    console.log(data)                
-                    this.setState({
-                        //loggedInUser: username,
-                    })
-                })
-        }
+        console.log(password + username);
+        fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
+            .then(checkStatus)
+            .then(data => {    
+                console.log(data)                
+                if(JSON.parse(data).success === 1) {
+                    alert("Register sucessful, please log in");
+                } else {
+                    alert(JSON.parse(data).result + ", please try again");
+                }        
+            })
     }
 
     onLogInClose() {

@@ -91,7 +91,6 @@ class DrawPage extends Component {
                 </div>
                 {/* 判断是否有剩余次数 */}
                 {this.btn()}
-                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3>
                 {this.state.playAnimation && <LinearShuffle /> }
             </motion.div>                 
                        
@@ -168,6 +167,7 @@ function checkStatus(response) {
 
 const styles = {
     contentMain: {
+        height: "80vh",
         display: 'flex',
         flexDirection: 'column',   
         flex: 1,

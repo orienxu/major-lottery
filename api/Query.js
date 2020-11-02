@@ -76,7 +76,6 @@ class Query {
         let res = null;
         const hash = crypto.createHash('sha256');
         self.connection.query(LOGIN_CHECK_USER_EXIST, [username], function (err, results, fields) {
-            console.log(username)
             if (err) {
                 throw err;
             }
