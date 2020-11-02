@@ -10,8 +10,9 @@ export default class InfoPage extends Component {
     super();
     this.state = {
       apiResponse: 'Node failed',
+      major: match['match']['params']['id']
     };
-    console.log('match', match);
+    
   }
 
   // async callAPI() {
@@ -28,9 +29,14 @@ export default class InfoPage extends Component {
   renderContent() {
     return (
       <div
-        style={styles.contentMain}
+        style={{justifyContent: 'flex-start',
+        alignItems: 'center',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: BackgroundColor[this.state.major],}}
       >
-        <img src={Res.subjectFoster}
+        <img src={Res[this.state.major]}
           style={{
             width: '67vmin',
             alignSelf: 'center',
@@ -64,7 +70,7 @@ export default class InfoPage extends Component {
               {"\“"}
             </p>
             <p style={{ fontFamily: 'PingFang SC', fontSize: '18px', lineHeight: '25px', fontWeight: '600' }}>
-              {Quote['cse']}
+              {Quote[this.state.major]}
             </p>
             <p style={{ fontFamily: 'PingFang SC', fontSize: '48px', lineHeight: '67px' }}>
               {"\”"}
@@ -91,21 +97,8 @@ export default class InfoPage extends Component {
               fontWeight: '500'
             }}>
               专业介绍
-          </h3>
-            <p style={{
-              textAlign: 'left',
-              marginTop: '-5vmin',
-              fontFamily: 'PingFang SC',
-              fontSize: '14px',
-              lineHeight: '20px',
-              marginLeft: '5vmin',
-              marginRight: '5vmin',
-            }}>
-              cse作为华大最热门的专业之一，
-              也是非常competitive的专业之一。
-              但是专业里面的机会和师资是觉得worth所有applicant的努力。
-              例如一年几度的career fair就有他们的专属场所。
-          </p>
+            </h3>
+            
           </div>
         </div>
       </div>

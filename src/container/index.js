@@ -43,7 +43,7 @@ export default class MainPage extends Component {
                     <HomeIcon />
 
                 </IconButton>
-                <h3 style={{ marginLeft: "7vmin" }} >华大课友抽奖</h3>
+                <h3 style={{ marginLeft: "7vmin" }} >专业上上签</h3>
                 <div>
                     <IconButton
                         component={Link}
@@ -86,10 +86,8 @@ export default class MainPage extends Component {
                             return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
                         }} />
 
-                        <Route path="/result" component={() => {
-                            return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
-                        }} />
-                        <Route path="/info" component={InfoPage} />
+                        <Route path="/info/:majorname" component={InfoPage} />
+                        <Route path="/result" component={ResultPage}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
                     <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => { this.onLogIn(username, pass) }} />

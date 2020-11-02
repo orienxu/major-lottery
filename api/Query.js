@@ -15,7 +15,7 @@ const CHECK_TIME_LEFT = "Select U.username, U.timeLeft From Users As U Where U.u
 const UPDATE_TIME_LEFT = "Update Users As U Set U.timeLeft = ? Where U.username = ?";
 const UPDATE_OWNED_CARD = "Update UserCard As UC Set ";
 const MAX_MAJOR_NUMBER = 16;
-const INIT_TIME_LEFT = 9;
+const INIT_TIME_LEFT = 999;
 
 
 const VIEW_OWNED = "SELECT UC.cse, UC.ee, UC.info, UC.design, UC.acms, UC.biochem, UC.stat, UC.com, UC.arch, UC.me, UC.foster, UC.psych, UC.phys, UC.math, UC.music, UC.chem FROM UserCard As UC JOIN Users As U ON UC.username = U.username WHERE U.username = ?";
