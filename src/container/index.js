@@ -89,7 +89,9 @@ export default class MainPage extends Component {
                         <Route path="/info/:id" component={InfoPage}/>
     
                         <Route path = "/collection/:username" exact component={CollectionPage}/>
-                        <Route path="/result" component={ResultPage}/>
+                        <Route path="/result" component={() => {
+                            return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                        }}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
                     
