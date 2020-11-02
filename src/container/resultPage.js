@@ -94,10 +94,10 @@ export default class ResultPage extends Component {
         return (
             <div style={styles.content}>
                 <div
-                    style={{
-                        width: '100vmin',
-                        height: '60vh',
-                    }}
+                    // style={{
+                    //     width: '100vmin',
+                    //     height: '60vh',
+                    // }}
                 >
                     <motion.div
                         initial={{
@@ -186,6 +186,9 @@ export default class ResultPage extends Component {
 
     async generateNewCard() {
         //let username = this.props.loggedInUser
+        if (!this.props.loggedIn) {
+            alert("Cards can only be saved after login.")
+        }
         let username = "f"
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
@@ -259,10 +262,10 @@ const styles = {
         overflow: 'hidden',
     },
     content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'center',
-        paddingTop: '10vh',
+        // display: 'flex',
+        // flexDirection: 'column',
+        // alignSelf: 'center',
+        // paddingTop: '10vh',
     },
     box: {
         display: 'flex',

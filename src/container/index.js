@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import Res from '../config/image';
 import './App.css';
 import InfoPage from './infoPage';
-<<<<<<< HEAD
-//import UserPage from './User';
-=======
->>>>>>> 2a9b3bbc5d542ed84c0b2b2d26eb78e36edc51e7
 import DrawPage from './drawPage';
 import ResultPage from './resultPage';
 import CollectionPage from './Collection/collection';
@@ -90,7 +86,9 @@ export default class MainPage extends Component {
                             return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
                         }} />
 
-                        <Route path="/result" component={InfoPage} />
+                        <Route path="/result" component={() => {
+                            return <ResultPage loggedIn={this.state.loggedIn} />
+                        }} />
                     </Switch>
                     {/* pass additional props into loginpage */}
                     <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => { this.onLogIn(username, pass) }} />
