@@ -154,7 +154,7 @@ export default class ResultPage extends Component {
     renderBottom() {
         return (
             <div style={styles.box}>
-                <button style={styles.rec} onClick = {() => this.generateNewCard()}>
+                <button style={styles.button} onClick = {() => this.generateNewCard()}>
                     再抽一次
                 </button>
                 <button style={styles.rec}>
@@ -186,9 +186,9 @@ export default class ResultPage extends Component {
 
     async generateNewCard() {
         //let username = this.props.loggedInUser
-        if (!this.props.loggedIn) {
-            alert("Cards can only be saved after login.")
-        }
+        // if (!this.props.loggedIn) {
+        //     alert("Cards can only be saved after login.")
+        // }
         let username = "f"
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
@@ -254,18 +254,20 @@ const styles = {
         backgroundColor: '#FEFA5DD',
     },
     contentMain: {
-        justifyContent: 'space-around',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        flex: 1,
-        overflow: 'hidden',
-    },
-    content: {
+        // //justifyContent: 'space-around',
         // display: 'flex',
         // flexDirection: 'column',
-        // alignSelf: 'center',
-        // paddingTop: '10vh',
+        // alignItems: 'flex-start',
+        // flex: 1,
+        // overflow: 'hidden',
+        // backgroundImage: `url(${Res.background})`,
+        // backgroundSize: "cover",
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignSelf: 'center',
+        paddingTop: '10vh',
     },
     box: {
         display: 'flex',
@@ -277,6 +279,20 @@ const styles = {
         borderRadius: '2vmin',
         margin: '10vmin',
         width: '30vmin',
+    },
+    button: {
+        textAlign: 'center',
+        fontSize: '130%',
+        alignSelf: 'center',
+        backgroundColor: '#4B2E83',
+        borderRadius: '3vmin',
+        marginTop: '5vmin',
+        marginBottom: '3vmin',
+        color: 'white',
+        width: '25vh',
+        height: '10vh',
+        display: 'flex',
+        alignItems: 'center',
     },
     initalStyle: {
         position: "flex",
