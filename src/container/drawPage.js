@@ -8,7 +8,7 @@ import LinearShuffle from './LinearShuffule'
 class DrawPage extends Component {
     ANIMATION_TIMER = null;
     constructor() {
-        super();     
+        super();
         this.state = {
             ipAddress: "",
             loggedIn: false,
@@ -16,12 +16,28 @@ class DrawPage extends Component {
             isFlipped: false,
             playAnimation: false,
             apiResponse: 'Node failed',
+            width: 0,
+            height: 0,
         };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         // this.handleClick = this.handleClick.bind(this);
         // this.checkUser = this.checkUser.bind(this);
         // this.getUserIP = this.getUserIP.bind(this);
     }
-    
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    }
+
     handleCardClick() {
         var self = this
         this.setState({
@@ -31,7 +47,7 @@ class DrawPage extends Component {
         //do api call here
         // if (!this.props.loggedIn) {
         //     var ip = "place holder";
-        //     //get ip 
+        //     //get ip
         //     //and set it back by calling a function passed in props
         //     this.props.setUserToVisitor(ip);
         // }
@@ -78,7 +94,7 @@ class DrawPage extends Component {
         // }
         
     }
-    
+
     renderContent() {
         return (
             <motion.div
@@ -87,13 +103,13 @@ class DrawPage extends Component {
                 style={styles.contentMain}
             >
                 <div style={styles.icon}>
-                    <img src={Res.cardBack} style={{ width: '55vmin' }} />
+                    <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>
                 {/* 判断是否有剩余次数 */}
                 {this.btn()}
                 {this.state.playAnimation && <LinearShuffle /> }
-            </motion.div>                 
-                       
+            </motion.div>
+
         );
     }
 
@@ -157,22 +173,15 @@ class DrawPage extends Component {
 
 }
 
-function checkStatus(response) { 
-    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
-        return response.text();
-    } else { 
-        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
-    } 
-}
-
 const styles = {
     contentMain: {
         height: "80vh",
         display: 'flex',
-        flexDirection: 'column',   
+        flexDirection: 'column',
         flex: 1,
         overflow: 'hidden',
-        position: "relative"
+        position: "relative",
+        height: '100vh',
     },
     contentTitle: {
         marginLeft: '3vmin',
@@ -183,15 +192,15 @@ const styles = {
         flexDirection: 'column',
     },
     button: {
-        fontSize: '32px',
+        fontSize: '130%',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
         borderRadius: '3vmin',
         marginTop: '5vmin',
         marginBottom: '3vmin',
         color: 'white',
-        width: '55vmin',
-        height: '15vmin',
+        width: '25vh',
+        height: '10vh',
         display: 'flex',
         alignItems: 'center',
     },
@@ -226,7 +235,7 @@ const styles = {
         justifyContent: 'center',
     },
     LOGIN_POPUP: {
-        
+
     }
 }
 

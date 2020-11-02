@@ -3,10 +3,11 @@ import ReactCardFlip from 'react-card-flip';
 import Res from '../config/image';
 import './App.css';
 import ServerConfig from '../config/ServerConfig';
+import {withRouter} from 'react-router-dom'
 import { motion } from 'framer-motion'
 //import 'http://res.wx.qq.com/open/js/jweixin-1.6.0.js'; //wechat jdk
 
-export default class ResultPage extends Component {
+class ResultPage extends Component {
 
     constructor() {
         super();
@@ -31,10 +32,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res[img]} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
             </ReactCardFlip>
         );
@@ -48,10 +49,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res.cardBack} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
             </ReactCardFlip>
         );
@@ -65,10 +66,10 @@ export default class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
                 <div>
-                    <img src={Res[img]} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
             </ReactCardFlip>
         );
@@ -94,10 +95,10 @@ export default class ResultPage extends Component {
         return (
             <div style={styles.content}>
                 <div
-                    style={{
-                        width: '100vmin',
-                        height: '60vh',
-                    }}
+                    // style={{
+                    //     width: '100vmin',
+                    //     height: '60vh',
+                    // }}
                 >
                     <motion.div
                         initial={{
@@ -154,11 +155,8 @@ export default class ResultPage extends Component {
     renderBottom() {
         return (
             <div style={styles.box}>
-                <button style={styles.rec} onClick = {() => this.generateNewCard()}>
+                <button style={styles.button} onClick = {() => this.generateNewCard()}>
                     再抽一次
-                </button>
-                <button style={styles.rec}>
-                    &#12288;分享&#12288;
                 </button>
             </div>
         );
@@ -167,7 +165,6 @@ export default class ResultPage extends Component {
 
     render() {
         return (
-            <div style={styles.main}>
                 <motion.div
                     animate={{ backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"] }}
                     transition={{ duration: 10, yoyo: Infinity }}
@@ -176,7 +173,6 @@ export default class ResultPage extends Component {
                     {this.renderContent()}
                     {this.renderBottom()}
                 </motion.div>
-            </ div>
         );
     }
 
@@ -185,8 +181,11 @@ export default class ResultPage extends Component {
     }
 
     async generateNewCard() {
-        //let username = this.props.loggedInUser
-        let username = "f"
+        let username = this.props.loggedInUser
+        if (!this.props.loggedIn) {
+            alert("Cards can only be saved after login.")
+        }
+        //let username = "f"
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
                 .then(checkStatus)
@@ -200,6 +199,7 @@ export default class ResultPage extends Component {
                         })
                     } else {
                         alert("Don't have enough lottery chances")
+                        this.props.history.push("/")
                     }
                 })
             this.setState(prevState => ({ isFlipped1: false, isFlipped2: false, isFlipped3: false })); 
@@ -249,14 +249,16 @@ const styles = {
         alignItems: 'center',
         flex: 1,
         backgroundColor: '#FEFA5DD',
+        
     },
     contentMain: {
-        justifyContent: 'space-around',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'flex-center',
         flex: 1,
         overflow: 'hidden',
+        backgroundImage: `url(${Res.background})`,
+        backgroundSize: "cover",
     },
     content: {
         display: 'flex',
@@ -265,15 +267,29 @@ const styles = {
         paddingTop: '10vh',
     },
     box: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingBottom: '10vh'
+        //display: 'flex',
+        //justifyContent: 'space-between',
+        paddingBottom: '10vh',
+        alignSelf: 'center',
     },
-    rec: {
-        backgroundColor: '#C4C4C4',
-        borderRadius: '2vmin',
-        margin: '10vmin',
-        width: '30vmin',
+    // rec: {
+    //     backgroundColor: '#C4C4C4',
+    //     borderRadius: '2vmin',
+    //     margin: '10vmin',
+    //     width: '30vmin',
+    // },
+    button: {
+        fontSize: '130%',
+        alignSelf: 'center',
+        backgroundColor: '#4B2E83',
+        borderRadius: '3vmin',
+        marginTop: '5vmin',
+        marginBottom: '3vmin',
+        color: 'white',
+        width: '25vh',
+        height: '10vh',
+        display: 'block',
+        alignItems: 'center',
     },
     initalStyle: {
         position: "flex",
@@ -284,3 +300,4 @@ const styles = {
     },
 }
 
+export default withRouter(ResultPage);

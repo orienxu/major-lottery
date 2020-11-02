@@ -23,5 +23,6 @@ export default {
     psych: require('../res/psych.png'),
     biochem: require('../res/biochem.png'),
     stat: require('../res/stat.png'),
-    biochem: require('../res/biochem.png')
+    biochem: require('../res/biochem.png'),
+    //background: require('../res/background1.png')
 }

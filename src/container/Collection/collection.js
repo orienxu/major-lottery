@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import Res from '../../config/image';
 import '../App.css';
 import ServerConfig from '../../config/ServerConfig'
 import CollectionEntry from './CollectionEntry';
@@ -43,10 +44,7 @@ export default class CollectionPage extends Component {
                     console.log(data)   
                     const dataJSON = JSON.parse(data)
                     const success = dataJSON.success;
-                    if (success == 0) {
-                        alert(dataJSON.error);
-                        return;
-                    }
+
                     
                     const ownedCard = dataJSON.result;
                     const ownedSet = new Set(ownedCard)
@@ -60,7 +58,7 @@ export default class CollectionPage extends Component {
                     this.setState({
                         owned: this.state.owned.concat(this.all.map((card) => {
                             if (!ownedSet.has(card)) {
-                                return <CollectionEntry key={card} image={'cardBack'} quote={card} />
+                                return <CollectionEntry  key={card} image={'cardBack'} quote={card}/>
                             } 
                         }))
                     })

@@ -1,7 +1,7 @@
 CREATE TABLE Users(
     username VARCHAR(20) PRIMARY KEY,
-                 pass VARBINARY(20),
-                 salt VARBINARY(20),
+                 pass VARBINARY(256),
+                 salt VARBINARY(256),
                  timeLeft int
 );
 
