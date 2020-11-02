@@ -38,7 +38,7 @@ class Server {
 
     doAction(action, param, res) {
         switch (action) {
-            case '/login':
+            case '/api/login':
                 //Note: key on param depends on the param structure and how u name the input
 
                 this.query.logIn(param['username'], param['password'], function (result) {
@@ -53,7 +53,7 @@ class Server {
                     }
                 });
                 break;
-            case '/register':
+            case '/api/register':
                 if (param['password'] == null || param['password'] === "") {
                     break;
                 }
@@ -65,7 +65,7 @@ class Server {
                     }
                 });
                 break;
-            case '/generateNewCard':
+            case '/api/generateNewCard':
                 this.query.updateUserCard(param['username'], function (result) {
                     if (result === TIME_LEFT_NOT_ENOUGH) {
                         res.end(JSON.stringify({ "result": [], "success": 0 }));
@@ -74,7 +74,7 @@ class Server {
                     }
                 })
                 break;
-            case '/ownedCards':
+            case '/api/ownedCards':
                 this.query.ownedCards(param['username'], function (result) {
                     if (result === Config.EMPTY_OWNED) {
                         console.log("ending")
@@ -84,7 +84,7 @@ class Server {
                     }                    
                 });
                 break;
-            case '/updateTime':
+            case '/api/updateTime':
                 if (!this.checkUserName(param['username'])) {
                     res.end(JSON.stringify({"success" : 0, "error" : "Invalid username"}));
                     break;
@@ -100,7 +100,7 @@ class Server {
                     res.end(JSON.stringify({"success" : 1, "error": message}))
                 });
                 break;
-            case '/checkTime':
+            case '/api/checkTime':
                 if (!this.checkUserName(param['username'])) {
                     res.end(JSON.stringify({"success" : 0, "error" : "Invalid username"}));
                     break;
@@ -142,6 +142,7 @@ class Server {
         var self = this;
         const running = http.createServer(function (req, res) {
             res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
             const reqSummary = urlParser.parse(req.url, true);
             self.doAction(reqSummary.pathname, reqSummary.query, res);
         });

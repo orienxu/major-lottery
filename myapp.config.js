@@ -1,7 +1,7 @@
 module.exports = {
     apps : [{
       name        : "myapp-api",
-      script      : "node ./api/sv.js",
+      script      : "./api/sv.js",
       watch       : true,
       env: {
         "NODE_ENV": "development",
@@ -12,7 +12,7 @@ module.exports = {
     },
     {
       name       : "myapp-client",
-      script     : "npm run start",
+      script     : "./src/index.js",
       watch       : true,
       env: {
         "NODE_ENV": "development",

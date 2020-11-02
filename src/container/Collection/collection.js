@@ -40,8 +40,16 @@ export default class CollectionPage extends Component {
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GET_OWNED_CARD + username)
                 .then(this.checkStatus)
-                .then(data => {                    
-                    const ownedCard = JSON.parse(data).result;
+                .then(data => {
+                    console.log(data)   
+                    const dataJSON = JSON.parse(data)
+                    const success = dataJSON.success;
+                    if (success == 0) {
+                        alert(dataJSON.error);
+                        return;
+                    }
+                    
+                    const ownedCard = dataJSON.result;
                     const ownedSet = new Set(ownedCard)
                     console.log(ownedCard)
                     //TODO change to check outcome later

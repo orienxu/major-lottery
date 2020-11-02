@@ -89,6 +89,7 @@ export default class MainPage extends Component {
                         <Route path="/result" component={() => {
                             return <ResultPage loggedIn={this.state.loggedIn} />
                         }} />
+                        <Route path="/info" component={InfoPage} />
                     </Switch>
                     {/* pass additional props into loginpage */}
                     <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => { this.onLogIn(username, pass) }} />
