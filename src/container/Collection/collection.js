@@ -44,10 +44,7 @@ export default class CollectionPage extends Component {
                     console.log(data)   
                     const dataJSON = JSON.parse(data)
                     const success = dataJSON.success;
-                    if (success == 0) {
-                        alert(dataJSON.error);
-                        return;
-                    }
+
                     
                     const ownedCard = dataJSON.result;
                     const ownedSet = new Set(ownedCard)

@@ -167,7 +167,6 @@ export default class ResultPage extends Component {
 
     render() {
         return (
-            <div style={styles.main}>
                 <motion.div
                     animate={{ backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"] }}
                     transition={{ duration: 10, yoyo: Infinity }}
@@ -176,7 +175,6 @@ export default class ResultPage extends Component {
                     {this.renderContent()}
                     {this.renderBottom()}
                 </motion.div>
-            </ div>
         );
     }
 
@@ -186,10 +184,14 @@ export default class ResultPage extends Component {
 
     async generateNewCard() {
         //let username = this.props.loggedInUser
+<<<<<<< HEAD
         // if (!this.props.loggedIn) {
         //     alert("Cards can only be saved after login.")
         // }
         let username = "f"
+=======
+        let username = "weifeng"
+>>>>>>> b9e6d229c3e150bbfc7cd012bdc3086cad9f5cc6
         if (username !== null && username !== "") {
             fetch(ServerConfig.SERVER_URL + ServerConfig.GENERATE_NEW_CARD + username)
                 .then(checkStatus)
@@ -252,8 +254,10 @@ const styles = {
         alignItems: 'center',
         flex: 1,
         backgroundColor: '#FEFA5DD',
+        
     },
     contentMain: {
+<<<<<<< HEAD
         // //justifyContent: 'space-around',
         // display: 'flex',
         // flexDirection: 'column',
@@ -262,6 +266,15 @@ const styles = {
         // overflow: 'hidden',
         // backgroundImage: `url(${Res.background})`,
         // backgroundSize: "cover",
+=======
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-center',
+        flex: 1,
+        overflow: 'hidden',
+        backgroundImage: `url(${Res.background})`,
+        backgroundSize: "cover",
+>>>>>>> b9e6d229c3e150bbfc7cd012bdc3086cad9f5cc6
     },
     content: {
         display: 'flex',
