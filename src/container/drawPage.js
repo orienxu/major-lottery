@@ -139,7 +139,9 @@ const styles = {
         flexDirection: 'column',   
         flex: 1,
         overflow: 'hidden',
-        position: "relative"
+        position: "relative",
+        backgroundImage: `url(${Res.background})`,
+        backgroundSize: "cover",
     },
     contentTitle: {
         marginLeft: '3vmin',

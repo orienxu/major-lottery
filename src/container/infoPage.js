@@ -14,16 +14,16 @@ export default class InfoPage extends Component {
     console.log('match', match);
   }
 
-  async callAPI() {
-    const response = await fetch('http://localhost:9000/login?username=weifeng&password=123');
-    const data = await response.json();
+  // async callAPI() {
+  //   const response = await fetch('http://localhost:9000/login?username=weifeng&password=123');
+  //   const data = await response.json();
 
-    console.log('data', data);
-  }
+  //   console.log('data', data);
+  // }
 
-  componentDidMount() {
-    this.callAPI();
-  }
+  // componentDidMount() {
+  //   this.callAPI();
+  // }
 
   renderContent() {
     return (

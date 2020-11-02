@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { Component } from 'react';
 import Res from '../../config/image';
 import Quotes from '../../config/Quote'
-
+import {withRouter} from 'react-router-dom';
 // const fullNameMap = {
 //     "cse": "Computer Science",
 //     "acms": "Applied and Computational Math Science",
@@ -42,14 +42,14 @@ const fullNameMap = {
     "" : ""
 }
 
-export default class CollectionEntry extends Component{    
+class CollectionEntry extends Component{    
     constructor() {
         super()
     }
 
     render() {
         return(
-            <Button onClick={this.helper}>
+            <Button onClick={() => this.helper()}>
                 <div style={styles.box}>
                     <img src={Res[this.props.image]} style={styles.img} />
                     <ul style={styles.ul}>
@@ -64,7 +64,12 @@ export default class CollectionEntry extends Component{
     }
 
     helper() {
-        console.log("what ever")
+        if (this.props.image !== 'cardBack') {
+            this.props.history.push(`/info/${this.props.image}`)
+        } else {
+            alert("You don't own this card yet, try your luck by returning to the home page!")
+        }
+        
     }
 }
 
@@ -99,3 +104,5 @@ const styles = {
         listStyleType: 'none',
     }
 }
+
+export default withRouter(CollectionEntry);
