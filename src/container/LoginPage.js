@@ -22,9 +22,9 @@ function LogInPage(props) {
         if(username === null || username === "") {
             alert("username should not be empty");
         } else if (password === null || password === "") {
-            alert("password shoudl not be empty");
+            alert("password should not be empty");
         } else {
-            loginAction(username, password);
+            loginAction(username, password, true);
             onClose();
         }
     }
@@ -39,9 +39,9 @@ function LogInPage(props) {
             if(username === null || username === "") {
                 alert("username should not be empty");
             } else if (password === null || password === "") {
-                alert("password shoudl not be empty");
+                alert("password shoudld not be empty");
             } else if(password === newPassword) {
-                registerAction(username, password);
+                registerAction(username, password, true);
                 setRegisterOpen(false);
                 onClose();
             } else {

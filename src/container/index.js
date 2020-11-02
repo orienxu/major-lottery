@@ -22,6 +22,7 @@ export default class MainPage extends Component {
             id: 'info',
             loggedIn: false,
             loggedInUser: "",
+            usingIp: false,
             openLoginWindow: false,
         }
     }
@@ -44,7 +45,7 @@ export default class MainPage extends Component {
 
                 </IconButton>
                 <h3 style={{ marginLeft: "7vmin" }} >专业上上签</h3>
-                {this.state.loggedInUser !== "" && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
+                {this.state.loggedIn && !this.state.usingIp && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
                 <div>
                     <IconButton
                         component={Link}
@@ -53,7 +54,7 @@ export default class MainPage extends Component {
                     >
                         <StarIcon />
                     </IconButton>
-                    {this.state.loggedInUser === "" && <IconButton
+                    {!this.state.loggedIn && <IconButton
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
@@ -67,11 +68,7 @@ export default class MainPage extends Component {
         );
     }
 
-    setUserToVisitor(ip) {
-        this.setState({
-            loggedInUser: ip
-        })
-    }
+
 
     render() {
         const { id } = this.state;
@@ -84,7 +81,11 @@ export default class MainPage extends Component {
                         <Route path="/collection/:username" exact component={CollectionPage} />
 
                         <Route path="/" exact component={() => {
-                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
+                            return <DrawPage 
+                                        loggedIn={this.state.loggedIn} 
+                                        setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
+                                        registerAction={(username, pass) => {this.onRegister(username, pass)}}
+                                        loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
                         }} />
                         <Route path="/info/:id" component={InfoPage}/>
     
@@ -95,21 +96,37 @@ export default class MainPage extends Component {
                     </Switch>
                     {/* pass additional props into loginpage */}
                     
-                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} registerAction={(username, pass) => {this.onRegister(username, pass)}} loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
+                    <LogInPage 
+                        open={this.state.openLoginWindow} 
+                        onClose={() => this.onLogInClose()} 
+                        registerAction={(username, pass, display) => {this.onRegister(username, pass, display)}} 
+                        loginAction={(username, pass, display) => {this.onLogIn(username, pass, display)}} />
                 </div>
             </Router>
         );
     }
-    
-    onLogIn(username, password) {
-        console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+
+    setUserToVisitor(ip) {
+        console.log("myip" + ip);
+        this.setState({
+            loggedInUser: ip,
+            loggedIn: true,
+            usingIp: true,
+        })
+    }
+
+    onLogIn(username, password, display) {
+        //console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
         fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
             .then(checkStatus)
             .then(data => {    
                 console.log(data) 
                 if(JSON.parse(data).success === 1) {
-                    alert("User Logged in Successfully");
+                    if(display) {
+                        alert("User Logged in Successfully");
+                    }
                     this.setState({
+                        loggedIn: true,
                         loggedInUser: username,
                     })
                 } else {
@@ -118,14 +135,16 @@ export default class MainPage extends Component {
             })
     }
 
-    onRegister(username, password) {
+    onRegister(username, password, display) {
         console.log(password + username);
         fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
             .then(checkStatus)
             .then(data => {    
                 console.log(data)                
                 if(JSON.parse(data).success === 1) {
-                    alert("Register sucessful, please log in");
+                    if(display) {
+                        alert("Register sucessful, please log in");
+                    }  
                 } else {
                     alert(JSON.parse(data).result + ", please try again");
                 }        
