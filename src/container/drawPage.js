@@ -8,19 +8,35 @@ import LinearShuffle from './LinearShuffule'
 class DrawPage extends Component {
     ANIMATION_TIMER = null;
     constructor() {
-        super();     
+        super();
         this.state = {
             //ipAddress: "",
             chancesLeft: 3,
             isFlipped: false,
             playAnimation: false,
             apiResponse: 'Node failed',
+            width: 0,
+            height: 0,
         };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         // this.handleClick = this.handleClick.bind(this);
         // this.checkUser = this.checkUser.bind(this);
         // this.getUserIP = this.getUserIP.bind(this);
     }
-    
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    }
+
     handleCardClick() {
         var self = this
         this.setState({
@@ -30,14 +46,14 @@ class DrawPage extends Component {
         //do api call here
         // if (!this.props.loggedIn) {
         //     var ip = "place holder";
-        //     //get ip 
+        //     //get ip
         //     //and set it back by calling a function passed in props
         //     this.props.setUserToVisitor(ip);
         // }
         //transition to next resultPage
         //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
 
-        this.setState({ 
+        this.setState({
             chancesLeft: this.state.chancesLeft - 1,
         })
         // document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
@@ -48,23 +64,23 @@ class DrawPage extends Component {
             You have to checck the chances everytime you call generate card
             using some sort of fetch(api)
          */
-        if(this.state.chancesLeft > 0) {
-            //update time left before transitioning
-            return <Button
-                    style={styles.button}
-                    onClick={() => {this.handleCardClick()}}
-                    >
-                    点我抽卡
-                    </Button>;
-        } else {
-            return <h1 
+        // if(this.state.chancesLeft > 0) {
+        //     //update time left before transitioning
+        //     return <Button
+        //             style={styles.button}
+        //             onClick={() => {this.handleCardClick()}}
+        //             >
+        //             点我抽卡
+        //             </Button>;
+        // } else {
+            return <h1
             style={styles.fakeButton}>
                 次数用尽
             </h1>
-        }
-        
+        // }
+
     }
-    
+
     renderContent() {
         return (
             <motion.div
@@ -73,14 +89,20 @@ class DrawPage extends Component {
                 style={styles.contentMain}
             >
                 <div style={styles.icon}>
-                    <img src={Res.cardBack} style={{ width: '55vmin' }} />
+                    <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>
                 {/* 判断是否有剩余次数 */}
-                {this.btn()}
-                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3>
+                {/* {this.btn()}
+                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3> */}
+                <Button
+                    style={styles.button}
+                    onClick={() => {this.handleCardClick()}}
+                    >
+                    点我抽卡
+                    </Button>
                 {this.state.playAnimation && <LinearShuffle /> }
-            </motion.div>                 
-                       
+            </motion.div>
+
         );
     }
 
@@ -108,7 +130,7 @@ class DrawPage extends Component {
         }
         //this.state.chancesLeft = 3;
     }
-    
+
     getUserIP() {
         fetch('https://api.ipify.org?format=jsonp?callback=?', {
           method: 'GET',
@@ -133,15 +155,14 @@ class DrawPage extends Component {
 
 }
 
-const styles = {
+let styles = {
     contentMain: {
         display: 'flex',
-        flexDirection: 'column',   
+        flexDirection: 'column',
         flex: 1,
         overflow: 'hidden',
         position: "relative",
-        backgroundImage: `url(${Res.background})`,
-        backgroundSize: "cover",
+        height: '100vh',
     },
     contentTitle: {
         marginLeft: '3vmin',
@@ -152,15 +173,15 @@ const styles = {
         flexDirection: 'column',
     },
     button: {
-        fontSize: '32px',
+        fontSize: '130%',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
         borderRadius: '3vmin',
         marginTop: '5vmin',
         marginBottom: '3vmin',
         color: 'white',
-        width: '55vmin',
-        height: '15vmin',
+        width: '25vh',
+        height: '10vh',
         display: 'flex',
         alignItems: 'center',
     },
@@ -195,7 +216,7 @@ const styles = {
         justifyContent: 'center',
     },
     LOGIN_POPUP: {
-        
+
     }
 }
 
