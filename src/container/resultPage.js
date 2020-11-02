@@ -3,10 +3,11 @@ import ReactCardFlip from 'react-card-flip';
 import Res from '../config/image';
 import './App.css';
 import ServerConfig from '../config/ServerConfig';
+import {withRouter} from 'react-router-dom'
 import { motion } from 'framer-motion'
 //import 'http://res.wx.qq.com/open/js/jweixin-1.6.0.js'; //wechat jdk
 
-export default class ResultPage extends Component {
+class ResultPage extends Component {
 
     constructor() {
         super();
@@ -181,6 +182,7 @@ export default class ResultPage extends Component {
 
     async generateNewCard() {
         let username = this.props.loggedInUser
+        console.log(username)
         if (!this.props.loggedIn) {
             alert("Cards can only be saved after login.")
         }
@@ -198,6 +200,7 @@ export default class ResultPage extends Component {
                         })
                     } else {
                         alert("Don't have enough lottery chances")
+                        this.props.history.push("/")
                     }
                 })
             this.setState(prevState => ({ isFlipped1: false, isFlipped2: false, isFlipped3: false })); 
@@ -298,3 +301,4 @@ const styles = {
     },
 }
 
+export default withRouter(ResultPage);

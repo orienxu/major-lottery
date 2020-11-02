@@ -1,11 +1,14 @@
 //import { Button } from 'react-native-elements';
-import React,  { useState } from 'react';
+import React,  { useState, useRef } from 'react';
 import './App.css';
 import { motion } from 'framer-motion';
 import TextField from '@material-ui/core/TextField';
 import { Dialog, DialogTitle, Button } from '@material-ui/core';
 
 function LogInPage(props) {
+    var username, password, newPassword;
+    let usernameInput = useRef(null);
+    let passwordInput = useRef(null);
     const {onClose, open, loginAction, registerAction} = props;
     const [registerOpen, setRegisterOpen] = useState(false)
 
@@ -15,17 +18,52 @@ function LogInPage(props) {
     }
 
     const handleLoginClick = () => {
-        loginAction();
-        onClose();
+       // console.log(username + password)
+        if(username === null || username === "") {
+            alert("username should not be empty");
+        } else if (password === null || password === "") {
+            alert("password shoudl not be empty");
+        } else {
+            loginAction(username, password);
+            onClose();
+        }
     }
 
     const handleRegisterClick = () => {
-        setRegisterOpen(true);
-        //uncomment this to perform ur api fetch
-        //registerAction();
+        if(!registerOpen) {
+            usernameInput.current.value = "";
+            passwordInput.current.value = "";
+            setRegisterOpen(true);
+        } else {
+            //console.log(password + username);
+            if(username === null || username === "") {
+                alert("username should not be empty");
+            } else if (password === null || password === "") {
+                alert("password shoudl not be empty");
+            } else if(password === newPassword) {
+                registerAction(username, password);
+                setRegisterOpen(false);
+                onClose();
+            } else {
+                console.log(password);
+                console.log(newPassword);
+                alert("password not match");
+            }
+            
+        }
         
     }
-
+    //this.handleChange = this.handleChange.bind(this);
+    const handlePasswordChange = (e) => {
+        password = e.target.value;
+    }
+    const handleUsernameChange = (e) => {
+        username = e.target.value;
+    }
+    const handleNewPasswordChange = (e) => {
+        newPassword = e.target.value;
+    }
+    
     return (
         <Dialog
         onClose={handleClose}
@@ -37,10 +75,15 @@ function LogInPage(props) {
             <DialogTitle> 登陆/注册 </DialogTitle>
                 <motion.div style={styles.contentMain} >
                         
-                        <TextField style={styles.inputs} label="Username" variant="outlined"  inputProps={INPUT_PROPS.USERNAME}/>
-                        <TextField style={styles.inputs} label="Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD}/>
-                        {registerOpen && <TextField style={styles.inputs} label="Confirm Password" variant="outlined" inputProps={INPUT_PROPS.PASSWORD}/> }
-                        {registerOpen === false && <Button style={styles.loginButton}> 登陆 </Button> }
+                        <TextField style={styles.inputs} inputRef={usernameInput} label="Username" helperText="请小于10个字符" variant="outlined"  inputProps={INPUT_PROPS.USERNAME, {maxLength: 10}} onChange={handleUsernameChange}/>
+                        <TextField style={styles.inputs} inputRef={passwordInput} label="Password" helperText="请小于20个字符" variant="outlined" inputProps={INPUT_PROPS.PASSWORD, {maxLength: 20}} onChange={handlePasswordChange}/>
+                        {registerOpen && <TextField 
+                                            style={styles.inputs} 
+                                            label="Confirm Password" 
+                                            variant="outlined" 
+                                            inputProps={INPUT_PROPS.PASSWORD} 
+                                            onChange={handleNewPasswordChange}/> }
+                        {registerOpen === false && <Button style={styles.loginButton} onClick={handleLoginClick}> 登陆 </Button> }
                         <Button style={styles.loginButton} onClick={handleRegisterClick}> 注册账号 </Button>
                 </motion.div>
 
@@ -48,15 +91,14 @@ function LogInPage(props) {
     )
 }
 
-
-const INPUT_PROPS = {
-    USERNAME: {
-        type: "email",
-    },
-    PASSWORD: {
-        type: "password",
-    }
-}
+ const INPUT_PROPS = {
+     USERNAME: {
+         type: "email",
+     },
+     PASSWORD: {
+         type: "password",
+     }
+ }
 
 const styles = {
     loginButton: {
@@ -90,4 +132,4 @@ const styles = {
     }
 }
 
-export default LogInPage
+export default LogInPage 

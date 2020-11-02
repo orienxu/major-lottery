@@ -10,7 +10,8 @@ class DrawPage extends Component {
     constructor() {
         super();
         this.state = {
-            //ipAddress: "",
+            ipAddress: "",
+            loggedIn: false,
             chancesLeft: 3,
             isFlipped: false,
             playAnimation: false,
@@ -53,10 +54,19 @@ class DrawPage extends Component {
         //transition to next resultPage
         //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
 
-        this.setState({
-            chancesLeft: this.state.chancesLeft - 1,
-        })
-        // document.getElementById("ChancesLeft").innerHTML = "剩余次数：" + this.state.chancesLeft;
+        // this.setState({ 
+        //     chancesLeft: this.state.chancesLeft - 1,
+        // })
+
+        // update chancesLeft
+        //let username = this.props.username;
+        // let username = "weifeng";
+        // fetch(ServerConfig.SERVER_URL + ServerConfig.UPDATE_TIME + username)
+        // .then(checkStatus)
+        // .then(data => {    
+        //     console.log(data); 
+        //     //console.log(JSON.parse(data).result);
+        // })
     }
 
     btn = () => {
@@ -64,21 +74,25 @@ class DrawPage extends Component {
             You have to checck the chances everytime you call generate card
             using some sort of fetch(api)
          */
+        // this.getUserInfo();
+        
         // if(this.state.chancesLeft > 0) {
         //     //update time left before transitioning
-        //     return <Button
-        //             style={styles.button}
-        //             onClick={() => {this.handleCardClick()}}
-        //             >
-        //             点我抽卡
-        //             </Button>;
+             return <Button
+                     //component={Link}
+                     //to="/result"
+                     style={styles.button}
+                     onClick={() => {this.handleCardClick()}}
+                     >
+                     点我抽卡
+                     </Button>;
         // } else {
-            return <h1
-            style={styles.fakeButton}>
-                次数用尽
-            </h1>
+        //     return <h1 
+        //     style={styles.fakeButton}>
+        //         次数用尽
+        //     </h1>
         // }
-
+        
     }
 
     renderContent() {
@@ -92,14 +106,7 @@ class DrawPage extends Component {
                     <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>
                 {/* 判断是否有剩余次数 */}
-                {/* {this.btn()}
-                <h3 id = "ChancesLeft" style={styles.rec}>{this.state.chancesLeft}</h3> */}
-                <Button
-                    style={styles.button}
-                    onClick={() => {this.handleCardClick()}}
-                    >
-                    点我抽卡
-                    </Button>
+                {this.btn()}
                 {this.state.playAnimation && <LinearShuffle /> }
             </motion.div>
 
@@ -107,9 +114,7 @@ class DrawPage extends Component {
     }
 
     // check user status
-    componentWillMount () {
-        //Dont do any ip checking here, component are not loaded
-        this.checkUser();
+    componentWillMount () {       
     }
 
     componentWillUnmount() {
@@ -117,34 +122,47 @@ class DrawPage extends Component {
     }
 
     componentDidMount () {
-        //You could do this by updating the state
+
     }
 
-    //问题在于getUserIp可以得到ip 但是传不回来
-    async checkUser() {
-        if(!this.state.loggedIn) {
-            console.log(this.getUserIP());
-            // check ip and get chancesleft
-        } else {
-            // get chancesleft
-        }
-        //this.state.chancesLeft = 3;
-    }
-
-    getUserIP() {
-        fetch('https://api.ipify.org?format=jsonp?callback=?', {
-          method: 'GET',
-          headers: {},
-        })
-        .then(res => {
-          return res.text()
-        }).then(ip => {
-            //dont return the result, set it to a state, it automatically updates the page where that state is used.
-            return ip;
-            //console.log(this.state.ipAddress);
-        });
-    }
-
+    // getUserInfo() {
+    //     let username = "";
+    //     if(!this.state.loggedIn) {
+    //         this.getUserIP();
+    //         username = this.state.ipAddress;
+    //     } else {
+    //         //username = this.props.username;
+    //     }
+    //     username = "weifeng";
+    //     if (username !== null && username !== "") {
+    //         fetch(ServerConfig.SERVER_URL + ServerConfig.CHECK_TIME + username)
+    //             .then(checkStatus)
+    //             .then(data => {    
+    //                 //console.log(data); 
+    //                 //console.log(JSON.parse(data).result);
+    //                 this.setState({
+    //                     chancesLeft: JSON.parse(data).result
+    //                 });
+    //             })
+    //     } else {
+    //         alert("User are not suppose to be here if not logged in, please file a bug")
+    //     }
+         
+    // }
+    // async getUserIP() {
+    //     fetch('https://api.ipify.org?format=jsonp?callback=?', {
+    //       method: 'GET',
+    //       headers: {},
+    //     })
+    //     .then(res => {
+    //       return res.text()
+    //     }).then(ip => {
+    //         this.setState({
+    //             ipAddress: ip,
+    //         })
+    //         console.log(this.state.ipAddress);
+    //     });
+    // }
     render() {
         return (
             <div className="App">
@@ -155,8 +173,9 @@ class DrawPage extends Component {
 
 }
 
-let styles = {
+const styles = {
     contentMain: {
+        height: "80vh",
         display: 'flex',
         flexDirection: 'column',
         flex: 1,

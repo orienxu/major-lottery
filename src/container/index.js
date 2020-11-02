@@ -21,7 +21,7 @@ export default class MainPage extends Component {
         this.state = {
             id: 'info',
             loggedIn: false,
-            loggedInUser: "weifeng",
+            loggedInUser: "",
             openLoginWindow: false,
         }
     }
@@ -44,6 +44,7 @@ export default class MainPage extends Component {
 
                 </IconButton>
                 <h3 style={{ marginLeft: "7vmin" }} >专业上上签</h3>
+                {this.state.loggedInUser !== "" && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
                 <div>
                     <IconButton
                         component={Link}
@@ -52,7 +53,7 @@ export default class MainPage extends Component {
                     >
                         <StarIcon />
                     </IconButton>
-                    <IconButton
+                    {this.state.loggedInUser === "" && <IconButton
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
@@ -60,7 +61,7 @@ export default class MainPage extends Component {
                             style={{ marginLeft: '-3vmin' }}
 
                         />
-                    </IconButton>
+                    </IconButton>}
                 </div>
             </div >
         );
@@ -85,23 +86,48 @@ export default class MainPage extends Component {
                         <Route path="/" exact component={() => {
                             return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
                         }} />
-
-                        <Route path="/info/:majorname" component={InfoPage} />
+                        <Route path="/info/:id" component={InfoPage}/>
+    
+                        <Route path = "/collection/:username" exact component={CollectionPage}/>
                         <Route path="/result" component={ResultPage}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
-                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} logInAction={(username, pass) => { this.onLogIn(username, pass) }} />
+                    
+                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} registerAction={(username, pass) => {this.onRegister(username, pass)}} loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
                 </div>
             </Router>
         );
     }
-
+    
     onLogIn(username, password) {
-
+        console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+        fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+            .then(checkStatus)
+            .then(data => {    
+                console.log(data) 
+                if(JSON.parse(data).success === 1) {
+                    alert("User Logged in Successfully");
+                    this.setState({
+                        loggedInUser: username,
+                    })
+                } else {
+                    alert(JSON.parse(data).result + ", please try again");
+                }         
+            })
     }
 
     onRegister(username, password) {
-
+        console.log(password + username);
+        fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
+            .then(checkStatus)
+            .then(data => {    
+                console.log(data)                
+                if(JSON.parse(data).success === 1) {
+                    alert("Register sucessful, please log in");
+                } else {
+                    alert(JSON.parse(data).result + ", please try again");
+                }        
+            })
     }
 
     onLogInClose() {
@@ -109,6 +135,18 @@ export default class MainPage extends Component {
             openLoginWindow: false,
         })
     }
+    
+
+}
+
+function checkStatus(response) { 
+    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
+        console.log(5)
+        return response.text();
+    } else { 
+        console.log(5) 
+        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+    } 
 }
 
 const styles = {
