@@ -112,7 +112,7 @@ class DrawPage extends Component {
                 // transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
-                {this.props.loggedInUser !== "" && <h3 style={{ textAlign: "center", color: "white", marginTop: "8vh"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
+                {this.props.loggedInUser !== "" && !this.props.usingIp && <h3 style={{ textAlign: "center", color: "white", marginTop: "8vh"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
                 <div style={styles.icon}>
                     <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>

@@ -96,7 +96,9 @@ export default class MainPage extends Component {
                                         loggedInUser={this.state.loggedInUser} 
                                         setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
                                         async registerAction={(username, pass) => {this.onRegister(username, pass)}}
-                                        loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
+                                        loginAction={(username, pass) => {this.onLogIn(username, pass)}} 
+                                        usingIp={this.state.usingIp}/>
+                                        
                         }} />
                         <Route path="/info/:id" component={InfoPage}/>
     
@@ -141,9 +143,7 @@ export default class MainPage extends Component {
                     }
                     this.setState({
                         loggedIn: true,
-                        loggedInUser: username,
-                        loggedIn: true,
-                    })
+                        loggedInUser: username,                    })
                 } else {
                     alert(JSON.parse(data).result + ", please try again");
                 }         
