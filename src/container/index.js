@@ -84,7 +84,7 @@ export default class MainPage extends Component {
                             return <DrawPage 
                                         loggedIn={this.state.loggedIn} 
                                         setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
-                                        registerAction={(username, pass) => {this.onRegister(username, pass)}}
+                                        async registerAction={(username, pass) => {this.onRegister(username, pass)}}
                                         loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
                         }} />
                         <Route path="/info/:id" component={InfoPage}/>
@@ -135,7 +135,7 @@ export default class MainPage extends Component {
             })
     }
 
-    onRegister(username, password, display) {
+    async onRegister(username, password, display) {
         console.log(password + username);
         fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
             .then(checkStatus)

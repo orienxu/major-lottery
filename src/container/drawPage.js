@@ -9,6 +9,7 @@ import ServerConfig from '../config/ServerConfig';
 
 class DrawPage extends Component {
     ANIMATION_TIMER = null;
+    LOGIN_TIMER = null;
     constructor() {
         
         super();
@@ -44,7 +45,8 @@ class DrawPage extends Component {
     handleCardClick() {        
         
         if (!this.props.loggedIn) {
-            console.log(this.state.ipAddress)
+            console.log(this.state.ipAddress);
+            //console.log("temp" + this.state.ipAddress);
             alert("用户未登录，抽卡结果将不会保存")
             this.props.setUserToVisitor(this.state.ipAddress);
             fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + this.state.ipAddress + ServerConfig.LOGIN_PASS + this.state.guestPassword)
@@ -52,9 +54,12 @@ class DrawPage extends Component {
             .then(data => {    
                 console.log(data) 
                 if(JSON.parse(data).success === 0) {
+                    console.log("1");
+                    //setTimeout(this.props.registerAction(this.state.ipAddress, this.state.guestPassword, false), 10000);
                     this.props.registerAction(this.state.ipAddress, this.state.guestPassword, false);
                 }
-                this.props.loginAction(this.state.ipAddress, this.state.guestPassword, false);        
+                console.log("2");
+                this.LOGIN_TIMER = setTimeout(() => {this.props.loginAction(this.state.ipAddress, this.state.guestPassword, false)}, 1000);      
             })
         }
         //transition to next resultPage
@@ -139,6 +144,7 @@ class DrawPage extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.ANIMATION_TIMER)
+        clearTimeout(this.LOGIN_TIMER)
     }
 
     componentDidMount () {
