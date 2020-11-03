@@ -5,14 +5,17 @@ import './App.css';
 import {motion} from 'framer-motion'
 import {withRouter} from 'react-router-dom'
 import LinearShuffle from './LinearShuffule'
+import ServerConfig from '../config/ServerConfig';
+
 class DrawPage extends Component {
     ANIMATION_TIMER = null;
     constructor() {
+        
         super();
         this.state = {
             ipAddress: "",
             loggedIn: false,
-            chancesLeft: 3,
+            guestPassword: "guest",
             isFlipped: false,
             playAnimation: false,
             apiResponse: 'Node failed',
@@ -38,19 +41,21 @@ class DrawPage extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
-    handleCardClick() {
-        var self = this
-        this.setState({
-            playAnimation: true
-        })
-        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
-        //do api call here
-        // if (!this.props.loggedIn) {
-        //     var ip = "place holder";
-        //     //get ip
-        //     //and set it back by calling a function passed in props
-        //     this.props.setUserToVisitor(ip);
-        // }
+    handleCardClick() {        
+        
+        if (!this.props.loggedIn) {
+            console.log(this.state.ipAddress)
+            this.props.setUserToVisitor(this.state.ipAddress);
+            fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + this.state.ipAddress + ServerConfig.LOGIN_PASS + this.state.guestPassword)
+            .then(checkStatus)
+            .then(data => {    
+                console.log(data) 
+                if(JSON.parse(data).success === 0) {
+                    this.props.registerAction(this.state.ipAddress, this.state.guestPassword, false);
+                }
+                this.props.loginAction(this.state.ipAddress, this.state.guestPassword, false);        
+            })
+        }
         //transition to next resultPage
         //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
 
@@ -59,14 +64,13 @@ class DrawPage extends Component {
         // })
 
         // update chancesLeft
-        //let username = this.props.username;
-        // let username = "weifeng";
-        // fetch(ServerConfig.SERVER_URL + ServerConfig.UPDATE_TIME + username)
-        // .then(checkStatus)
-        // .then(data => {    
-        //     console.log(data); 
-        //     //console.log(JSON.parse(data).result);
-        // })
+
+
+        var self = this
+        this.setState({
+            playAnimation: true
+        })
+        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
     }
 
     btn = () => {
@@ -102,7 +106,7 @@ class DrawPage extends Component {
                 // transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
-                {this.props.loggedInUser !== "" && <h3 style={{ textAlign: "center", color: "white"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
+                {this.props.loggedInUser !== "" && <h3 style={{ textAlign: "center", color: "white", marginTop: "8vh"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
                 <div style={styles.icon}>
                     <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>
@@ -114,8 +118,23 @@ class DrawPage extends Component {
         );
     }
 
+    getIp() {
+        fetch('https://api.ipify.org?format=jsonp?callback=?', {
+            method: 'GET',
+            headers: {},
+            })
+            .then(res => {
+                return res.text()
+            }).then(ip => {
+                this.setState({
+                    ipAddress: ip,
+                })
+                //console.log(this.state.ipAddress);
+            });
+    }
     // check user status
     componentWillMount () {       
+        this.getIp();
     }
 
     componentWillUnmount() {
@@ -164,6 +183,7 @@ class DrawPage extends Component {
     //         console.log(this.state.ipAddress);
     //     });
     // }
+    
     render() {
         return (
             <div className="App" >
@@ -174,6 +194,15 @@ class DrawPage extends Component {
 
 }
 
+function checkStatus(response) { 
+    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
+        console.log(5)
+        return response.text();
+    } else { 
+        console.log(5) 
+        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+    } 
+}
 const styles = {
     contentMain: {
         height: "80vh",
@@ -183,6 +212,10 @@ const styles = {
         overflow: 'hidden',
         position: "relative",
         height: '100vh',
+        backgroundImage: `url(${Res.background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
     },
     contentTitle: {
         marginLeft: '3vmin',

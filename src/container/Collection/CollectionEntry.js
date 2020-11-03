@@ -92,8 +92,9 @@ const styles = {
         fontFamily: 'Ro',
         fontStyle: 'normal',
         fontWeight: 'normal',
-        fontSize: '2.0vh',
+        fontSize: '3.0vh',
         display: 'flex',
+        margin: "auto",
         lineHeight: '4.8vh',
     },
     majorQuote: {
@@ -102,6 +103,7 @@ const styles = {
     ul: {
         textAlign: "center",
         listStyleType: 'none',
+        margin: "auto"
     }
 }
 

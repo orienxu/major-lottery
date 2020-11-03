@@ -15,6 +15,7 @@ import LogInPage from './LoginPage';
 import ServerConfig from '../config/ServerConfig';
 import { AppBar } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import ResultPagePC from './resultPagePC'
 export default class MainPage extends Component {
 
     constructor() {
@@ -23,7 +24,9 @@ export default class MainPage extends Component {
             id: 'info',
             loggedIn: false,
             loggedInUser: "",
+            usingIp: false,
             openLoginWindow: false,
+            width: 0,
         }
     }
 
@@ -56,7 +59,7 @@ export default class MainPage extends Component {
                     >
                         <StarIcon />
                     </IconButton>
-                    {this.state.loggedInUser === "" && <IconButton
+                    {!this.state.loggedIn && <IconButton
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
@@ -70,9 +73,10 @@ export default class MainPage extends Component {
         );
     }
 
-    setUserToVisitor(ip) {
+    componentDidMount() {
+        let current = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
         this.setState({
-            loggedInUser: ip
+            width: current
         })
     }
 
@@ -87,32 +91,56 @@ export default class MainPage extends Component {
                         <Route path="/collection/:username" exact component={CollectionPage} />
 
                         <Route path="/" exact component={() => {
-                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} loggedInUser={this.state.loggedInUser}/>
+                            return <DrawPage 
+                                        loggedIn={this.state.loggedIn}
+                                        loggedInUser={this.state.loggedInUser} 
+                                        setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
+                                        registerAction={(username, pass) => {this.onRegister(username, pass)}}
+                                        loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
                         }} />
                         <Route path="/info/:id" component={InfoPage}/>
     
                         <Route path = "/collection/:username" exact component={CollectionPage}/>
                         <Route path="/result" component={() => {
-                            return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                            if (this.state.width > 768)
+                                return <ResultPagePC loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                            else 
+                                return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
                         }}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
                     
-                    <LogInPage open={this.state.openLoginWindow} onClose={() => this.onLogInClose()} registerAction={(username, pass) => {this.onRegister(username, pass)}} loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
+                    <LogInPage 
+                        open={this.state.openLoginWindow} 
+                        onClose={() => this.onLogInClose()} 
+                        registerAction={(username, pass, display) => {this.onRegister(username, pass, display)}} 
+                        loginAction={(username, pass, display) => {this.onLogIn(username, pass, display)}} />
                 </div>
             </Router>
         );
     }
-    
-    onLogIn(username, password) {
-        console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
+
+    setUserToVisitor(ip) {
+        console.log("myip" + ip);
+        this.setState({
+            loggedInUser: ip,
+            loggedIn: true,
+            usingIp: true,
+        })
+    }
+
+    onLogIn(username, password, display) {
+        //console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
         fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
             .then(checkStatus)
             .then(data => {    
                 console.log(data) 
                 if(JSON.parse(data).success === 1) {
-                    alert("User Logged in Successfully");
+                    if(display) {
+                        alert("User Logged in Successfully");
+                    }
                     this.setState({
+                        loggedIn: true,
                         loggedInUser: username,
                         loggedIn: true,
                     })
@@ -122,14 +150,16 @@ export default class MainPage extends Component {
             })
     }
 
-    onRegister(username, password) {
+    onRegister(username, password, display) {
         console.log(password + username);
         fetch(ServerConfig.SERVER_URL + ServerConfig.REGISTER_NAME + username + ServerConfig.REGISTER_PASS + password)
             .then(checkStatus)
             .then(data => {    
                 console.log(data)                
                 if(JSON.parse(data).success === 1) {
-                    alert("Register sucessful, please log in");
+                    if(display) {
+                        alert("Register sucessful, please log in");
+                    }  
                 } else {
                     alert(JSON.parse(data).result + ", please try again");
                 }        

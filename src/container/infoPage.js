@@ -88,17 +88,17 @@ export default class InfoPage extends Component {
           </div>
           <div style={{ width: '100vmin', height: '100%' }}>
             <h3 style={{
-              alignSelf: 'flex-start',
-              marginLeft: '5vmin',
+              alignSelf: 'flex-center',
+              marginLeft: 'auto',
               marginTop: '6vmin',
               fontFamily: 'PingFang SC',
               fontSize: '24px',
               lineHeight: '34px',
               fontWeight: '500'
             }}>
-              专业介绍
+              专业介绍请扫描下方二维码
             </h3>
-            
+            <img src={Res[this.state.major + "qr"]} style={{}}/>
           </div>
         </div>
       </div>

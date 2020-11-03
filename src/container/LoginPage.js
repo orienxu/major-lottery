@@ -22,9 +22,9 @@ function LogInPage(props) {
         if(username === null || username === "") {
             alert("username should not be empty");
         } else if (password === null || password === "") {
-            alert("password shoudl not be empty");
+            alert("password should not be empty");
         } else {
-            loginAction(username, password);
+            loginAction(username, password, true);
             onClose();
         }
     }
@@ -39,9 +39,9 @@ function LogInPage(props) {
             if(username === null || username === "") {
                 alert("username should not be empty");
             } else if (password === null || password === "") {
-                alert("password shoudl not be empty");
+                alert("password shoudld not be empty");
             } else if(password === newPassword) {
-                registerAction(username, password);
+                registerAction(username, password, true);
                 setRegisterOpen(false);
                 onClose();
             } else {
@@ -76,7 +76,7 @@ function LogInPage(props) {
                 <motion.div style={styles.contentMain} >
                         
                         <TextField style={styles.inputs} inputRef={usernameInput} label="Username" helperText="请小于10个字符" variant="outlined"  inputProps={INPUT_PROPS.USERNAME, {maxLength: 10}} onChange={handleUsernameChange}/>
-                        <TextField style={styles.inputs} inputRef={passwordInput} label="Password" helperText="请小于20个字符" variant="outlined" inputProps={INPUT_PROPS.PASSWORD, {maxLength: 20}} onChange={handlePasswordChange}/>
+                        <TextField style={styles.inputs} inputRef={passwordInput} label="Password" helperText="请小于20个字符" variant="outlined" inputProps={INPUT_PROPS.PASSWORD} onChange={handlePasswordChange}/>
                         {registerOpen && <TextField 
                                             style={styles.inputs} 
                                             label="Confirm Password" 
@@ -97,6 +97,7 @@ function LogInPage(props) {
      },
      PASSWORD: {
          type: "password",
+         maxLength: 20
      }
  }
 
