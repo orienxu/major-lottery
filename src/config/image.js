@@ -24,5 +24,5 @@ export default {
     biochem: require('../res/biochem.png'),
     stat: require('../res/stat.png'),
     biochem: require('../res/biochem.png'),
-    //background: require('../res/background1.png')
+    background: require('../res/bestBack.jpeg')
 }

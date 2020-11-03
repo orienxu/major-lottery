@@ -1,10 +1,10 @@
 export default {
     "design": "#F5D7AC80",
-    "acms": "#B7A57F80",
+    "acms": "#B7A57F80", 
     "biochem": "#E878EA80",
     "math": "#E6959180",
     "psych": "#F1ABA380",
-    "stats": "#E7DBB480",
+    "stats": "#E7DBB480", 
     "com": "#E7DBDB80",
     "ee": "#8EB8DE80",
     "cse": "#C0C2C380",

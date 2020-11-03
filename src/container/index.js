@@ -13,7 +13,8 @@ import { motion } from "framer-motion";
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LogInPage from './LoginPage';
 import ServerConfig from '../config/ServerConfig';
-
+import { AppBar } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 export default class MainPage extends Component {
 
     constructor() {
@@ -33,7 +34,7 @@ export default class MainPage extends Component {
     renderTop() {
         const { id } = this.state;
         return (
-            <div style={styles.topMain}>
+            <AppBar style={styles.topMain}>
                 <IconButton
                     component={Link}
                     to={"/"}
@@ -43,8 +44,10 @@ export default class MainPage extends Component {
                     <HomeIcon />
 
                 </IconButton>
-                <h3 style={{ marginLeft: "7vmin" }} >专业上上签</h3>
-                {this.state.loggedInUser !== "" && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
+                <Typography variant="h6" style={{color: "black"}}>
+                专业上上签
+                </Typography>
+            
                 <div>
                     <IconButton
                         component={Link}
@@ -63,7 +66,7 @@ export default class MainPage extends Component {
                         />
                     </IconButton>}
                 </div>
-            </div >
+            </AppBar >
         );
     }
 
@@ -84,7 +87,7 @@ export default class MainPage extends Component {
                         <Route path="/collection/:username" exact component={CollectionPage} />
 
                         <Route path="/" exact component={() => {
-                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} />
+                            return <DrawPage loggedIn={this.state.loggedIn} setUserToVisitor={(ip) => { this.setUserToVisitor(ip) }} loggedInUser={this.state.loggedInUser}/>
                         }} />
                         <Route path="/info/:id" component={InfoPage}/>
     
@@ -111,6 +114,7 @@ export default class MainPage extends Component {
                     alert("User Logged in Successfully");
                     this.setState({
                         loggedInUser: username,
+                        loggedIn: true,
                     })
                 } else {
                     alert(JSON.parse(data).result + ", please try again");

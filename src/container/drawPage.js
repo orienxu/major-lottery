@@ -98,10 +98,11 @@ class DrawPage extends Component {
     renderContent() {
         return (
             <motion.div
-                animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
-                transition={{duration:10, yoyo:Infinity}}
+                // animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
+                // transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
+                {this.props.loggedInUser !== "" && <h3 style={{ textAlign: "center", color: "white"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
                 <div style={styles.icon}>
                     <img src={Res.cardBack} style={{ width: '90%' }} />
                 </div>
@@ -165,7 +166,7 @@ class DrawPage extends Component {
     // }
     render() {
         return (
-            <div className="App">
+            <div className="App" >
                 {this.renderContent()}
             </div>
         );
