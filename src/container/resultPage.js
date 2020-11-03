@@ -5,6 +5,7 @@ import './App.css';
 import ServerConfig from '../config/ServerConfig';
 import {withRouter} from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Button } from '@material-ui/core';
 //import 'http://res.wx.qq.com/open/js/jweixin-1.6.0.js'; //wechat jdk
 
 class ResultPage extends Component {
@@ -32,10 +33,10 @@ class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res.cardBack} style={{ width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
                 <div>
-                    <img src={Res[img]} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res[img]} style={{  width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
             </ReactCardFlip>
         );
@@ -49,10 +50,10 @@ class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} style={{  width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res.cardBack} style={{  width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
                 <div>
-                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
+                    <img src={Res[img]} style={{ width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick2} />
                 </div>
             </ReactCardFlip>
         );
@@ -66,10 +67,10 @@ class ResultPage extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res.cardBack} style={{ width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
                 <div>
-                    <img src={Res[img]} style={{ width: '25vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
+                    <img src={Res[img]} style={{ width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick3} />
                 </div>
             </ReactCardFlip>
         );
@@ -94,12 +95,6 @@ class ResultPage extends Component {
     renderContent() {
         return (
             <div style={styles.content}>
-                <div
-                    // style={{
-                    //     width: '100vmin',
-                    //     height: '60vh',
-                    // }}
-                >
                     <motion.div
                         initial={{
                             y: "18vh"
@@ -147,7 +142,6 @@ class ResultPage extends Component {
                             {this.card3(this.state.cardResult[2])}
                         </motion.div>
                     </div>
-                </div>
             </div >
         );
     }
@@ -155,9 +149,9 @@ class ResultPage extends Component {
     renderBottom() {
         return (
             <div style={styles.box}>
-                <button style={styles.button} onClick = {() => this.generateNewCard()}>
+                <Button style={styles.button} onClick = {() => this.generateNewCard()}>
                     再抽一次
-                </button>
+                </Button>
             </div>
         );
     }
@@ -204,8 +198,6 @@ class ResultPage extends Component {
                     }
                 })
             this.setState(prevState => ({ isFlipped1: false, isFlipped2: false, isFlipped3: false })); 
-        } else {
-            alert("User are not suppose to be here if not logged in, please file a bug")
         }
     }
 
@@ -242,30 +234,26 @@ function checkStatus(response) {
 }
 
 const styles = {
-    main: {
-        height: '100vh',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        flex: 1,
-        backgroundColor: '#FEFA5DD',
-        
-    },
     contentMain: {
         display: 'flex',
+        height: '100vh',
         flexDirection: 'column',
         alignItems: 'flex-center',
         flex: 1,
         overflow: 'hidden',
         backgroundImage: `url(${Res.background})`,
         backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
     },
     content: {
         display: 'flex',
         flexDirection: 'column',
         alignSelf: 'center',
         paddingTop: '10vh',
+        // backgroundImage: `url(${Res.background})`,
+        // backgroundSize: "cover",
+
     },
     box: {
         //display: 'flex',
@@ -273,12 +261,6 @@ const styles = {
         paddingBottom: '10vh',
         alignSelf: 'center',
     },
-    // rec: {
-    //     backgroundColor: '#C4C4C4',
-    //     borderRadius: '2vmin',
-    //     margin: '10vmin',
-    //     width: '30vmin',
-    // },
     button: {
         fontSize: '130%',
         alignSelf: 'center',
@@ -289,7 +271,7 @@ const styles = {
         color: 'white',
         width: '25vh',
         height: '10vh',
-        display: 'block',
+        display: 'flex',
         alignItems: 'center',
     },
     initalStyle: {

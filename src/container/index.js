@@ -13,7 +13,9 @@ import { motion } from "framer-motion";
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LogInPage from './LoginPage';
 import ServerConfig from '../config/ServerConfig';
-
+import { AppBar } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import ResultPagePC from './resultPagePC'
 export default class MainPage extends Component {
 
     constructor() {
@@ -24,6 +26,7 @@ export default class MainPage extends Component {
             loggedInUser: "",
             usingIp: false,
             openLoginWindow: false,
+            width: 0,
         }
     }
 
@@ -34,7 +37,7 @@ export default class MainPage extends Component {
     renderTop() {
         const { id } = this.state;
         return (
-            <div style={styles.topMain}>
+            <AppBar style={styles.topMain}>
                 <IconButton
                     component={Link}
                     to={"/"}
@@ -44,8 +47,10 @@ export default class MainPage extends Component {
                     <HomeIcon />
 
                 </IconButton>
-                <h3 style={{ marginLeft: "7vmin" }} >专业上上签</h3>
-                {this.state.loggedIn && !this.state.usingIp && <h3 style={{ textAlign: "center" }} > Welcome! {this.state.loggedInUser}</h3>}
+                <Typography variant="h6" style={{color: "black"}}>
+                专业上上签
+                </Typography>
+            
                 <div>
                     <IconButton
                         component={Link}
@@ -64,11 +69,16 @@ export default class MainPage extends Component {
                         />
                     </IconButton>}
                 </div>
-            </div >
+            </AppBar >
         );
     }
 
-
+    componentDidMount() {
+        let current = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+        this.setState({
+            width: current
+        })
+    }
 
     render() {
         const { id } = this.state;
@@ -82,7 +92,8 @@ export default class MainPage extends Component {
 
                         <Route path="/" exact component={() => {
                             return <DrawPage 
-                                        loggedIn={this.state.loggedIn} 
+                                        loggedIn={this.state.loggedIn}
+                                        loggedInUser={this.state.loggedInUser} 
                                         setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
                                         async registerAction={(username, pass) => {this.onRegister(username, pass)}}
                                         loginAction={(username, pass) => {this.onLogIn(username, pass)}} />
@@ -91,7 +102,10 @@ export default class MainPage extends Component {
     
                         <Route path = "/collection/:username" exact component={CollectionPage}/>
                         <Route path="/result" component={() => {
-                            return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                            if (this.state.width > 768)
+                                return <ResultPagePC loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                            else 
+                                return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
                         }}/>
                     </Switch>
                     {/* pass additional props into loginpage */}
@@ -128,6 +142,7 @@ export default class MainPage extends Component {
                     this.setState({
                         loggedIn: true,
                         loggedInUser: username,
+                        loggedIn: true,
                     })
                 } else {
                     alert(JSON.parse(data).result + ", please try again");

@@ -24,5 +24,22 @@ export default {
     biochem: require('../res/biochem.png'),
     stat: require('../res/stat.png'),
     biochem: require('../res/biochem.png'),
-    //background: require('../res/background1.png')
+    background: require('../res/bestBack.jpeg'),
+
+    acmsqr: require('../res/acmsqr.png'),
+    archqr: require('../res/majorQR.jpeg'),
+    chemqr: require('../res/majorQR.jpeg'),
+    comqr: require('../res/comqr.png'),
+    cseqr: require('../res/cseqr.png'),
+    designqr: require('../res/majorQR.jpeg'),
+    eeqr: require('../res/majorQR.jpeg'),
+    fosterqr: require('../res/fosterqr.png'),
+    infoqr: require('../res/infoqr.png'),
+    mathqr: require('../res/majorQR.jpeg'),
+    meqr: require('../res/majorQR.jpeg'),
+    musicqr: require('../res/majorQR.jpeg'),
+    physqr: require('../res/majorQR.jpeg'),
+    psychqr: require('../res/psychqr.png'),
+    biochemqr: require('../res/majorQR.jpeg'),
+    statqr: require('../res/statqr.png'),
 }
