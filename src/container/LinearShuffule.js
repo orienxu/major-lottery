@@ -23,7 +23,7 @@ const LinearShuffule = () => {
     const cards = ALL.map(card => {
         return createCard({image: card})
     })
-    console.log(cards.length)
+    
     return (
         <Page
             style={STYLE.ANIMATION_DIV}

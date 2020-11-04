@@ -16,8 +16,9 @@ import ServerConfig from '../config/ServerConfig';
 import { AppBar } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ResultPagePC from './resultPagePC'
-import { Toolbar } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import InfoPagePC from './infoPagePC';
+
+import {Button,Toolbar } from '@material-ui/core';
 export default class MainPage extends Component {
 
     constructor() {
@@ -212,6 +213,7 @@ export default class MainPage extends Component {
                                             usingIp={this.state.usingIp}/>
                                             
                             }} />
+                            {this.state.width > 768 && <Route path="/info/:id" component={InfoPagePC}/>}
                             <Route path="/info/:id" component={InfoPage}/>
         
                             <Route path = "/collection/:username" exact component={CollectionPage}/>

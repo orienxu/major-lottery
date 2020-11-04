@@ -83,6 +83,7 @@ const styles = {
         background: '#EDD29D',
         boxShadow: '4px 4px 4px rgba(0, 0, 0, 0.25)',
         borderRadius: '28px',
+        
     },
     img: {
         width: '40vmin',
@@ -91,19 +92,24 @@ const styles = {
     majorName: {
         fontFamily: 'Ro',
         fontStyle: 'normal',
-        fontWeight: 'normal',
-        fontSize: '3.0vh',
+        fontWeight: 'bold',
+        fontSize: '2.5vh',
         display: 'flex',
-        margin: "auto",
         lineHeight: '4.8vh',
+        // marginLeft: "auto",
+        // marginRight: "auto",
+        justifyContent: 'center',
     },
     majorQuote: {
-        display: 'flex',
+        justifyContent: 'center',
     },
     ul: {
+        flexDirection: "column",
+        display: 'flex',
         textAlign: "center",
         listStyleType: 'none',
-        margin: "auto"
+        marginLeft: "auto",
+        marginRight: "auto",
     }
 }
 

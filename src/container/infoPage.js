@@ -8,6 +8,7 @@ export default class InfoPage extends Component {
 
   constructor(match) {
     super();
+    console.log(match)
     this.state = {
       apiResponse: 'Node failed',
       major: match['match']['params']['id']
@@ -33,6 +34,7 @@ export default class InfoPage extends Component {
         alignItems: 'center',
         flex: 1,
         display: 'flex',
+
         flexDirection: 'column',
         backgroundColor: BackgroundColor[this.state.major],}}
       >
@@ -53,8 +55,8 @@ export default class InfoPage extends Component {
         >
           <div
             style={{
-              width: '98vmin',
-              height: '35vmin',
+              width: '100vmin',
+              height: '25vmin',
               borderRadius: 30,
               backgroundColor: '#FFFDED',
               border: '2px',
@@ -78,8 +80,8 @@ export default class InfoPage extends Component {
           </div>
           <div
             style={{
-              width: '94vmin',
-              height: '2vmin',
+              width: '90%',
+              height: '1vmin',
               background: '#AAAAAA',
               marginTop: '7vmin',
             }}
@@ -92,11 +94,11 @@ export default class InfoPage extends Component {
               marginLeft: 'auto',
               marginTop: '6vmin',
               fontFamily: 'PingFang SC',
-              fontSize: '24px',
+              fontSize: '20px',
               lineHeight: '34px',
               fontWeight: '500'
             }}>
-              专业介绍请扫描下方二维码
+              专业介绍
             </h3>
             <img src={Res[this.state.major + "qr"]} style={{}}/>
           </div>
