@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.0112fc09.chunk.css",
-    "main.js": "/static/js/main.8b28249e.chunk.js",
-    "main.js.map": "/static/js/main.8b28249e.chunk.js.map",
+    "main.css": "/static/css/main.8f506c39.chunk.css",
+    "main.js": "/static/js/main.5f1b5765.chunk.js",
+    "main.js.map": "/static/js/main.5f1b5765.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.83c3e0c4.js",
     "runtime-main.js.map": "/static/js/runtime-main.83c3e0c4.js.map",
-    "static/js/2.d0185a41.chunk.js": "/static/js/2.d0185a41.chunk.js",
-    "static/js/2.d0185a41.chunk.js.map": "/static/js/2.d0185a41.chunk.js.map",
+    "static/js/2.1570275c.chunk.js": "/static/js/2.1570275c.chunk.js",
+    "static/js/2.1570275c.chunk.js.map": "/static/js/2.1570275c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.b6c66c25cba8cab90edb6d82dab823bc.js": "/precache-manifest.b6c66c25cba8cab90edb6d82dab823bc.js",
+    "precache-manifest.a231138a246ea2f721793a3b87d3f34d.js": "/precache-manifest.a231138a246ea2f721793a3b87d3f34d.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.0112fc09.chunk.css.map": "/static/css/main.0112fc09.chunk.css.map",
-    "static/js/2.d0185a41.chunk.js.LICENSE.txt": "/static/js/2.d0185a41.chunk.js.LICENSE.txt",
+    "static/css/main.8f506c39.chunk.css.map": "/static/css/main.8f506c39.chunk.css.map",
+    "static/js/2.1570275c.chunk.js.LICENSE.txt": "/static/js/2.1570275c.chunk.js.LICENSE.txt",
     "static/media/Hearthstone.jpg": "/static/media/Hearthstone.ed328439.jpg",
     "static/media/acms.png": "/static/media/acms.83d37c38.png",
     "static/media/arch.png": "/static/media/arch.5a35a211.png",
+    "static/media/bestBack.jpeg": "/static/media/bestBack.3a721d18.jpeg",
     "static/media/biochem.png": "/static/media/biochem.081136d6.png",
     "static/media/card-back.png": "/static/media/card-back.4a2cbc95.png",
     "static/media/chem.png": "/static/media/chem.e35c1765.png",
@@ -27,16 +28,16 @@
     "static/media/math.png": "/static/media/math.4042ebe7.png",
     "static/media/me.png": "/static/media/me.7b9aebdd.png",
     "static/media/music.png": "/static/media/music.83d13c72.png",
-    "static/media/phys.png": "/static/media/phys.1ff4791c.png",
-    "static/media/psych.png": "/static/media/psych.0db73000.png",
+    "static/media/phys.png": "/static/media/phys.516db153.png",
+    "static/media/psych.png": "/static/media/psych.684e17bf.png",
     "static/media/stat.png": "/static/media/stat.d769c8a4.png",
     "static/media/subject-foster.png": "/static/media/subject-foster.19ee1451.png",
     "static/media/subject1.png": "/static/media/subject1.30811111.png"
   },
   "entrypoints": [
     "static/js/runtime-main.83c3e0c4.js",
-    "static/js/2.d0185a41.chunk.js",
-    "static/css/main.0112fc09.chunk.css",
-    "static/js/main.8b28249e.chunk.js"
+    "static/js/2.1570275c.chunk.js",
+    "static/css/main.8f506c39.chunk.css",
+    "static/js/main.5f1b5765.chunk.js"
   ]
 }

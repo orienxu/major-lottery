@@ -7,7 +7,7 @@ export default {
     "stats": "#E7DBB480", 
     "com": "#E7DBDB80",
     "ee": "#8EB8DE80",
-    "cse": "#C0C2C380",
+    "cse": "#2b445080",
     "me": "#A6616580",
     "info": "#F8C8CE80",
     "music": "#FEF0DD80",

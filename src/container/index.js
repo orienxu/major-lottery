@@ -16,6 +16,7 @@ import ServerConfig from '../config/ServerConfig';
 import { AppBar } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ResultPagePC from './resultPagePC'
+import InfoPagePC from './infoPagePC';
 export default class MainPage extends Component {
 
     constructor() {
@@ -87,7 +88,8 @@ export default class MainPage extends Component {
                 <div className="App">
                     {this.renderTop()}
                     <Switch>
-                        <Route path="/info/:id" component={InfoPage} />
+                        {this.state.width > 768 && <Route path="/info/:id" component={InfoPagePC}/>}
+                        <Route path="/info/:id" component={InfoPage}/>
                         <Route path="/collection/:username" exact component={CollectionPage} />
 
                         <Route path="/" exact component={() => {
