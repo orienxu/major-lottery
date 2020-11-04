@@ -11,10 +11,9 @@ class DrawPage extends Component {
     ANIMATION_TIMER = null;
     LOGIN_TIMER = null;
     constructor() {
-        
         super();
         this.state = {
-            ipAddress: "",
+            firstClick: true,
             loggedIn: false,
             guestPassword: "guest",
             isFlipped: false,
@@ -24,9 +23,7 @@ class DrawPage extends Component {
             height: 0,
         };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
-        // this.checkUser = this.checkUser.bind(this);
-        // this.getUserIP = this.getUserIP.bind(this);
+        this.handleCardClick = this.handleCardClick.bind(this)
     }
 
     componentDidMount() {
@@ -35,162 +32,66 @@ class DrawPage extends Component {
     }
 
     componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener('resize', this.updateWindowDimensions);
+       // clearTimeout(this.ANIMATION_TIMER)
     }
 
     updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
+    //first click without login, the page will pop up an alert
+    //then for the second time the page will go for the lottery as a guest
     handleCardClick() {        
-        
         if (!this.props.loggedIn) {
-            console.log(this.state.ipAddress);
-            //console.log("temp" + this.state.ipAddress);
-            alert("用户未登录，抽卡结果将不会保存")
-            this.props.setUserToVisitor(this.state.ipAddress);
-            fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + this.state.ipAddress + ServerConfig.LOGIN_PASS + this.state.guestPassword)
-            .then(checkStatus)
-            .then(data => {    
-                console.log(data) 
-                if(JSON.parse(data).success === 0) {
-                    console.log("1");
-                    //setTimeout(this.props.registerAction(this.state.ipAddress, this.state.guestPassword, false), 10000);
-                    this.props.registerAction(this.state.ipAddress, this.state.guestPassword, false);
-                }
-                console.log("2");
-                this.LOGIN_TIMER = setTimeout(() => {this.props.loginAction(this.state.ipAddress, this.state.guestPassword, false)}, 1000);      
-            })
+            if(this.state.firstClick) {
+                alert("用户未登录，点击右上角登录即可保存抽到的卡片哟~");
+                this.setState({
+                    firstClick: false
+                })
+                return;
+            } else {
+                this.props.setUserToVisitor();
+            }            
         }
-        //transition to next resultPage
-        //possiblily by calling this.props.history.push(`/result/$this.props.loggedInUser`)
-
-        // this.setState({ 
-        //     chancesLeft: this.state.chancesLeft - 1,
-        // })
-
-        // update chancesLeft
-
-
-        var self = this
+        var self = this;
         this.setState({
             playAnimation: true
         })
         this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
     }
 
-    btn = () => {
-        /*
-            You have to checck the chances everytime you call generate card
-            using some sort of fetch(api)
-         */
-        // this.getUserInfo();
-        
-        // if(this.state.chancesLeft > 0) {
-        //     //update time left before transitioning
-             return <Button
-                     //component={Link}
-                     //to="/result"
-                     style={styles.button}
-                     onClick={() => {this.handleCardClick()}}
-                     >
-                     点我抽卡
-                     </Button>;
-        // } else {
-        //     return <h1 
-        //     style={styles.fakeButton}>
-        //         次数用尽
-        //     </h1>
-        // }
-        
-    }
-
     renderContent() {
         return (
             <motion.div
-                // animate={{backgroundColor: ["#5C6FB2", "#D29C9C", "#2F75A7"]}}
-                // transition={{duration:10, yoyo:Infinity}}
                 style={styles.contentMain}
             >
-                {this.props.loggedInUser !== "" && !this.props.usingIp && <h3 style={{ textAlign: "center", color: "white", marginTop: "8vh"}} > 欢迎回来! {this.props.loggedInUser}</h3>}
+                {this.props.loggedInUser !== "" && !this.props.usingIp && <h3 
+                    style={{ 
+                        textAlign: "center", 
+                        color: "white", 
+                        marginTop: "3vh", 
+                        marginBottom: "-8vh"
+                    }} 
+                > 
+                欢迎回来! {this.props.loggedInUser}
+                </h3>}
                 <div style={styles.icon}>
-                    <img src={Res.cardBack} style={{ width: '90%' }} />
+                    <img src={Res.cardBack} alt="cardBack" style={{ width: '90%' }} />
                 </div>
                 {/* 判断是否有剩余次数 */}
-                {this.btn()}
+                <Button
+                    style={styles.button}
+                    onClick={() => {this.handleCardClick()}}
+                    >
+                    点我抽卡
+                </Button>  
                 {this.state.playAnimation && <LinearShuffle /> }
             </motion.div>
 
         );
     }
 
-    getIp() {
-        fetch('https://api.ipify.org?format=jsonp?callback=?', {
-            method: 'GET',
-            headers: {},
-            })
-            .then(res => {
-                return res.text()
-            }).then(ip => {
-                this.setState({
-                    ipAddress: ip,
-                })
-                //console.log(this.state.ipAddress);
-            });
-    }
-    // check user status
-    componentWillMount () {       
-        this.getIp();
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.ANIMATION_TIMER)
-        clearTimeout(this.LOGIN_TIMER)
-    }
-
-    componentDidMount () {
-
-    }
-
-    // getUserInfo() {
-    //     let username = "";
-    //     if(!this.state.loggedIn) {
-    //         this.getUserIP();
-    //         username = this.state.ipAddress;
-    //     } else {
-    //         //username = this.props.username;
-    //     }
-    //     username = "weifeng";
-    //     if (username !== null && username !== "") {
-    //         fetch(ServerConfig.SERVER_URL + ServerConfig.CHECK_TIME + username)
-    //             .then(checkStatus)
-    //             .then(data => {    
-    //                 //console.log(data); 
-    //                 //console.log(JSON.parse(data).result);
-    //                 this.setState({
-    //                     chancesLeft: JSON.parse(data).result
-    //                 });
-    //             })
-    //     } else {
-    //         alert("User are not suppose to be here if not logged in, please file a bug")
-    //     }
-         
-    // }
-    // async getUserIP() {
-    //     fetch('https://api.ipify.org?format=jsonp?callback=?', {
-    //       method: 'GET',
-    //       headers: {},
-    //     })
-    //     .then(res => {
-    //       return res.text()
-    //     }).then(ip => {
-    //         this.setState({
-    //             ipAddress: ip,
-    //         })
-    //         console.log(this.state.ipAddress);
-    //     });
-    // }
-    
     render() {
         return (
             <div className="App" >
@@ -201,15 +102,6 @@ class DrawPage extends Component {
 
 }
 
-function checkStatus(response) { 
-    if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
-        console.log(5)
-        return response.text();
-    } else { 
-        console.log(5) 
-        return Promise.reject(new Error(response.status + ": " + response.statusText)); 
-    } 
-}
 const styles = {
     contentMain: {
         height: "100vh",

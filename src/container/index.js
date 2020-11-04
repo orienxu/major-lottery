@@ -56,15 +56,17 @@ export default class MainPage extends Component {
                 </Link>
             
                 <div>
-                    <IconButton
+                    {this.state.loggedIn && !this.state.usingIp && <IconButton
                         component={Link}
                         to={`/collection/${this.state.loggedInUser}`}
                         aria-label="Collection"
-                    >
+                    > 
                         <StarIcon 
                             style={{color: 'black'}}/>
-                    </IconButton>
-                    {!this.state.loggedIn && <IconButton
+                    </IconButton>}
+                    {(!this.state.loggedIn || this.state.usingIp) && <IconButton
+                        component={Link}
+                        to={"/"}
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
@@ -207,9 +209,7 @@ export default class MainPage extends Component {
                                 return <DrawPage 
                                             loggedIn={this.state.loggedIn}
                                             loggedInUser={this.state.loggedInUser} 
-                                            setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
-                                            async registerAction={(username, pass) => {this.onRegister(username, pass)}}
-                                            loginAction={(username, pass) => {this.onLogIn(username, pass)}} 
+                                            setUserToVisitor={() => {this.setUserToVisitor()}}
                                             usingIp={this.state.usingIp}/>
                                             
                             }} />
@@ -238,10 +238,9 @@ export default class MainPage extends Component {
         );
     }
 
-    setUserToVisitor(ip) {
-        console.log("myip" + ip);
+    setUserToVisitor() {
         this.setState({
-            loggedInUser: ip,
+            loggedInUser: 'guest',
             loggedIn: true,
             usingIp: true,
         })
@@ -259,7 +258,8 @@ export default class MainPage extends Component {
                     }
                     this.setState({
                         loggedIn: true,
-                        loggedInUser: username,                    
+                        loggedInUser: username,
+                        usingIp: false,                    
                     })
                 } else {
                     alert(JSON.parse(data).result + ", please try again");
@@ -308,10 +308,6 @@ const styles = {
         height: '12vmin',
         backgroundColor: 'white',
         display: 'inline',
-        //display: 'flex',
-        //flexDirection: 'row',
-        //justifyContent: 'space-between',
-        //alignItems: 'center',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         overflow: 'auto',
         position: 'relative',
@@ -328,38 +324,4 @@ const styles = {
         overflow: 'auto',
         position: 'relative',
     }
-    // footer: {
-    //     height: '5rem',
-    //     width: '100%',
-    //     backgroundColor: 'white',
-    //     boxShadow: '0px 1px 3px rgba(0,0,0,0.16), 0px 1px 3px rgba(0,0,0,0.23)',
-    //     display: 'flex',
-    //     flexDirection: 'row',
-    //     marginBottom: '0',
-    //     position:'fixed',
-    //     bottom: '-5px',
-    //     zIndex: '1000',
-    // },
-        
-        // footer img{
-        //     width: 1.5rem;
-        // }
-        
-        // #footer-nav-container{
-        //     display:none;
-        //     width: 13rem;
-        // }
-        
-        // footer div{
-        //     margin-top: auto;
-        //     margin-bottom: auto;
-        //     width: 33%;
-        //     text-align: center;
-        //     margin-left: 1%;
-        // }
-        
-        // footer p{
-        //    margin:0; 
-        //    font-size: 10px;
-        // }
 }
