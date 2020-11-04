@@ -16,6 +16,8 @@ import ServerConfig from '../config/ServerConfig';
 import { AppBar } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ResultPagePC from './resultPagePC'
+import { Toolbar } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 export default class MainPage extends Component {
 
     constructor() {
@@ -44,10 +46,10 @@ export default class MainPage extends Component {
                     aria-label="Home"
                 // onClick={() => this.handleClick('draw')}
                 >
-                    <HomeIcon />
+                    <HomeIcon/>
 
                 </IconButton>
-                <Typography variant="h6" style={{color: "black"}}>
+                <Typography variant="h6" style={{color: "black", alignSelf: "center"}}>
                 专业上上签
                 </Typography>
             
@@ -73,7 +75,82 @@ export default class MainPage extends Component {
         );
     }
 
-    componentDidMount() {
+    renderTopPC() {
+        const { id } = this.state;
+        return (
+            <AppBar 
+                style={styles.topMainPC}
+
+            >
+                <Toolbar style={{padding: '0px', float: 'left'}}>
+                    <img src={Res.icon} style={{maxHeight: '12vmin'}} alt="logo"/>
+                </Toolbar>
+
+            
+                <div
+                    style={{
+                        float: 'right',
+                        padding: '0px',
+                        height: '12vmin',
+                        marginLeft: '3vh',
+                        backgroundColor: '#F5F3F8',
+                    }}
+                    >
+                    {this.state.loggedIn && !this.state.usingIp && <Button
+                        component={Link}
+                        to={`/collection/${this.state.loggedInUser}`}
+                        aria-label="Collection"
+                        style={{
+                            fontSize: '3vh',
+                            height: '12vmin',
+                        }}
+                    >
+                        我的收藏
+                        <StarIcon
+                            style={{ fontSize: '40' }}
+                            />
+                    </Button>}
+                    {!this.state.loggedIn && <Button
+                        aria-label="User"
+                        onClick={() => { this.setState({ openLoginWindow: true }) }}
+                        style={{
+                            fontSize: '3vh',
+                            height: '12vmin',
+                        }}
+                    >
+                        用户登录/注册
+                        <PersonIcon
+                            style={{ fontSize: '40' }}
+                        />
+                    </Button>}
+                </div>
+                <Button
+                    component={Link}
+                    to={"/"}
+                    aria-label="Home"
+                    style={{
+                        float: 'right',
+                        fontSize: '3vh',
+                        padding: '0px',
+                        height: '12vmin',
+                        //marginLeft: '-23vh',
+                        backgroundColor: '#F5F3F8',
+                        
+                        }}
+                // onClick={() => this.handleClick('draw')}
+                >
+                    <div style={{padding: '1vmin'}}>
+                        抽卡首页
+                    </div>
+                    <HomeIcon
+                            style={{ fontSize: '40' }}
+                    />
+                </Button>
+            </AppBar >
+            
+        );
+    }
+    componentWillMount() {
         let current = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
         this.setState({
             width: current
@@ -82,34 +159,39 @@ export default class MainPage extends Component {
 
     render() {
         const { id } = this.state;
+        console.log(this.state.width)
         return (
             <Router>
                 <div className="App">
-                    {this.renderTop()}
-                    <Switch>
-                        <Route path="/info/:id" component={InfoPage} />
-                        <Route path="/collection/:username" exact component={CollectionPage} />
+                    {this.state.width < 768 && this.renderTop()}
+                    {this.state.width >= 768 && this.renderTopPC()}
+                    <div
+                        style={{clear: 'both'}}>
+                        <Switch>
+                            <Route path="/info/:id" component={InfoPage} />
+                            <Route path="/collection/:username" exact component={CollectionPage} />
 
-                        <Route path="/" exact component={() => {
-                            return <DrawPage 
-                                        loggedIn={this.state.loggedIn}
-                                        loggedInUser={this.state.loggedInUser} 
-                                        setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
-                                        async registerAction={(username, pass) => {this.onRegister(username, pass)}}
-                                        loginAction={(username, pass) => {this.onLogIn(username, pass)}} 
-                                        usingIp={this.state.usingIp}/>
-                                        
-                        }} />
-                        <Route path="/info/:id" component={InfoPage}/>
-    
-                        <Route path = "/collection/:username" exact component={CollectionPage}/>
-                        <Route path="/result" component={() => {
-                            if (this.state.width > 768)
-                                return <ResultPagePC loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
-                            else 
-                                return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
-                        }}/>
-                    </Switch>
+                            <Route path="/" exact component={() => {
+                                return <DrawPage 
+                                            loggedIn={this.state.loggedIn}
+                                            loggedInUser={this.state.loggedInUser} 
+                                            setUserToVisitor={(ip) => {this.setUserToVisitor(ip)}}
+                                            async registerAction={(username, pass) => {this.onRegister(username, pass)}}
+                                            loginAction={(username, pass) => {this.onLogIn(username, pass)}} 
+                                            usingIp={this.state.usingIp}/>
+                                            
+                            }} />
+                            <Route path="/info/:id" component={InfoPage}/>
+        
+                            <Route path = "/collection/:username" exact component={CollectionPage}/>
+                            <Route path="/result" component={() => {
+                                if (this.state.width > 768)
+                                    return <ResultPagePC loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                                else 
+                                    return <ResultPage loggedIn={this.state.loggedIn} loggedInUser={this.state.loggedInUser} />
+                            }}/>
+                        </Switch>
+                    </div>
                     {/* pass additional props into loginpage */}
                     
                     <LogInPage 
@@ -119,6 +201,7 @@ export default class MainPage extends Component {
                         loginAction={(username, pass, display) => {this.onLogIn(username, pass, display)}} />
                 </div>
             </Router>
+            
         );
     }
 
@@ -143,7 +226,8 @@ export default class MainPage extends Component {
                     }
                     this.setState({
                         loggedIn: true,
-                        loggedInUser: username,                    })
+                        loggedInUser: username,                    
+                    })
                 } else {
                     alert(JSON.parse(data).result + ", please try again");
                 }         
@@ -186,10 +270,23 @@ function checkStatus(response) {
 }
 
 const styles = {
+    topMainPC: {
+        width: '100%',
+        height: '12vmin',
+        backgroundColor: 'white',
+        display: 'inline',
+        //display: 'flex',
+        //flexDirection: 'row',
+        //justifyContent: 'space-between',
+        //alignItems: 'center',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        overflow: 'auto',
+        position: 'relative',
+    },
     topMain: {
         width: '100%',
         height: '12vmin',
-        backgroundColor: '#F5F3F8',
+        backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -197,5 +294,39 @@ const styles = {
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         overflow: 'auto',
         position: 'relative',
-    },
+    }
+    // footer: {
+    //     height: '5rem',
+    //     width: '100%',
+    //     backgroundColor: 'white',
+    //     boxShadow: '0px 1px 3px rgba(0,0,0,0.16), 0px 1px 3px rgba(0,0,0,0.23)',
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     marginBottom: '0',
+    //     position:'fixed',
+    //     bottom: '-5px',
+    //     zIndex: '1000',
+    // },
+        
+        // footer img{
+        //     width: 1.5rem;
+        // }
+        
+        // #footer-nav-container{
+        //     display:none;
+        //     width: 13rem;
+        // }
+        
+        // footer div{
+        //     margin-top: auto;
+        //     margin-bottom: auto;
+        //     width: 33%;
+        //     text-align: center;
+        //     margin-left: 1%;
+        // }
+        
+        // footer p{
+        //    margin:0; 
+        //    font-size: 10px;
+        // }
 }

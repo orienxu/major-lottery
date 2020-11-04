@@ -212,13 +212,12 @@ function checkStatus(response) {
 }
 const styles = {
     contentMain: {
-        height: "80vh",
+        height: "100vh",
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
         overflow: 'hidden',
         position: "relative",
-        height: '100vh',
         backgroundImage: `url(${Res.background})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",

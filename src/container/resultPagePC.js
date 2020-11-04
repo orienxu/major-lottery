@@ -33,10 +33,10 @@ class ResultPagePC extends Component {
                 className="CardContainer"
             >
                 <div>
-                    <img src={Res.cardBack} style={{ width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res.cardBack} style={{ width: '35vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
                 <div>
-                    <img src={Res[img]} style={{  width: '30vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
+                    <img src={Res[img]} style={{  width: '35vmin', height: 'auto' }} className="App-logo" alt="logo" onClick={this.handleClick1} />
                 </div>
             </ReactCardFlip>
         );
@@ -94,33 +94,43 @@ class ResultPagePC extends Component {
 
     renderContent() {
         return (
-            <div style={styles.content}>
+            <div class="outer" style={styles.content}>
                     <motion.div
+                        // initial={{
+                        //     y: "18vh"
+                        // }}
+                        // animate={{
+                        //     y: "-2vh",
+                        // }}
                         initial={{
-                            y: "18vh"
+                            y: "-10vh",
+                            x: "25vw"
                         }}
                         animate={{
-                            y: "-2vh",
+                            x: "-2vw",
+                            y: "0.3vh",
                         }}
                         transition={{duration: 1}}
                         style={styles.initalStyle}
                     >
                         {this.card1(this.state.cardResult[0])}
                     </motion.div>
-                    <div
-                        style={{
-                            display: 'flex', flexDirection: 'row', width: '100vmin', alignContent: 'center', marginTop: '5vh'
-                        }}
-                    >
+                    {/* <div
+                        class="inner"
+                        style={styles.initalStyle}
+                        // style={{
+                        //     display: 'flex', flexDirection: 'row', width: '100vmin', alignContent: 'center', marginTop: '5vh'
+                        // }}
+                    > */}
                         <motion.div
-                            initial={{
-                                y: "-10vh",
-                                x: "25vw"
-                            }}
-                            animate={{
-                                x: "-2vw",
-                                y: "0.3vh",
-                            }}
+                            // initial={{
+                            //     y: "-10vh",
+                            //     x: "25vw"
+                            // }}
+                            // animate={{
+                            //     x: "-2vw",
+                            //     y: "0.3vh",
+                            // }}
                             transition={{duration: 1}}
                             style={styles.initalStyle}
                         >
@@ -142,7 +152,7 @@ class ResultPagePC extends Component {
                             {this.card3(this.state.cardResult[2])}
                         </motion.div>
                     </div>
-            </div >
+            //</div >
         );
     }
 
@@ -236,7 +246,8 @@ function checkStatus(response) {
 const styles = {
     contentMain: {
         display: 'flex',
-        height: '140vh',
+        //height: '140vh',
+        height: '88vmin',
         flexDirection: 'column',
         alignItems: 'flex-center',
         flex: 1,
@@ -248,8 +259,10 @@ const styles = {
     },
     content: {
         display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'center',
+        flexDirection: 'row',
+        //flexDirection: 'column',
+        //alignSelf: 'center',
+        justifyContent: 'space-evenly',
         paddingTop: '10vh',
         // backgroundImage: `url(${Res.background})`,
         // backgroundSize: "cover",
@@ -275,11 +288,11 @@ const styles = {
         alignItems: 'center',
     },
     initalStyle: {
-        position: "flex",
-        top: '40vh',
-        left: '34vmin',
-        margin: "auto",
-        overflow: 'hidden',
+        // position: "flex",
+        // top: '40vh',
+        // left: '34vmin',
+        // margin: "auto",
+        // overflow: 'hidden',
     },
 }
 
