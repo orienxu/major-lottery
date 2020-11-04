@@ -37,7 +37,6 @@ export default class MainPage extends Component {
     }
 
     renderTop() {
-        const { id } = this.state;
         return (
             <AppBar style={styles.topMain}>
                 <IconButton
@@ -46,12 +45,14 @@ export default class MainPage extends Component {
                     aria-label="Home"
                 // onClick={() => this.handleClick('draw')}
                 >
-                    <HomeIcon/>
+                    <HomeIcon
+                        style={{color: 'black'}}/>
 
                 </IconButton>
-                <Typography variant="h6" style={{color: "black", alignSelf: "center"}}>
-                专业上上签
-                </Typography>
+
+                <Link to="www.uwclassmates.com">
+                    <img src={Res.icon} style={{maxHeight: '12vmin', alignSelf: 'center'}} alt="logo"/>
+                </Link>
             
                 <div>
                     <IconButton
@@ -59,14 +60,15 @@ export default class MainPage extends Component {
                         to={`/collection/${this.state.loggedInUser}`}
                         aria-label="Collection"
                     >
-                        <StarIcon />
+                        <StarIcon 
+                            style={{color: 'black'}}/>
                     </IconButton>
                     {!this.state.loggedIn && <IconButton
                         aria-label="User"
                         onClick={() => { this.setState({ openLoginWindow: true }) }}
                     >
                         <PersonIcon
-                            style={{ marginLeft: '-3vmin' }}
+                            style={{ marginLeft: '-3vmin', color: 'black'}}
 
                         />
                     </IconButton>}
@@ -76,7 +78,6 @@ export default class MainPage extends Component {
     }
 
     renderTopPC() {
-        const { id } = this.state;
         return (
             <AppBar 
                 style={styles.topMainPC}
@@ -103,12 +104,22 @@ export default class MainPage extends Component {
                         style={{
                             fontSize: '3vh',
                             height: '12vmin',
+                            width: '23vmin',
                         }}
                     >
-                        我的收藏
-                        <StarIcon
-                            style={{ fontSize: '40' }}
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems:'center',
+                                justifyContent: 'center',
+                            }}
+                        >  
+                            <StarIcon
+                                style={{ fontSize: '40' }}
                             />
+                            我的收藏
+                        </div>
                     </Button>}
                     {!this.state.loggedIn && <Button
                         aria-label="User"
@@ -116,12 +127,23 @@ export default class MainPage extends Component {
                         style={{
                             fontSize: '3vh',
                             height: '12vmin',
+                            width: '23vmin',
                         }}
                     >
-                        用户登录/注册
-                        <PersonIcon
-                            style={{ fontSize: '40' }}
-                        />
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems:'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            
+                            <PersonIcon
+                                style={{ fontSize: '40' }}
+                            />
+                            用户登录/注册
+                        </div>
                     </Button>}
                 </div>
                 <Button
@@ -133,18 +155,27 @@ export default class MainPage extends Component {
                         fontSize: '3vh',
                         padding: '0px',
                         height: '12vmin',
-                        //marginLeft: '-23vh',
                         backgroundColor: '#F5F3F8',
-                        
+                        width: '23vmin',                  
+                    }}
+                >            
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems:'center',
+                            justifyContent: 'center',
                         }}
-                // onClick={() => this.handleClick('draw')}
-                >
-                    <div style={{padding: '1vmin'}}>
-                        抽卡首页
-                    </div>
-                    <HomeIcon
+                    >
+                        <HomeIcon
                             style={{ fontSize: '40' }}
-                    />
+                        />
+                        <div style={{padding: '0vmin, 1vmin'}}>
+                            抽卡首页
+                        </div>
+                    </div>        
+
+
                 </Button>
             </AppBar >
             
