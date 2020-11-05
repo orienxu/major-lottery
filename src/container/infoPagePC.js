@@ -69,6 +69,7 @@ export default class InfoPagePC extends Component {
                     alignSelf: 'center',
                     marginTop: '7vmin'
                 }}
+                alt='major'
                 />
                 <div
                 style={{
@@ -94,13 +95,13 @@ export default class InfoPagePC extends Component {
                         }}
                     >
                         <p style={{ fontFamily: 'PingFang SC', fontSize: '48px', lineHeight: '67px' }}>
-                        {"\“"}
+                        {"“"}
                         </p>
                         <p style={{ fontFamily: 'PingFang SC', fontSize: '28px', lineHeight: '25px', fontWeight: '600' }}>
                         {Quote[this.state.major]}
                         </p>
                         <p style={{ fontFamily: 'PingFang SC', fontSize: '48px', lineHeight: '67px' }}>
-                        {"\”"}
+                        {"”"}
                         </p>
                     </div>      
                 </div>
@@ -117,10 +118,10 @@ export default class InfoPagePC extends Component {
                         fontSize: '20px',
                         fontWeight: '500'
                       }}>
-                        专业介绍请按这
+                        更多专业介绍↓↓
                       </h3>
                       <a href= {articleExists[this.state.major + "link"]}>
-                        <img src={Res.article} style={{width: "30%"}}/>
+                        <img src={Res.article} style={{width: "30%"}} alt='link to article'/>
                       </a>
                     </div>
               }
@@ -132,9 +133,9 @@ export default class InfoPagePC extends Component {
                         fontSize: '20px',
                         fontWeight: '500'
                       }}>
-                        查看更多关于此专业
+                        查看更多课评和专业介绍↓↓
                       </h3>
-                      <img src={Res[this.state.major + "qr"]} />
+                      <img src={Res[this.state.major + "qr"]} alt='qrcode' />
                     </div>
               }
               <h3 style={{
@@ -143,9 +144,9 @@ export default class InfoPagePC extends Component {
                         fontSize: '20px',
                         fontWeight: '500'
               }}>
-                查看更多课评请按这
+                查看更多课评↓↓
               </h3>
-              <a href= "http://uwclassmate.com"><img src={Res.site} style={{width: "30%"}}/> </a>
+              <a href= "http://uwclassmate.com"><img src={Res.site} style={{width: "30%"}} alt='siteImage'/> </a>
         </div>
         </div>
     );
@@ -157,33 +158,5 @@ export default class InfoPagePC extends Component {
         {this.renderContent()}
       </div>
     );
-  }
-}
-
-const styles = {
-  contentMain: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#DDDDDD',
-  },
-  contentTitle: {
-    marginLeft: '3vmin',
-    marginTop: '1vmin',
-  },
-  contentPersonnel: {
-    width: '100vmin',
-    flexDirection: 'column',
-  },
-  quoteBox: {
-    width: '98vmin',
-    height: '35vmin',
-    borderRadius: 30,
-    backgroundColor: '#FFFDED',
-    border: 1,
-    solid: '#000000',
-    boxSizing: 'border-box'
   }
 }

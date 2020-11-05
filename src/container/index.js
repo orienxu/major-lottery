@@ -9,12 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import PersonIcon from '@material-ui/icons/Person'
-import { motion } from "framer-motion";
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LogInPage from './LoginPage';
 import ServerConfig from '../config/ServerConfig';
 import { AppBar } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import ResultPagePC from './resultPagePC'
 import InfoPagePC from './infoPagePC';
 
@@ -194,8 +192,6 @@ export default class MainPage extends Component {
     }
 
     render() {
-        const { id } = this.state;
-        //console.log(this.state.width)
         return (
             <Router>
                 <div className="App">
@@ -255,7 +251,6 @@ export default class MainPage extends Component {
     }
 
     onLogIn(username, password, display) {
-        //console.log(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
         fetch(ServerConfig.SERVER_URL + ServerConfig.LOGIN_NAME + username + ServerConfig.LOGIN_PASS + password)
             .then(checkStatus)
             .then(data => {    

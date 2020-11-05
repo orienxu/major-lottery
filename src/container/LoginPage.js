@@ -104,7 +104,6 @@ function LogInPage(props) {
 const styles = {
     loginButton: {
         backgroundColor: '#4B2E83',
-        marginTop: '5vmin',
         color: "white",
         width: "30vmin",
         marginLeft: "auto",

@@ -1,6 +1,6 @@
 import Res from '../config/image';
 import React from "react";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 import { Page } from "framer";
 
 const Animations = {

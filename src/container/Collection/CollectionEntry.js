@@ -44,15 +44,12 @@ const fullNameMap = {
 
 
 class CollectionEntry extends Component{    
-    constructor() {
-        super()
-    }
 
     render() {
         return(
             <Button onClick={() => this.helper()}>
                 <div style={styles.box}>
-                    <img src={Res[this.props.image]} style={styles.img} />
+                    <img src={Res[this.props.image]} style={styles.img} alt='img' />
                     <ul style={styles.ul}>
                         <h2 style={styles.majorName}>{fullNameMap[this.props.image]}</h2>
                         <h4 style={styles.majorQuote}>{

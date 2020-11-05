@@ -43,9 +43,6 @@ export default class CollectionPage extends Component {
                 .then(data => {
                     console.log(data)   
                     const dataJSON = JSON.parse(data)
-                    const success = dataJSON.success;
-
-                    
                     const ownedCard = dataJSON.result;
                     const ownedSet = new Set(ownedCard)
                     console.log(ownedCard)
@@ -70,7 +67,7 @@ export default class CollectionPage extends Component {
     }
 
     checkStatus(response) { 
-        if (response.status >= 200 && response.status < 300 || response.status == 0) {  
+        if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
         return response.text();
         } else {  
         return Promise.reject(new Error(response.status + ": " + response.statusText)); 

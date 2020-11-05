@@ -208,7 +208,7 @@ function checkStatus(response) {
 const styles = {
     contentMain: {
         display: 'flex',
-        //height: '140vh',
+        opacity: '80%',
         height: '88vmin',
         flexDirection: 'column',
         alignItems: 'flex-center',
