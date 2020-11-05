@@ -42,6 +42,7 @@ const fullNameMap = {
     "" : ""
 }
 
+
 class CollectionEntry extends Component{    
     constructor() {
         super()
@@ -93,7 +94,7 @@ const styles = {
         fontFamily: 'Ro',
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fontSize: '2.5vh',
+        fontSize: '3vh',
         display: 'flex',
         lineHeight: '4.8vh',
         // marginLeft: "auto",
@@ -101,6 +102,11 @@ const styles = {
         justifyContent: 'center',
     },
     majorQuote: {
+        fontFamily: 'Ro',
+        fontStyle: 'normal',
+        fontSize: '2vh',
+        display: 'flex',
+        lineHeight: '4.8vh',
         justifyContent: 'center',
     },
     ul: {
