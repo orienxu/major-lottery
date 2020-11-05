@@ -1,4 +1,3 @@
-//import { Button } from 'react-native-elements';
 import React, { Component } from 'react';
 import './App.css';
 import { motion } from 'framer-motion';

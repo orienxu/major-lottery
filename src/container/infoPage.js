@@ -62,6 +62,7 @@ export default class InfoPage extends Component {
             alignSelf: 'center',
             marginTop: '7vmin'
           }}
+          alt='major'
         />
         <div
           style={{
@@ -145,7 +146,7 @@ export default class InfoPage extends Component {
               }}>
                 查看更多课评请按这
               </h3>
-              <a href= "http://uwclassmate.com"><img src={Res.site} style={{width: "40%"}}/> </a>
+              <a href= "http://uwclassmate.com"><img src={Res.site} style={{width: "40%"}} alt="img of official website"/> </a>
             </div>
         </div>
       </div>
