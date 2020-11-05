@@ -30,6 +30,7 @@ export default class MainPage extends Component {
             usingIp: false,
             openLoginWindow: false,
             width: 0,
+            reinitializeDraw: false,
         }
     }
 
@@ -84,7 +85,6 @@ export default class MainPage extends Component {
         return (
             <AppBar 
                 style={styles.topMainPC}
-
             >
                 <Toolbar style={{padding: '0px', float: 'left'}}>
                     <img src={Res.icon} style={{maxHeight: '12vmin'}} alt="logo"/>
@@ -97,7 +97,6 @@ export default class MainPage extends Component {
                         padding: '0px',
                         height: '12vmin',
                         marginLeft: '3vh',
-                        backgroundColor: '#F5F3F8',
                     }}
                     >
                     {this.state.loggedIn && !this.state.usingIp && <Button
@@ -121,7 +120,9 @@ export default class MainPage extends Component {
                             <StarIcon
                                 style={{ fontSize: '40' }}
                             />
+                            <div style={{padding: '0vmin, 1vmin', fontSize: "50%"}}>
                             我的收藏
+                            </div>
                         </div>
                     </Button>}
                     {!this.state.loggedIn && <Button
@@ -145,7 +146,9 @@ export default class MainPage extends Component {
                             <PersonIcon
                                 style={{ fontSize: '40' }}
                             />
-                            用户登录/注册
+                            <div style={{padding: '0vmin, 1vmin', fontSize: "50%"}}>
+                            用户注册/登录
+                            </div>
                         </div>
                     </Button>}
                 </div>
@@ -158,7 +161,6 @@ export default class MainPage extends Component {
                         fontSize: '3vh',
                         padding: '0px',
                         height: '12vmin',
-                        backgroundColor: '#F5F3F8',
                         width: '23vmin',                  
                     }}
                 >            
@@ -173,7 +175,7 @@ export default class MainPage extends Component {
                         <HomeIcon
                             style={{ fontSize: '40' }}
                         />
-                        <div style={{padding: '0vmin, 1vmin'}}>
+                        <div style={{padding: '0vmin, 1vmin', fontSize: "50%"}}>
                             抽卡首页
                         </div>
                     </div>        
@@ -202,7 +204,6 @@ export default class MainPage extends Component {
                     <div
                         style={{clear: 'both'}}>
                         <Switch>
-                            <Route path="/info/:id" component={InfoPage} />
                             <Route path="/collection/:username" exact component={CollectionPage} />
 
                             <Route path="/" exact component={() => {
@@ -210,6 +211,7 @@ export default class MainPage extends Component {
                                             loggedIn={this.state.loggedIn}
                                             loggedInUser={this.state.loggedInUser} 
                                             setUserToVisitor={() => {this.setUserToVisitor()}}
+                                            initialize={this.state.reinitializeDraw}
                                             usingIp={this.state.usingIp}/>
                                             
                             }} />
@@ -243,6 +245,7 @@ export default class MainPage extends Component {
             loggedInUser: 'guest',
             loggedIn: true,
             usingIp: true,
+            reinitializeDraw: true,
         })
     }
 

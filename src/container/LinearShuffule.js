@@ -17,8 +17,7 @@ const Animations = {
 }
 const ALL = ["cse", "ee", "info", "design", "acms", "biochem", "stat", "com", "arch", "me", "foster", "psych", "phys", "math", "music", "chem"]
 
-//Main component that is exported
-//creates a list of card horizontally and let them move back and forth
+
 const LinearShuffule = () => {
     const cards = ALL.map(card => {
         return createCard({image: card})

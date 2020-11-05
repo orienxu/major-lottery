@@ -42,5 +42,7 @@ export default {
     psychqr: require('../res/psychqr.png'),
     biochemqr: require('../res/ohcmqr.png'),
     statqr: require('../res/statqr.png'),
+    article: require('../res/article.png'),
+    site: require('../res/ohcmsite.png'),
     uwclassmate: require('../res/uwclassmateqr.png')
 }

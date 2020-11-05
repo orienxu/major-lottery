@@ -4,6 +4,35 @@ import './App.css';
 import BackgroundColor from '../config/backgroundColor';
 import Quote from '../config/Quote';
 
+const articleExists = {
+  "cse": 1,
+  "acms": 1,
+  "arch": 0,
+  "biochem": 0,
+  "chem": 0,
+  "com": 1,
+  "ee": 0,
+  "info": 1,
+  "design": 0,
+  "foster": 1,
+  "math": 0,
+  "me": 0,
+  "music": 0,
+  "phys": 0,
+  "psych": 1,
+  "stat": 1,
+  "" : "",
+  
+  "cselink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651899657&idx=1&sn=6c8d60903ca4e57a08106e031c9928fe&chksm=80bb9693b7cc1f85d689753ede986ab38be4925a154dda21c71ba6f49ff83e8a6da8d7e78ae1&scene=178&cur_album_id=1353908768404373505#rd",
+  "acmslink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651925026&idx=1&sn=c88b57774968a7b29e0cb6ae503c3708&chksm=80ba7bb8b7cdf2ae71261afaba4e020a4d6cd793f6b42e9b1d29bba3a13f7498cf1791afd671&scene=178&cur_album_id=1353908768404373505#rd",
+  "comlink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651899730&idx=1&sn=a3e9971530d0de9e5e4b6f5ad3f4a626&chksm=80bb96c8b7cc1fde9e206d6d17974833134873a1dee14a7e5db76e2a737c0449ec1f55967a07&scene=178&cur_album_id=1353908768404373505#rd",
+  "infolink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651904335&idx=1&sn=3149e0986741d4dba48d8bc660d7185a&chksm=80bb88d5b7cc01c377ffd1054bfcbcebacbf5aceca1908de43cb0fae91e62d6bd8a6ff6ab802&scene=178&cur_album_id=1353908768404373505#rd",
+  "fosterlink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651898173&idx=1&sn=ad0dc4421f6efa977b354ca60179551d&chksm=80bb90a7b7cc19b1f4ae876fa796e7532fd1ee72022cba0593b72aa0e28885e3ee5d0f6719da&scene=178&cur_album_id=1353908768404373505#rd",
+  "psychlink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651924195&idx=1&sn=7752b6d40f8375951d4fd9306a797a1d&chksm=80ba7779b7cdfe6fe06a22fa856b9f2a1a10939365b29bd7dc542c454cb3686ba5cc456e3405&scene=178&cur_album_id=1353908768404373505#rd",
+  "statlink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651926992&idx=1&sn=3ae209eb3d672d8ae61f9465477da810&chksm=80ba604ab7cde95ca70d7545e9921e68a3b0eac6b13af48cd51534c950a8a283d087b40ba194&scene=178&cur_album_id=1353908768404373505#rd",
+}
+
+
 export default class InfoPage extends Component {
 
   constructor(match) {
@@ -15,17 +44,6 @@ export default class InfoPage extends Component {
     };
     
   }
-
-  // async callAPI() {
-  //   const response = await fetch('http://localhost:9000/login?username=weifeng&password=123');
-  //   const data = await response.json();
-
-  //   console.log('data', data);
-  // }
-
-  // componentDidMount() {
-  //   this.callAPI();
-  // }
 
   renderContent() {
     return (
@@ -89,19 +107,46 @@ export default class InfoPage extends Component {
 
           </div>
           <div style={{ width: '100vmin', height: '100%' }}>
-            <h3 style={{
-              alignSelf: 'flex-center',
-              marginLeft: 'auto',
-              marginTop: '6vmin',
-              fontFamily: 'PingFang SC',
-              fontSize: '20px',
-              lineHeight: '34px',
-              fontWeight: '500'
-            }}>
-              专业介绍
-            </h3>
-            <img src={Res[this.state.major + "qr"]} style={{}}/>
-          </div>
+            
+
+              {articleExists[this.state.major] 
+                && <div>
+                      <h3 style={{
+                        marginTop: '3vmin',
+                        fontFamily: 'PingFang SC',
+                        fontSize: '20px',
+                        fontWeight: '500'
+                      }}>
+                        专业介绍请按这
+                      </h3>
+                      <a href= {articleExists[this.state.major + "link"]}>
+                        <img src={Res.article} style={{width: "40%"}}/>
+                      </a>
+                    </div>
+              }
+              {!articleExists[this.state.major] 
+                && <div>
+                      <h3 style={{
+                        marginTop: '3vmin',
+                        fontFamily: 'PingFang SC',
+                        fontSize: '20px',
+                        fontWeight: '500'
+                      }}>
+                        查看更多关于此专业
+                      </h3>
+                      <img src={Res[this.state.major + "qr"]} />
+                    </div>
+              }
+              <h3 style={{
+                        marginTop: '3vmin',
+                        fontFamily: 'PingFang SC',
+                        fontSize: '20px',
+                        fontWeight: '500'
+              }}>
+                查看更多课评请按这
+              </h3>
+              <a href= "http://uwclassmate.com"><img src={Res.site} style={{width: "40%"}}/> </a>
+            </div>
         </div>
       </div>
     );
