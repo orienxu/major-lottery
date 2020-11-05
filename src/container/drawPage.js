@@ -25,6 +25,8 @@ class DrawPage extends Component {
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
+        if (this.props.initialize)
+            this.ANIMATION_TIMER = setTimeout(() => {this.props.history.push("/result")}, 3500)
     }
 
     componentWillUnmount() {
@@ -46,17 +48,15 @@ class DrawPage extends Component {
                     firstClick: false
                 })
                 return;
-            } else {
-                this.props.setUserToVisitor();
-            }            
+            } 
+            this.props.setUserToVisitor();
         }
-        var self = this;
-        this.setState(state => ({...state, playAnimation: true}));
-        // this.setState({
-        //     playAnimation: true
-        // })
-        console.log(this.state.playAnimation)
-        this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
+
+        this.setState({
+            playAnimation: true
+        })
+        
+        this.ANIMATION_TIMER = setTimeout(() => {this.props.history.push("/result")}, 3500)
     }
 
     renderContent() {
@@ -83,7 +83,7 @@ class DrawPage extends Component {
                     >
                     点我抽卡
                 </Button>  
-                {this.state.playAnimation && <LinearShuffle /> }
+                {(this.state.playAnimation|| this.props.initialize) && <LinearShuffle /> }
             </motion.div>
 
         );

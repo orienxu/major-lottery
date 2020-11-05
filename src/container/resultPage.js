@@ -171,7 +171,10 @@ class ResultPage extends Component {
     }
 
     componentDidMount() {
-        this.generateNewCard()        
+        if (this.props.loggedIn) 
+            this.generateNewCard();   
+        else 
+            this.props.history.push('/');     
     }
 
     async generateNewCard() {
@@ -202,26 +205,6 @@ class ResultPage extends Component {
     }
 
 }
-
-// wx.config({
-//     debug:true,
-//     appId: '',
-//     timestamp: '',
-//     nonceStr: '',
-//     signature: '',
-//     jsApiList: ['updateTimelineShareData']
-// });
-
-// wx.ready(function() {
-//     wx.updateTimelineShareData({
-//         title: '', //分享标题
-//         link: '', //分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-//         imgUrl: '', //分享图标
-//         success: function() {
-//             //设置成功
-//         }
-//     })
-// });
 
 function checkStatus(response) { 
     if ((response.status >= 200 && response.status < 300) || response.status === 0) {  

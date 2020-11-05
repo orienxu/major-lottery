@@ -96,12 +96,6 @@ class ResultPagePC extends Component {
         return (
             <div class="outer" style={styles.content}>
                     <motion.div
-                        // initial={{
-                        //     y: "18vh"
-                        // }}
-                        // animate={{
-                        //     y: "-2vh",
-                        // }}
                         initial={{
                             y: "-10vh",
                             x: "25vw"
@@ -115,22 +109,7 @@ class ResultPagePC extends Component {
                     >
                         {this.card1(this.state.cardResult[0])}
                     </motion.div>
-                    {/* <div
-                        class="inner"
-                        style={styles.initalStyle}
-                        // style={{
-                        //     display: 'flex', flexDirection: 'row', width: '100vmin', alignContent: 'center', marginTop: '5vh'
-                        // }}
-                    > */}
                         <motion.div
-                            // initial={{
-                            //     y: "-10vh",
-                            //     x: "25vw"
-                            // }}
-                            // animate={{
-                            //     x: "-2vw",
-                            //     y: "0.3vh",
-                            // }}
                             transition={{duration: 1}}
                             style={styles.initalStyle}
                         >
@@ -181,7 +160,10 @@ class ResultPagePC extends Component {
     }
 
     componentDidMount() {
-        this.generateNewCard()        
+        if (this.props.loggedIn) 
+            this.generateNewCard();   
+        else 
+            this.props.history.push('/');     
     }
 
     async generateNewCard() {
@@ -213,26 +195,6 @@ class ResultPagePC extends Component {
 
 }
 
-// wx.config({
-//     debug:true,
-//     appId: '',
-//     timestamp: '',
-//     nonceStr: '',
-//     signature: '',
-//     jsApiList: ['updateTimelineShareData']
-// });
-
-// wx.ready(function() {
-//     wx.updateTimelineShareData({
-//         title: '', //分享标题
-//         link: '', //分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-//         imgUrl: '', //分享图标
-//         success: function() {
-//             //设置成功
-//         }
-//     })
-// });
-
 function checkStatus(response) { 
     if ((response.status >= 200 && response.status < 300) || response.status === 0) {  
         console.log(5)
@@ -260,17 +222,11 @@ const styles = {
     content: {
         display: 'flex',
         flexDirection: 'row',
-        //flexDirection: 'column',
-        //alignSelf: 'center',
         justifyContent: 'space-evenly',
         paddingTop: '10vh',
-        // backgroundImage: `url(${Res.background})`,
-        // backgroundSize: "cover",
 
     },
     box: {
-        //display: 'flex',
-        //justifyContent: 'space-between',
         paddingBottom: '10vh',
         alignSelf: 'center',
     },
@@ -286,13 +242,6 @@ const styles = {
         height: '10vh',
         display: 'flex',
         alignItems: 'center',
-    },
-    initalStyle: {
-        // position: "flex",
-        // top: '40vh',
-        // left: '34vmin',
-        // margin: "auto",
-        // overflow: 'hidden',
     },
 }
 
