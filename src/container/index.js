@@ -212,7 +212,8 @@ export default class MainPage extends Component {
                                             loggedInUser={this.state.loggedInUser} 
                                             setUserToVisitor={() => {this.setUserToVisitor()}}
                                             initialize={this.state.reinitializeDraw}
-                                            usingIp={this.state.usingIp}/>
+                                            usingIp={this.state.usingIp}
+                                        />
                                             
                             }} />
                             {this.state.width > 768 && <Route path="/info/:id" component={InfoPagePC}/>}
@@ -239,6 +240,9 @@ export default class MainPage extends Component {
             
         );
     }
+    componentWillUnmount() {
+        clearTimeout(this.RESET_TIMER)
+    }
 
     setUserToVisitor() {
         this.setState({
@@ -247,6 +251,7 @@ export default class MainPage extends Component {
             usingIp: true,
             reinitializeDraw: true,
         })
+        this.RESET_TIMER = setTimeout(() => {this.state.reinitializeDraw = false}, 4000)
     }
 
     onLogIn(username, password, display) {

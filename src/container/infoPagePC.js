@@ -5,22 +5,22 @@ import BackgroundColor from '../config/backgroundColor';
 import Quote from '../config/Quote';
 
 const articleExists = {
-    "cse": 1,
-    "acms": 1,
-    "arch": 0,
-    "biochem": 0,
-    "chem": 0,
-    "com": 1,
-    "ee": 0,
-    "info": 1,
-    "design": 0,
-    "foster": 1,
-    "math": 0,
-    "me": 0,
-    "music": 0,
-    "phys": 0,
-    "psych": 1,
-    "stat": 1,
+    "cse": true,
+    "acms": true,
+    "arch": false,
+    "biochem": false,
+    "chem": false,
+    "com": true,
+    "ee": false,
+    "info": true,
+    "design": false,
+    "foster": true,
+    "math": false,
+    "me": false,
+    "music": false,
+    "phys": false,
+    "psych": true,
+    "stat": true,
     "" : "",
     
     "cselink": "https://mp.weixin.qq.com/s?__biz=MzAwOTQxNDkwMQ==&mid=2651899657&idx=1&sn=6c8d60903ca4e57a08106e031c9928fe&chksm=80bb9693b7cc1f85d689753ede986ab38be4925a154dda21c71ba6f49ff83e8a6da8d7e78ae1&scene=178&cur_album_id=1353908768404373505#rd",
@@ -59,7 +59,7 @@ export default class InfoPagePC extends Component {
                 alignItems: 'center',
                 flex: 1,
                 display: 'flex',
-
+                marginLeft: "7vw",
                 flexDirection: 'column',
                 }}
             >
@@ -96,7 +96,7 @@ export default class InfoPagePC extends Component {
                         <p style={{ fontFamily: 'PingFang SC', fontSize: '48px', lineHeight: '67px' }}>
                         {"\“"}
                         </p>
-                        <p style={{ fontFamily: 'PingFang SC', fontSize: '18px', lineHeight: '25px', fontWeight: '600' }}>
+                        <p style={{ fontFamily: 'PingFang SC', fontSize: '28px', lineHeight: '25px', fontWeight: '600' }}>
                         {Quote[this.state.major]}
                         </p>
                         <p style={{ fontFamily: 'PingFang SC', fontSize: '48px', lineHeight: '67px' }}>

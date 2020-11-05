@@ -6,7 +6,6 @@ import ServerConfig from '../config/ServerConfig';
 import {withRouter} from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@material-ui/core';
-//import 'http://res.wx.qq.com/open/js/jweixin-1.6.0.js'; //wechat jdk
 
 class ResultPage extends Component {
 
@@ -155,7 +154,6 @@ class ResultPage extends Component {
             </div>
         );
     }
-
 
     render() {
         return (
