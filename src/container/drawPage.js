@@ -5,20 +5,16 @@ import './App.css';
 import {motion} from 'framer-motion'
 import {withRouter} from 'react-router-dom'
 import LinearShuffle from './LinearShuffule'
-import ServerConfig from '../config/ServerConfig';
 
 class DrawPage extends Component {
     ANIMATION_TIMER = null;
-    LOGIN_TIMER = null;
     constructor() {
         super();
         this.state = {
             firstClick: true,
             loggedIn: false,
             guestPassword: "guest",
-            isFlipped: false,
             playAnimation: false,
-            apiResponse: 'Node failed',
             width: 0,
             height: 0,
         };
@@ -33,7 +29,7 @@ class DrawPage extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
-       // clearTimeout(this.ANIMATION_TIMER)
+        clearTimeout(this.ANIMATION_TIMER)
     }
 
     updateWindowDimensions() {
@@ -55,9 +51,11 @@ class DrawPage extends Component {
             }            
         }
         var self = this;
-        this.setState({
-            playAnimation: true
-        })
+        this.setState(state => ({...state, playAnimation: true}));
+        // this.setState({
+        //     playAnimation: true
+        // })
+        console.log(this.state.playAnimation)
         this.ANIMATION_TIMER = setTimeout(() => {self.props.history.push("/result")}, 3500)
     }
 
@@ -74,12 +72,11 @@ class DrawPage extends Component {
                         marginBottom: "-8vh"
                     }} 
                 > 
-                欢迎回来! {this.props.loggedInUser}
+                    欢迎回来! {this.props.loggedInUser}
                 </h3>}
                 <div style={styles.icon}>
                     <img src={Res.cardBack} alt="cardBack" style={{ width: '90%' }} />
                 </div>
-                {/* 判断是否有剩余次数 */}
                 <Button
                     style={styles.button}
                     onClick={() => {this.handleCardClick()}}
@@ -99,7 +96,6 @@ class DrawPage extends Component {
             </div>
         );
     }
-
 }
 
 const styles = {
@@ -115,39 +111,19 @@ const styles = {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
     },
-    contentTitle: {
-        marginLeft: '3vmin',
-        marginTop: '1vmin',
-    },
-    contentPersonnel: {
-        width: '100vmin',
-        flexDirection: 'column',
-    },
     button: {
         fontSize: '130%',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
         borderRadius: '3vmin',
-        marginTop: '5vmin',
+        marginTop: '8vmin',
         marginBottom: '3vmin',
         color: 'white',
         width: '25vh',
         height: '10vh',
         display: 'flex',
         alignItems: 'center',
-    },
-    fakeButton: {
-        fontSize: '32px',
-        alignSelf: 'center',
-        backgroundColor: '#4B2E83',
-        borderRadius: '6vmin',
-        marginTop: '5vmin',
-        color: 'white',
-        width: '60vmin',
-        height: '17vmin',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        opacity: '80%',
     },
     rec: {
         alignSelf: 'center',
@@ -166,9 +142,6 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    LOGIN_POPUP: {
-
-    }
 }
 
 export default withRouter(DrawPage);

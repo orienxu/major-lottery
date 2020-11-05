@@ -193,7 +193,7 @@ export default class MainPage extends Component {
 
     render() {
         const { id } = this.state;
-        console.log(this.state.width)
+        //console.log(this.state.width)
         return (
             <Router>
                 <div className="App">
