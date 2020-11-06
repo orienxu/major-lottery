@@ -123,7 +123,7 @@ const styles = {
         height: '10vh',
         display: 'flex',
         alignItems: 'center',
-        opacity: '80%',
+        //opacity: '80%',
     },
     rec: {
         alignSelf: 'center',

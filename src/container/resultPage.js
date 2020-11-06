@@ -246,7 +246,7 @@ const styles = {
         fontSize: '130%',
         alignSelf: 'center',
         backgroundColor: '#4B2E83',
-        opacity: '80%',
+        //opacity: '80%',
         borderRadius: '3vmin',
         marginTop: '5vmin',
         marginBottom: '3vmin',
