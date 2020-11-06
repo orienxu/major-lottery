@@ -50,9 +50,9 @@ export default class MainPage extends Component {
 
                 </IconButton>
 
-                <Link to="www.uwclassmates.com">
+                <a href="http://www.uwclassmate.com">
                     <img src={Res.icon} style={{maxHeight: '12vmin', alignSelf: 'center'}} alt="logo"/>
-                </Link>
+                </a>
             
                 <div>
                     {this.state.loggedIn && !this.state.usingIp && <IconButton
@@ -257,7 +257,7 @@ export default class MainPage extends Component {
                 console.log(data) 
                 if(JSON.parse(data).success === 1) {
                     if(display) {
-                        alert("User Logged in Successfully");
+                        alert("用户登录成功！");
                     }
                     this.setState({
                         loggedIn: true,
@@ -278,7 +278,8 @@ export default class MainPage extends Component {
                 console.log(data)                
                 if(JSON.parse(data).success === 1) {
                     if(display) {
-                        alert("Register sucessful, please log in");
+                        //alert("Register sucessful, please log in");
+                        alert("注册成功，请再次登录")
                     }  
                 } else {
                     alert(JSON.parse(data).result + ", please try again");

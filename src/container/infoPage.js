@@ -132,7 +132,7 @@ export default class InfoPage extends Component {
                         fontSize: '20px',
                         fontWeight: '500'
                       }}>
-                        查看更多课评和专业介绍↓↓
+                        查看更多专业介绍↓↓
                       </h3>
                       <img src={Res[this.state.major + "qr"]} alt="qrcode" />
                     </div>
